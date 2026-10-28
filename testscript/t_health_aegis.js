@@ -1,0 +1,13 @@
+const H=require('./_harness.js');
+const A=H.ALGOS||[];
+const ids=A.map(a=>a.id);
+const dup=ids.filter((x,i)=>ids.indexOf(x)!==i);
+const long=A.filter(a=>a.info&&a.info.length>200).map(a=>a.id);
+const nogroup=A.filter(a=>!a.group).map(a=>a.id);
+console.log('scripts       ', H.parsed.length);
+console.log('ALGOS         ', A.length);
+console.log('unique ids    ', new Set(ids).size);
+console.log('duplicates    ', dup.length?dup:'none');
+console.log('info>200字    ', long.length?long:'0');
+console.log('缺 group      ', nogroup.length?nogroup:'0');
+console.log('aegis entries ', ids.filter(i=>i.startsWith('aegis')));

@@ -1,0 +1,5 @@
+# HONOR Sans 官方 TTF 的 SHA-256（用于自证内嵌字体未被修改/裁剪）
+# 协议要求「不得对 HONOR Sans 做任何修改」，故本项目原样内嵌，不做子集化、不转格式。
+# t_fonts.js 会解出 fonts.css 中的 base64 并与此值比对。
+fcbd9b2a47c33631185df22623f627481db31aa65fa3b75e41d356e187932251  HONORSansVFCN.ttf  27503428
+05dd9257190e37319ec8060bab2d856307a027df988d852f9b103d25c4b1a9e7  HONORSansVFNormal.ttf  355632

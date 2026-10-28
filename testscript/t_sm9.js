@@ -1,0 +1,16 @@
+const fs=require("fs"),vm=require("vm"),nc=require("crypto");
+global.crypto=nc.webcrypto;global.btoa=s=>Buffer.from(s,"binary").toString("base64");global.atob=s=>Buffer.from(s,"base64").toString("binary");
+global.TextEncoder=require("util").TextEncoder;
+const mk=id=>({id,value:"",_h:{},options:[],addEventListener(e,f){(this._h[e]=this._h[e]||[]).push(f);},dispatchEvent(e){(this._h[e.type]||[]).forEach(f=>f.call(this,e));},classList:{add(){},remove(){},toggle(){},contains(){return false;}},setAttribute(){},appendChild(){},style:{},innerHTML:"",textContent:""});
+const store={};global.document={getElementById:id=>store[id]||(store[id]=mk(id)),createElement:t=>mk(t),querySelector(){return mk('q');},querySelectorAll(){return [];},addEventListener(){},readyState:"complete",body:{appendChild(){}}};
+global.window=global;global.addEventListener=()=>{};global.Event=function(t){this.type=t;};
+const html=fs.readFileSync("index.html","utf8");
+[...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m=>m[1]).forEach(f=>vm.runInThisContext(fs.readFileSync(f,"utf8"),{filename:f}));
+let pass=0,fail=0;const ck=(n,c)=>{if(c)pass++;else{fail++;console.log("  ✗ "+n);}};
+ck("a == 6t+2", SM9_A === 6n*SM9_T + 2n);
+ck("G1 在曲线上", sm9g1IsOn(SM9_G1));
+ck("G2 在曲线上", sm9g2IsOn(SM9_G2));
+ck("r·G1 = O", sm9g1Mul(SM9_G1, SM9_N) === null);
+ck("r·G2 = O", sm9g2Mul(SM9_G2, SM9_N) === null);
+ck("G1 非无穷远", SM9_G1 !== null);
+console.log("SM9 曲线参数: 通过 "+pass+" / 失败 "+fail);

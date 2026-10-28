@@ -1,0 +1,14 @@
+const fs=require("fs"),vm=require("vm"),nc=require("crypto");
+global.crypto=nc.webcrypto;
+global.btoa=function(s){return Buffer.from(s,"binary").toString("base64");};
+global.atob=function(s){return Buffer.from(s,"base64").toString("binary");};
+const mk=function(id){return {id:id,value:"",_h:{},options:[],addEventListener:function(e,f){(this._h[e]=this._h[e]||[]).push(f);},dispatchEvent:function(e){(this._h[e.type]||[]).forEach(function(f){f.call(this,e);});},classList:{add:function(){},remove:function(){},toggle:function(){},contains:function(){return false;}},setAttribute:function(){},appendChild:function(){},style:{},innerHTML:""};};
+const store={};
+global.document={getElementById:function(id){return store[id]||(store[id]=mk(id));},createElement:function(t){return mk(t);},addEventListener:function(){},readyState:"complete",body:{appendChild:function(){}}};
+global.window=global;global.addEventListener=function(){};
+global.Event=function(t){this.type=t;};
+const html=fs.readFileSync("index.html","utf8");
+[...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m=>m[1]).forEach(function(f){vm.runInThisContext(fs.readFileSync(f,"utf8"),{filename:f});});
+const g={};
+ALGOS.forEach(a=>{ (g[a.group]=g[a.group]||[]).push(a.id+":"+a.name); });
+Object.keys(g).forEach(k=>{ console.log("【"+k+"】("+g[k].length+"): "+g[k].join(", ")); });

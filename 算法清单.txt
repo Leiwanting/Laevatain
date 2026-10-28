@@ -1,0 +1,466 @@
+【编码】(26)
+  Base64  【base64】
+  Base32  【base32】
+  Base58  【base58】
+  Base85 (ASCII85)  【base85】
+  URL 编码  【url】
+  HTML 实体  【html】
+  Unicode 转义序列  【unicode】
+  16 进制编码  【hex】
+  ROT13  【rot13】
+  ASCII 移位 / 凯撒  【caesar】
+  摩尔斯电码  【morse】
+  二进制  【binary】
+  八进制  【octal】
+  Base45  【base45】
+  Base62  【base62】
+  basE91  【base91】
+  ROT47  【rot47】
+  Quoted-printable  【quoted-printable】
+  UUEncode  【uuencode】
+  Punycode  【punycode】
+  Base64url  【base64url】
+  CBOR（RFC 8949）  【cbor】
+  Bech32 地址编码（BIP-173）  【bech32】
+  Bech32m 地址编码（BIP-350）  【bech32m】
+  BIP-39 助记词  【bip39-mnemonic】
+  Base58Check 编码（比特币地址）  【base58check】
+【古典密码】(6)
+  维吉尼亚密码  【vigenere】
+  Atbash 密码  【atbash】
+  仿射密码  【affine】
+  栅栏密码  【railfence】
+  Playfair 密码  【playfair】
+  培根密码  【bacon】
+【单向哈希】(94)
+  MD5  【md5】
+  SHA-1  【sha1】
+  SHA-224  【sha224】
+  SHA-256  【sha256】
+  SHA-384  【sha384】
+  SHA-512  【sha512】
+  SHA-3-224  【sha3-224】
+  SHA-3-256  【sha3-256】
+  SHA-3-384  【sha3-384】
+  SHA-3-512  【sha3-512】
+  BLAKE2s-256  【blake2s】
+  SM3  【sm3】
+  BLAKE3-256  【blake3】
+  BLAKE2b-512  【blake2b】
+  RIPEMD-160  【ripemd160】
+  HMAC 消息认证码  【hmac】
+  PBKDF2 密钥派生  【pbkdf2】
+  HKDF 密钥派生  【hkdf】
+  scrypt 口令派生  【scrypt】
+  Streebog-256  【streebog256】
+  Streebog-512  【streebog512】
+  SHAKE128（可扩展输出）  【shake128】
+  SHAKE256（可扩展输出）  【shake256】
+  cSHAKE128（可定制）  【cshake128】
+  cSHAKE256（可定制）  【cshake256】
+  CMAC-AES 消息认证码  【cmac】
+  KMAC128  【kmac128】
+  KMAC256  【kmac256】
+  Argon2id  【argon2id】
+  Argon2i  【argon2i】
+  Argon2d  【argon2d】
+  Poly1305 消息认证码  【poly1305】
+  MD4（已不安全）  【md4】
+  SHA-512/224  【sha512-224】
+  SHA-512/256  【sha512-256】
+  ZUC-128-EIA3（LTE 完整性算法）  【zuc-eia3】
+  Whirlpool-512  【whirlpool】
+  HOTP 一次性口令（RFC 4226）  【hotp】
+  TOTP 时间型口令（RFC 6238）  【totp】
+  SipHash-2-4（带密钥 PRF）  【siphash-24】
+  SipHash-1-3（快速变体）  【siphash-13】
+  KASUMI f9（3GPP 完整性算法）  【kasumi_f9】
+  TurboSHAKE128（12 轮 XOF）  【turboshake128】
+  TurboSHAKE256（12 轮 XOF）  【turboshake256】
+  KT128 / KangarooTwelve  【kt128】
+  KT256  【kt256】
+  bcrypt 口令哈希  【bcrypt】
+  Merkle 树根（RFC 6962）  【merkle-root】
+  Merkle 包含证明（RFC 6962）  【merkle-proof】
+  BIP-39 种子派生  【bip39-seed】
+  NHPoly1305 泛哈希  【nhpoly1305】
+  BLAKE2bp-512（并行）  【blake2bp】
+  BLAKE2sp-256（并行）  【blake2sp】
+  Ascon-XOF128（可扩展输出）  【ascon-xof128】
+  Ascon-CXOF128（可定制 XOF）  【ascon-cxof128】
+  Ascon-Hash256  【ascon-hash256】
+  Tiger-192（标准）  【tiger192】
+  Tiger-160（截断）  【tiger160】
+  Tiger-128（截断）  【tiger128】
+  Skein-512-224  【skein512-224】
+  Skein-512-256  【skein512-256】
+  Skein-512-384  【skein512-384】
+  Skein-512-512  【skein512-512】
+  Skein-512(512,Test)  【skein512-512-test】
+  PBKDF1（PKCS#5 v1.5，SHA-1）  【pbkdf1】
+  CBC-MAC（DES）  【cbcmac-des】
+  CBC-MAC（AES-128）  【cbcmac-aes128】
+  ANSI X9.19 MAC（零售 MAC）  【x919-mac】
+  KDF2（ISO 18033-2，SHA-1）  【kdf2】
+  KDF1（ISO 18033-2，SHA-1）  【kdf1】
+  GMAC（AES-GMAC 消息认证码）  【gmac】
+  SP 800-108 KDF（计数器模式）  【sp800-108-ctr】
+  SP 800-108 KDF（反馈模式）  【sp800-108-fb】
+  SP 800-108 KDF（流水线模式）  【sp800-108-pipe】
+  OpenPGP S2K 口令派生（RFC 4880）  【pgp-s2k】
+  HMAC-DRBG（NIST SP 800-90A）  【hmac-drbg】
+  SP 800-56A 单步 KDF  【sp800-56a】
+  SP 800-56C 两步 KDF  【sp800-56c】
+  TLS 1.2 PRF（RFC 5246 §5）  【tls12-prf】
+  TLS PRF（TLS 1.0/1.1，MD5⊕SHA-1）  【tls-prf】
+  ANSI X9.42 PRF  【x942-prf】
+  bcrypt-pbkdf（OpenSSH 口令派生）  【bcrypt-pbkdf】
+  Comb4P(MD4,MD5) 哈希组合器  【comb4p-md4md5】
+  Comb4P(SHA-1,RIPEMD-160) 哈希组合器  【comb4p-sha1rmd160】
+  ChaCha_RNG（Botan 专有 DRBG）  【chacha-rng】
+  Telegram auth_key_id（auth_key→密钥标识）  【mtproto-authkeyid】
+  Parallel(MD5,SHA-160) 组合哈希  【parallel-md5-sha1】
+  Parallel(SHA-256,SHA-512) 组合哈希  【parallel-sha256-512】
+  Passhash9 口令哈希（Botan $9$）  【passhash9】
+  Passhash9 校验（比对口令）  【passhash9-verify】
+  GOST R 34.11-94（CryptoPro）  【gost3411】
+  GOST R 34.11-94（TestParam）  【gost3411tp】
+  CTR-DRBG（NIST SP 800-90A）  【ctr-drbg】
+  Hash-DRBG（NIST SP 800-90A）  【hash-drbg】
+【对称加密】(137)
+  AES-128  【aes128】
+  AES-192  【aes192】
+  AES-256  【aes256】
+  DES  【des】
+  3DES (Triple DES)  【3des】
+  SM4  【sm4】
+  RC5  【rc5】
+  RC6  【rc6】
+  RC4  【rc4】
+  ChaCha20  【chacha20】
+  Blowfish  【blowfish】
+  IDEA  【idea】
+  Twofish-128  【twofish128】
+  Twofish-192  【twofish192】
+  Twofish-256  【twofish256】
+  SEED  【seed】
+  ARIA-128  【aria128】
+  ARIA-192  【aria192】
+  ARIA-256  【aria256】
+  Camellia-128  【camellia128】
+  Camellia-192  【camellia192】
+  Camellia-256  【camellia256】
+  TEA  【tea】
+  XTEA  【xtea】
+  GOST Magma（RFC 8891）  【magma】
+  XXTEA  【xxtea】
+  AES-GCM（认证加密）  【aes-gcm】
+  ChaCha20-Poly1305（认证加密）  【chacha20-poly1305】
+  Serpent  【serpent】
+  Kuznyechik（GOST R 34.12-2015）  【kuznyechik】
+  AES-CCM（认证加密）  【aes-ccm】
+  AES-KW（密钥包装 RFC 3394）  【aes-kw】
+  AES-KW 解包（unwrap 独立条目，RFC 3394）  【aes-kw-unwrap】
+  FF1 格式保留加密  【ff1】
+  AES-KWP（带填充密钥包装 RFC 5649）  【aes-kwp】
+  AES-SIV（RFC 5297 确定性 AEAD）  【aes-siv】
+  Salsa20  【salsa20】
+  Salsa20/12（降轮变体）  【salsa20-12】
+  Salsa20/8（降轮变体）  【salsa20-8】
+  FF3 格式保留加密  【ff3】
+  FF3-1 格式保留加密  【ff3-1】
+  AES-GCM-SIV  【aes-gcm-siv】
+  HCTR2 长度保持加密  【hctr2】
+  CAST5 / CAST-128  【cast5】
+  RC2  【rc2】
+  GOST 28147-89 / Magma  【gost28147】
+  CAST-256 / CAST6  【cast6】
+  ZUC-128（国密流密码）  【zuc】
+  ZUC-128-EEA3（LTE 机密性算法）  【zuc-eea3】
+  EME2-AES-128 宽块加密  【eme2】
+  XCB-AES-128 宽块加密  【xcb】
+  CBC-ESSIV（磁盘扇区）  【cbc-essiv】
+  AES-XTS-128（磁盘扇区加密）  【aes-xts-128】
+  AES-XTS-256（磁盘扇区加密）  【aes-xts-256】
+  Simon-64/96（NSA 轻量分组密码）  【simon64-96】
+  Simon-64/128（NSA 轻量分组密码）  【simon64-128】
+  Simon-128/128（NSA 轻量分组密码）  【simon128】
+  Simon-128/192（NSA 轻量分组密码）  【simon128-192】
+  Simon-128/256（NSA 轻量分组密码）  【simon128-256】
+  SPECK-64/96（NSA 轻量分组密码）  【speck64-96】
+  SPECK-64/128（NSA 轻量分组密码）  【speck64-128】
+  SPECK-128/128（NSA 轻量分组密码）  【speck128】
+  SPECK-128/192（NSA 轻量分组密码）  【speck128-192】
+  SPECK-128/256（NSA 轻量分组密码）  【speck128-256】
+  KASUMI f8（3GPP 机密性算法）  【kasumi_f8】
+  MARS-128  【mars128】
+  MARS-192  【mars192】
+  MARS-256  【mars256】
+  GIFT-64（轻量分组密码）  【gift64】
+  GIFT-128（轻量分组密码）  【gift128】
+  SHACAL-2（SHA-256 压缩函数分组密码）  【shacal2】
+  SHACAL-1（SHA-1 压缩函数分组密码）  【shacal1】
+  NOEKEON（轻量分组密码）  【noekeon】
+  MISTY1（NESSIE 认证分组密码）  【misty1】
+  KASUMI（3GPP 分组密码）  【kasumi】
+  SKIPJACK（NSA，1998 解密）  【skipjack】
+  PRESENT-80（超轻量分组密码）  【present80】
+  PRESENT-128（超轻量分组密码）  【present128】
+  SKINNY-128-256（轻量可调分组密码）  【skinny128-256】
+  SKINNY-64-128（轻量可调分组密码）  【skinny64-128】
+  QARMA-64（7 轮，ARM 指针认证同族）  【qarma64-r7】
+  QARMA-64（6 轮）  【qarma64-r6】
+  QARMA-64（5 轮）  【qarma64-r5】
+  LEA-128（韩国 KS X 3246 轻量分组）  【lea128】
+  LEA-192（韩国 KS X 3246 轻量分组）  【lea192】
+  LEA-256（韩国 KS X 3246 轻量分组）  【lea256】
+  HIGHT（韩国 ISO/IEC 29192-2 超轻量）  【hight】
+  SIMECK-32/64（Simon 简化变体）  【simeck32】
+  SIMECK-64/128（Simon 简化变体）  【simeck64】
+  CHAM-64/128（韩国轻量分组密码）  【cham64】
+  CHAM-128/128（韩国轻量分组密码）  【cham128】
+  CHAM-128/256（韩国轻量分组密码）  【cham128-256】
+  CLEFIA-128（索尼轻量分组，ISO 29192-2）  【clefia128】
+  CLEFIA-192（索尼轻量分组）  【clefia192】
+  CLEFIA-256（索尼轻量分组）  【clefia256】
+  Kalyna-128/128（乌克兰国标 DSTU 7624）  【kalyna128】
+  Kalyna-128/256（乌克兰国标 DSTU 7624）  【kalyna128-256】
+  Kalyna-256/256（乌克兰国标 DSTU 7624）  【kalyna256】
+  Kalyna-256/512（乌克兰国标 DSTU 7624）  【kalyna256-512】
+  Kalyna-512/512（乌克兰国标 DSTU 7624）  【kalyna512】
+  KHAZAD（NESSIE 候选，v2.0 tweaked S 盒）  【khazad】
+  LOKI89  【loki89】
+  LOKI91  【loki91】
+  SAFER K-64  【safer-k64】
+  SAFER K-128  【safer-k128】
+  SAFER SK-64  【safer-sk64】
+  SAFER SK-128  【safer-sk128】
+  ANUBIS-128（NESSIE 候选，12 轮）  【anubis128】
+  ANUBIS-160（NESSIE 候选，13 轮）  【anubis160】
+  ANUBIS-192（NESSIE 候选，14 轮）  【anubis192】
+  ANUBIS-224（NESSIE 候选，15 轮）  【anubis224】
+  ANUBIS-256（NESSIE 候选，16 轮）  【anubis256】
+  ANUBIS-288（NESSIE 候选，17 轮）  【anubis288】
+  ANUBIS-320（NESSIE 候选，18 轮）  【anubis320】
+  Adiantum 长度保持加密（XChaCha12-AES256）  【adiantum】
+  Adiantum（XChaCha20-AES256）  【adiantum20】
+  Adiantum（XChaCha8-AES256）  【adiantum8】
+  XChaCha12 流密码  【xchacha12】
+  XChaCha8 流密码  【xchacha8】
+  XChaCha20 流密码  【xchacha20】
+  Threefish-512（Skein 核心可调分组密码）  【threefish512】
+  LION（SHA-1+RC4，64 字节块）  【lion】
+  MTProto 2.0 消息加密（Telegram）  【mtproto-enc】
+  MTProto 2.0 消息解密（Telegram）  【mtproto-dec】
+  MTProto 报文结构解析（Telegram，不解密）  【mtproto-parse】
+  MTProto 1.0 消息加密（Telegram，已废弃）  【mtproto1-enc】
+  MTProto 1.0 消息解密（Telegram，已废弃）  【mtproto1-dec】
+  Cascade(Serpent,AES-256) 级联加密  【cascade-serpent-aes256】
+  XSalsa20 流密码（NaCl 用）  【xsalsa20】
+  NaCl secretbox 封装（XSalsa20-Poly1305）  【nacl-secretbox-enc】
+  NaCl secretbox 解封（XSalsa20-Poly1305）  【nacl-secretbox-dec】
+  Fernet 加密（Python cryptography 格式）  【fernet-enc】
+  Fernet 解密（Python cryptography 格式）  【fernet-dec】
+  PASETO v4.local 加密  【paseto-v4-local-enc】
+  PASETO v4.local 解密  【paseto-v4-local-dec】
+  PASETO v2.local 加密  【paseto-v2-local-enc】
+  PASETO v2.local 解密  【paseto-v2-local-dec】
+【非对称加密】(39)
+  RSA (RSA-OAEP)  【rsa】
+  RSA-PSS 签名  【rsa-pss】
+  ECDSA (P-256)  【ecdsa-p256】
+  ECDSA (P-384)  【ecdsa-p384】
+  EdDSA (Ed25519)  【ed25519】
+  ECDH (P-256 密钥协商)  【ecdh-p256】
+  Diffie-Hellman (MODP Group 2)  【dh-modp2】
+  ECC 通用加密（ECIES）  【ecc-ecies】
+  ECC 密钥协商（ECDH）  【ecc-ecdh】
+  ElGamal 加密  【elgamal】
+  SM2 加密（国密）  【sm2-enc】
+  FROST 阈值签名 (Ed25519)  【frost】
+  GG20 阈值 ECDSA (secp256k1)  【gg20】
+  ECDH+HKDF+AEAD 混合加密  【hpke】
+  SPAKE2+ 注册（口令 → w0/w1/L）  【spake2p-register】
+  SPAKE2+ Prover（客户端）  【spake2p-prover】
+  SPAKE2+ Verifier（服务器）  【spake2p-verifier】
+  Ed25519ctx（带上下文）  【ed25519-ctx】
+  Ed25519ph（预哈希）  【ed25519-ph】
+  Ristretto255 密钥协商  【ristretto255-dh】
+  SM2 密钥协商（国密）  【sm2-keyxchg】
+  Decaf448 密钥协商  【decaf448-dh】
+  SM9 标识密码签名  【sm9-sign】
+  SM9 加密密钥生成  【sm9-keygen-enc】
+  SM9 密钥封装（IBE-KEM）  【sm9-kem】
+  SM9 标识公钥加密  【sm9-enc】
+  IBE 主密钥生成（Boneh-Franklin）  【ibe-setup】
+  IBE 用户私钥提取  【ibe-extract】
+  IBE 加密（向某身份）  【ibe-encrypt】
+  IBE 解密（用自己的私钥）  【ibe-decrypt】
+  RSA-KEM 封装（ISO 18033-2）  【rsa-kem-encaps】
+  RSA-KEM 解封装（ISO 18033-2）  【rsa-kem-decaps】
+  SRP-6a 远程口令协议（RFC 5054）  【srp6a】
+  NaCl box 封装（X25519 双方）  【nacl-box-enc】
+  NaCl box 解封（X25519 双方）  【nacl-box-dec】
+  NaCl sealed box 封装（匿名发送）  【nacl-sealedbox-enc】
+  NaCl sealed box 解封（匿名接收）  【nacl-sealedbox-dec】
+  age 加密（v1 / X25519 收件人）  【age-enc】
+  age 解密（v1 / X25519 身份）  【age-dec】
+【数字签名】(9)
+  ECDSA（椭圆曲线签名）  【ecc-ecdsa】
+  DSA（离散对数签名）  【dsa】
+  SM2 签名（国密）  【sm2-sign】
+  COSE_Sign1（RFC 8152）  【cose-sign1】
+  JWS 签名/验签（RFC 7515）  【jose-jws】
+  PASETO v4.public 签发（Ed25519）  【paseto-v4-public-sign】
+  PASETO v4.public 验签（Ed25519）  【paseto-v4-public-verify】
+  PASETO v2.public 签发（Ed25519）  【paseto-v2-public-sign】
+  PASETO v2.public 验签（Ed25519）  【paseto-v2-public-verify】
+【密钥工具】(6)
+  密钥生成（19 种：ECC/SM2/Ed25519/X25519/Ed448/X448/RSA/…）  【keygen】
+  密钥对导出（JWK / PEM）  【key-export】
+  X25519（密钥交换）  【x25519】
+  JWK 解析与指纹（RFC 7517/7638）  【jose-jwk】
+  TLS 1.3 HKDF-Expand-Label（RFC 8446）  【hkdf-expand-label】
+  age 密钥对生成（v1 身份 + 收件人）  【age-keygen】
+【校验和】(10)
+  CRC32  【crc32】
+  CRC32C (Castagnoli)  【crc32c】
+  Adler32  【adler32】
+  CRC8（ATM / ITU）  【crc8】
+  CRC16-CCITT（XMODEM）  【crc16ccitt】
+  CRC16-MODBUS  【crc16modbus】
+  CRC64-ECMA-182  【crc64ecma】
+  CRC64-XZ（Go ECMA）  【crc64xz】
+  FNV-1a 32  【fnv1a32】
+  CRC-24（OpenPGP，RFC 4880）  【crc24】
+【后量子密码】(71)
+  ML-KEM-512（后量子 KEM）  【mlkem512】
+  ML-KEM-768（后量子 KEM）  【mlkem768】
+  ML-KEM-1024（后量子 KEM）  【mlkem1024】
+  ML-DSA-44（后量子签名）  【mldsa44】
+  ML-DSA-65（后量子签名）  【mldsa65】
+  ML-DSA-87（后量子签名）  【mldsa87】
+  SPHINCS+ 签名（SHAKE-128f）  【sphincs】
+  HQC-128（后量子 KEM）  【hqc128】
+  HQC-192（后量子 KEM）  【hqc192】
+  HQC-256（后量子 KEM）  【hqc256】
+  BIKE-L1（后量子 KEM · 码基）  【bike1】
+  BIKE-L3（后量子 KEM · 码基）  【bike3】
+  BIKE-L5（后量子 KEM · 码基）  【bike5】
+  Classic McEliece 348864（码基 KEM）  【mceliece348864】
+  Classic McEliece 348864 密钥生成（官方 KAT 验证）  【mceliece348864-keygen】
+  Classic McEliece 460896（码基 KEM）  【mceliece460896】
+  Classic McEliece 460896 密钥生成（官方 KAT 验证）  【mceliece460896-keygen】
+  Classic McEliece 6688128（码基 KEM）  【mceliece6688128】
+  Classic McEliece 6688128 密钥生成（官方 KAT 验证）  【mceliece6688128-keygen】
+  Classic McEliece 6960119（码基 KEM）  【mceliece6960119】
+  Classic McEliece 6960119 密钥生成（官方 KAT 验证）  【mceliece6960119-keygen】
+  Classic McEliece 8192128（码基 KEM）  【mceliece8192128】
+  Classic McEliece 8192128 密钥生成（官方 KAT 验证）  【mceliece8192128-keygen】
+  FrodoKEM-976-SHAKE 密钥生成  【frodo976shake-keygen】
+  FrodoKEM-976-SHAKE 封装（公钥加密）  【frodo976shake-encaps】
+  FrodoKEM-976-SHAKE 解封装（私钥解密）  【frodo976shake-decaps】
+  FrodoKEM-1344-SHAKE 密钥生成  【frodo1344shake-keygen】
+  FrodoKEM-1344-SHAKE 封装（公钥加密）  【frodo1344shake-encaps】
+  FrodoKEM-1344-SHAKE 解封装（私钥解密）  【frodo1344shake-decaps】
+  FrodoKEM-640-SHAKE 密钥生成  【frodo640shake-keygen】
+  FrodoKEM-640-SHAKE 封装（公钥加密）  【frodo640shake-encaps】
+  FrodoKEM-640-SHAKE 解封装（私钥解密）  【frodo640shake-decaps】
+  sntrup761 密钥生成  【sntrup761-keygen】
+  sntrup761 封装（公钥加密）  【sntrup761-encaps】
+  sntrup761 解封装（私钥解密）  【sntrup761-decaps】
+  LightSaber 密钥生成  【lightsaber-keygen】
+  LightSaber 封装（公钥加密）  【lightsaber-encaps】
+  LightSaber 解封装（私钥解密）  【lightsaber-decaps】
+  Saber 密钥生成  【saber-keygen】
+  Saber 封装（公钥加密）  【saber-encaps】
+  Saber 解封装（私钥解密）  【saber-decaps】
+  FireSaber 密钥生成  【firesaber-keygen】
+  FireSaber 封装（公钥加密）  【firesaber-encaps】
+  FireSaber 解封装（私钥解密）  【firesaber-decaps】
+  NTRU-HPS 2048-509 密钥生成  【ntruhps2048509-keygen】
+  NTRU-HPS 2048-509 封装（公钥加密）  【ntruhps2048509-encaps】
+  NTRU-HPS 2048-509 解封装（私钥解密）  【ntruhps2048509-decaps】
+  NTRU-HPS 2048-677 密钥生成  【ntruhps2048677-keygen】
+  NTRU-HPS 2048-677 封装（公钥加密）  【ntruhps2048677-encaps】
+  NTRU-HPS 2048-677 解封装（私钥解密）  【ntruhps2048677-decaps】
+  NTRU-HPS 4096-821 密钥生成  【ntruhps4096821-keygen】
+  NTRU-HPS 4096-821 封装（公钥加密）  【ntruhps4096821-encaps】
+  NTRU-HPS 4096-821 解封装（私钥解密）  【ntruhps4096821-decaps】
+  NTRU-HRSS 701 密钥生成  【ntruhrss701-keygen】
+  NTRU-HRSS 701 封装（公钥加密）  【ntruhrss701-encaps】
+  NTRU-HRSS 701 解封装（私钥解密）  【ntruhrss701-decaps】
+  NTRU-LPRime 653 密钥生成  【ntrulpr653-keygen】
+  NTRU-LPRime 653 封装（公钥加密）  【ntrulpr653-encaps】
+  NTRU-LPRime 653 解封装（私钥解密）  【ntrulpr653-decaps】
+  NTRU-LPRime 857 密钥生成  【ntrulpr857-keygen】
+  NTRU-LPRime 857 封装（公钥加密）  【ntrulpr857-encaps】
+  NTRU-LPRime 857 解封装（私钥解密）  【ntrulpr857-decaps】
+  NTRU-LPRime 1277 密钥生成  【ntrulpr1277-keygen】
+  NTRU-LPRime 1277 封装（公钥加密）  【ntrulpr1277-encaps】
+  NTRU-LPRime 1277 解封装（私钥解密）  【ntrulpr1277-decaps】
+  XMSS 验签（RFC 8391 后量子哈希签名）  【xmss-verify】
+  XMSS 签名（RFC 8391，仅 h=10）  【xmss-sign】
+  XMSS 密钥生成（RFC 8391，仅 h=10）  【xmss-keygen】
+  LMS 密钥生成（RFC 8554，公钥）  【lms-keygen】
+  LMS 签名（RFC 8554）  【lms-sign】
+  LMS 验签（RFC 8554）  【lms-verify】
+【椭圆曲线与高级代数】(23)
+  BLS 签名（BLS12-381）  【bls_sig】
+  BLS12-381 配对 e(P,Q)  【bls_pair】
+  X448 密钥交换  【x448】
+  Ed448 签名  【ed448】
+  Schnorr 签名 (BIP-340)  【schnorr】
+  BIP-32 HD 钱包派生  【bip32】
+  BN254 / alt_bn128 配对  【bn254-pairing】
+  BLS12-377 配对  【bls12-377-pairing】
+  BLS12-377 哈希到域（RFC 9380 XMD）  【bls12-377-hash-to-field】
+  BLS12-377 哈希到曲线 G1（SSWU）  【bls12-377-hash-to-curve-g1】
+  BLS12-377 哈希到曲线 G2（SSWU）  【bls12-377-hash-to-curve-g2】
+  Ristretto255 群运算  【ristretto255】
+  Decaf448 群运算  【decaf448】
+  KZG 多项式承诺（BN254）  【kzg-commit】
+  BN254 配对  【kzg-pairing】
+  SM9 配对（R-ate）  【sm9-pairing】
+  Bulletproofs 范围证明验证（Ristretto255）  【bulletproof-verify】
+  Verkle Pedersen 向量承诺（Bandersnatch）  【verkle-commit】
+  Verkle 树根承诺（EIP-6800）  【verkle-root】
+  Verkle Pedersen 哈希 hash64 / 树键派生  【verkle-hash64】
+  Verkle 内积论证 IPA 证明（多项式求值）  【verkle-ipa-prove】
+  Verkle 内积论证 IPA 验证  【verkle-ipa-verify】
+  ECDSA 公钥恢复（从签名还原公钥）  【ecdsa-recover】
+【分布式与门限密码】(4)
+  Feldman VSS 可验证秘密共享  【vss】
+  Pedersen DKG 分布式密钥生成  【dkg】
+  Shamir 门限拆分（SSS）  【sss-split】
+  Shamir 门限还原（SSS）  【sss-recover】
+【认证加密】(19)
+  COSE_MAC0（RFC 8152）  【cose-mac0】
+  COSE_Encrypt0（RFC 8152）  【cose-encrypt0】
+  JWE 加密/解密（RFC 7516）  【jose-jwe】
+  Ascon-128a（AEAD）  【ascon128a】
+  AEGIS-128L（AEAD）  【aegis128l】
+  AEGIS-256（AEAD）  【aegis256aead】
+  AEGIS-128X2（并行 AEAD）  【aegis128x2】
+  AEGIS-128X4（并行 AEAD）  【aegis128x4】
+  AEGIS-256X2（并行 AEAD）  【aegis256x2】
+  AEGIS-256X4（并行 AEAD）  【aegis256x4】
+  AEGISMAC-128L  【aegismac128l】
+  AEGISMAC-256  【aegismac256】
+  AEGISMAC-128X2  【aegismac128x2】
+  AEGISMAC-128X4  【aegismac128x4】
+  AEGISMAC-256X2  【aegismac256x2】
+  AEGISMAC-256X4  【aegismac256x4】
+  AES-128-EAX（认证加密，可变 tag）  【eax-aes128】
+  AES-192-EAX（认证加密，可变 tag）  【eax-aes192】
+  AES-256-EAX（认证加密，可变 tag）  【eax-aes256】
+【密钥派生】(3)
+  HChaCha20 子密钥派生  【hchacha20】
+  MTProto 2.0 密钥派生（auth_key+msg_key→aes_key/aes_iv）  【mtproto-kdf】
+  MTProto 1.0 密钥派生（auth_key+msg_key→aes_key/aes_iv）  【mtproto1-kdf】
+【后量子】(3)
+  Falcon 验签（FN-DSA / FIPS 205）  【falcon-verify】
+  Falcon 签名（FN-DSA / FIPS 205）  【falcon-sign】
+  Falcon 密钥生成（FN-DSA / FIPS 205）  【falcon-keygen】
+
+TOTAL|450

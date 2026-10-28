@@ -1,0 +1,12 @@
+const fs=require("fs");
+const html=fs.readFileSync("index.html","utf8");
+const css=fs.readFileSync("style.css","utf8");
+const used=new Set();
+[...html.matchAll(/class="([^"]+)"/g)].forEach(m=>m[1].split(/\s+/).forEach(c=>c&&used.add(c)));
+const missing=[...used].filter(c=>!new RegExp("\\."+c.replace(/[-]/g,"\\-")+"[\\s,{:.]").test(css));
+console.log("HTML 使用的 class 数:",used.size);
+console.log("CSS 中缺失定义:",missing.length?missing.join(", "):"无");
+const ids=[...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);
+const dup=ids.filter((x,i)=>ids.indexOf(x)!==i);
+console.log("重复 id:",dup.length?dup.join(","):"无");
+console.log("脚本数:",[...html.matchAll(/<script src=/g)].length);

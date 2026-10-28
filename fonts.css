@@ -1,0 +1,15 @@
+/* 字体表 — 由脚本生成，勿手改。
+   HONOR Sans：Copyright 2022 Honor Device Co., Ltd.，依 HONOR Sans Copyright License Agreement 授权。
+     协议要求「不得修改」，故原样使用官方 TTF：未裁剪字集、未子集化、未转格式。
+     SHA-256 见 fonts/HONOR-Sans-original-sha256.txt，t_fonts.js 每次校验。
+   Noto Sans KR / JetBrains Mono：SIL OFL 1.1。
+   性能：字体一律外链为独立文件 + font-display:swap —— 早期版本把字体 base64 内嵌进本文件，
+     导致 CSS 膨胀到 37MB 并阻塞首屏渲染；改为外链后本文件仅数 KB，页面可立即渲染，
+     字体在后台加载（配合开屏动画）并按 swap 渐进替换。 */
+@font-face{font-family:'HONORSansCN';src:url('fonts/HONORSansVFCN.ttf') format('truetype-variations');font-weight:100 900;font-display:swap;}
+@font-face{font-family:'HONORSansLatin';src:url('fonts/HONORSansVFNormal.ttf') format('truetype-variations');font-weight:100 900;font-display:swap;}
+@font-face{font-family:'NotoKR';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/notokr-400.woff2') format('woff2');}
+@font-face{font-family:'NotoKR';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/notokr-500.woff2') format('woff2');}
+@font-face{font-family:'NotoKR';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/notokr-700.woff2') format('woff2');}
+@font-face{font-family:'JBM';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400.woff2') format('woff2');}
+@font-face{font-family:'JBM';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/jetbrains-mono-latin-700.woff2') format('woff2');}

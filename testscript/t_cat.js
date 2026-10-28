@@ -1,0 +1,14 @@
+const fs=require("fs"),vm=require("vm"),nc=require("crypto");
+global.crypto=nc.webcrypto;global.TextEncoder=require("util").TextEncoder;
+global.btoa=s=>Buffer.from(s,"binary").toString("base64");global.atob=s=>Buffer.from(s,"base64").toString("binary");
+const mk=id=>({id,value:"",_h:{},options:[],addEventListener(e,f){(this._h[e]=this._h[e]||[]).push(f);},dispatchEvent(e){(this._h[e.type]||[]).forEach(f=>f.call(this,e));},classList:{add(){},remove(){},toggle(){},contains(){return false;}},setAttribute(){},appendChild(){},style:{},innerHTML:"",textContent:""});
+const store={};global.document={getElementById:id=>store[id]||(store[id]=mk(id)),createElement:t=>mk(t),querySelector(){return mk('q');},querySelectorAll(){return [];},addEventListener(){},readyState:"complete",body:{appendChild(){}}};
+global.window=global;global.addEventListener=()=>{};global.Event=function(t){this.type=t;};
+const html=fs.readFileSync("index.html","utf8");
+[...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m=>m[1]).forEach(f=>{try{vm.runInThisContext(fs.readFileSync(f,"utf8"),{filename:f});}catch(e){}});
+const cnt={}, fb=[];
+ALGOS.forEach(a=>{ const c=algoCatOf(a.id,a.group); const k=c.cat+(c.sub?"/"+c.sub:""); cnt[k]=(cnt[k]||0)+1;
+  if(c.cat==='c-enc'&&c.sub==='c-enc-3') fb.push(a.name+"["+a.group+"]"); });
+console.log("分类分布:"); Object.keys(cnt).sort().forEach(k=>console.log("  "+k.padEnd(18)+cnt[k]));
+console.log("\n落入「编码-其他」兜底: "+fb.length);
+fb.forEach(n=>console.log("   - "+n));

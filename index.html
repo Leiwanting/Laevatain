@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title data-i18n="app.title">加密 / 解密工具</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="fonts.css">
+</head>
+<body>
+<header class="topbar">
+  <!-- 侧边栏打开按钮：占位在这里（顶栏最左），图标由 ui_sidebar.js 注入并可形变 -->
+  <button type="button" id="sideFabHost" class="side-fab-host" aria-label="menu"
+          data-i18n-title="side.open" title="打开菜单"></button>
+  <svg class="app-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M12 2.5 4 5.6v6.1c0 4.6 3.2 8.4 8 9.8 4.8-1.4 8-5.2 8-9.8V5.6L12 2.5z"
+          fill="#2b6cb0" fill-opacity=".12" stroke="#2b6cb0" stroke-width="1.4"
+          stroke-linejoin="round"/>
+    <path d="M12 2.5 4 5.6v6.1c0 4.6 3.2 8.4 8 9.8 4.8-1.4 8-5.2 8-9.8V5.6L12 2.5z"
+          stroke="#2b6cb0" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
+    <rect x="9.1" y="10.6" width="5.8" height="4.6" rx="1.1" fill="#2b6cb0" fill-opacity=".18"
+          stroke="#2b6cb0" stroke-width="1.3"/>
+    <path d="M10.3 10.6V9.4a1.7 1.7 0 0 1 3.4 0v1.2" stroke="#2b6cb0" stroke-width="1.3"
+          stroke-linecap="round" fill="none"/>
+  </svg>
+  <span class="app-name" data-i18n="app.name">加密工具箱</span>
+  <span class="app-sub" id="appSub" title="Laevatain_sky's Cryptography Toolbox">Laevatain_sky's Cryptography Toolbox</span>
+  <span class="ver-badge" id="verBadge" title="点击查看版本信息" data-i18n-title="title.ver">v—</span>
+</header>
+
+<div class="wrap">
+  <h1 data-i18n="app.title">加密 / 解密工具</h1>
+
+  <div class="ver-card hidden" id="verCard">
+    <div class="ver-card-head">
+      <span class="ver-ver" id="verVer2">v—</span>
+      <span class="ver-code" id="verCore">—</span>
+      <span class="ver-abbr-big" id="verBuild">—</span>
+      <span class="ver-cn" id="verDate">—</span>
+    </div>
+    <p class="ver-line" data-i18n-html="ver.line">
+      版本号遵循 <b>SemVer</b>（主版本.次版本.修订号），规则见随包的 <b>版本规则.md</b>：
+      删条目或改语义升主版本，新增算法升次版本，修 bug 与优化升修订号；版本号不含任何代号。
+      这个工具的两个坚持是：<b id="verAlgo2">全部算法</b>均经权威向量或参考实现交叉验证，
+      以及<b>零外部依赖</b>——不引任何 CDN 或 npm 包，断网可用。
+    </p>
+    <div class="ver-grid">
+      <div><span data-i18n="ver.algocnt">算法总数</span><b id="verAlgo">—</b></div>
+      <div><span data-i18n="ver.stress">压力测试</span><b id="verStress">—</b></div>
+      <div><span data-i18n="ver.self">内置自检</span><b id="verSelf">—</b></div>
+      <div><span data-i18n="ver.err">控制台报错</span><b id="verErr">0</b></div>
+      <div class="ver-full"><span data-i18n="ver.fullname">正式名称</span><b id="verFullName">—</b></div>
+    </div>
+    <p class="ver-note" data-i18n-html="ver.note">
+      全部算法均以权威实现为参照逐条比对：Twofish 对 C 参考实现、Camellia 对 OpenSSL、
+      SEED 对 RFC 4269 官方向量与 OpenSSL 随机向量、ARIA 对 RFC 5794 三组 KAT、
+      SM2 与 GmSSL 双向互通、bcrypt 与 bcryptjs 逐字节一致。
+    </p>
+  </div>
+
+  <div id="globalError" class="global-error hidden"></div>
+
+  <div class="panel">
+    <div class="row">
+      <div class="field">
+        <label for="algo" data-i18n="label.algo" data-i18n-tip="tip.algo" data-tip="点开可选择全部算法，支持模糊搜索（如 aes2 / sm2 / 哈希）">算法</label>
+        <div class="algo-picker">
+          <button type="button" id="algoBtn" class="algo-picker-btn" aria-haspopup="true" aria-expanded="false">
+            <span class="algo-btn-main">
+              <span id="algoBtnText" data-i18n="ver.pick">请选择算法</span>
+              <span class="algo-btn-cat" id="algoBtnCat"></span>
+            </span>
+            <span class="algo-btn-arrow">▾</span>
+          </button>
+          <div id="algoPanel" class="algo-panel hidden">
+            <div class="algo-panel-search">
+              <input type="text" id="algoSearch" placeholder="搜索算法（支持模糊，如 aes2 / sm2 / 哈希 / 门限）" data-i18n-ph="ph.algoSearch"
+                     autocomplete="off" spellcheck="false">
+            </div>
+            <div id="algoHist" class="algo-hist hidden"></div>
+            <div id="algoList" class="algo-panel-body"></div>
+          </div>
+        </div>
+        <select id="algo" class="algo-native" aria-hidden="true" tabindex="-1"></select>
+      </div>
+      <div class="field" id="keyField">
+        <label for="key" id="keyLabel" data-i18n="label.key">密钥</label>
+        <input type="text" id="key" placeholder="请输入密钥" data-i18n-ph="ph.key" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      
+        <select id="keyMode" style="margin-top:6px">
+          <option value="pw" data-i18n="opt.keyin.pw">口令（走 KDF 派生）</option>
+          <option value="raw" data-i18n="opt.keyin.raw">原始密钥 · Hex（不经 KDF）</option>
+          <option value="rawb64" data-i18n="opt.keyin.rawb64">原始密钥 · Base64（不经 KDF）</option>
+          <option value="rawtext" data-i18n="opt.keyin.rawtext">原始密钥 · 文本 UTF-8（不经 KDF）</option>
+          <option value="rawdec" data-i18n="opt.keyin.rawdec">原始密钥 · 十进制数组（不经 KDF）</option>
+          <option value="rand" data-i18n="opt.keyin.rand">随机生成（自动填回密钥框）</option>
+        </select>
+      </div>
+<div class="field hidden" id="key2Field">
+        <label for="key2" id="key2Label" data-i18n="label.key2">第二密钥</label>
+        <input type="text" id="key2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+<div class="field hidden" id="paramField">
+        <label for="param" id="paramLabel" data-i18n="label.param">参数</label>
+        <input type="text" id="param" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="row hidden" id="cipherRow">
+      <div class="field" id="modeField">
+        <label for="mode" data-i18n="label.mode" data-i18n-tip="tip.mode" data-tip="AEAD 模式（GCM/CCM/OCB…）自带认证，不需要再选 EtM">加密模式</label>
+        <select id="mode">
+          <option value="CBC">CBC</option>
+          <option value="ECB">ECB</option>
+          <option value="CFB">CFB</option>
+          <option value="OFB">OFB</option>
+          <option value="CTR">CTR</option>
+          <option value="XTS" data-i18n="opt.mode.xts">XTS（磁盘加密）</option>
+          <option value="GCM" data-i18n="opt.mode.gcm" selected>GCM（认证加密）</option>
+          <option value="CCM" data-i18n="opt.mode.ccm">CCM（认证加密）</option>
+          <option value="SIV" data-i18n="opt.mode.siv">SIV（确定性认证加密）</option>
+          <option value="EAX" data-i18n="opt.mode.eax">EAX（认证加密）</option>
+          <option value="OCB" data-i18n="opt.mode.ocb">OCB（认证加密）</option>
+          <option value="GCMSIV" data-i18n="opt.mode.gcmsiv">GCM-SIV（抗 nonce 误用，RFC 8452）</option>
+          <option value="PCBC" data-i18n="opt.mode.pcbc">PCBC（错误传播 CBC）</option>
+          <option value="LRW" data-i18n="opt.mode.lrw">LRW（可调分组，XTS 前身）</option>
+          <option value="CTS-CS1" data-i18n="opt.mode.cs1">CTS-CS1（密文窃取 NIST）</option>
+          <option value="CTS-CS2" data-i18n="opt.mode.cs2">CTS-CS2（密文窃取）</option>
+          <option value="CTS-CS3">CTS-CS3（Kerberos5）</option>
+          <option value="CFB8" data-i18n="opt.mode.cfb8">CFB8（8 位 CFB）</option>
+          <option value="CFB1" data-i18n="opt.mode.cfb1">CFB1（1 位 CFB）</option>
+          <option value="IGE" data-i18n="opt.mode.ige">IGE（无限混淆扩展，OpenSSL）</option>
+          <option value="biIGE" data-i18n="opt.mode.biige">biIGE（双向 IGE，错误双向传播）</option>
+          <option value="KW" data-i18n="opt.mode.kw">KW（密钥包装，RFC 3394 / SP 800-38F）</option>
+          <option value="KWP" data-i18n="opt.mode.kwp">KWP（带填充密钥包装，RFC 5649）</option>
+        </select>
+      </div>
+      <div class="field" id="padField">
+        <label for="padding" data-i18n="label.padding">填充模式</label>
+        <select id="padding">
+          <option value="PKCS7">PKCS7</option>
+          <option value="PKCS5" data-i18n="opt.pad.pkcs5">PKCS5（8 字节块）</option>
+          <option value="ISO10126" data-i18n="opt.pad.iso10126">ISO 10126（随机填充）</option>
+          <option value="X923">ANSI X9.23</option>
+          <option value="ISO7816">ISO/IEC 7816-4</option>
+          <option value="TBC" data-i18n="opt.pad.tbc">TBC（尾位补码）</option>
+          <option value="ESP">ESP（RFC 4303 / IPsec）</option>
+          <option value="Zero" data-i18n="opt.pad.zero">Zero 填充</option>
+          <option value="None" data-i18n="opt.pad.none">无填充</option>
+        </select>
+      </div>
+      <div class="field" id="etmField">
+        <label for="etm" data-i18n="label.etm">附加认证（EtM，RFC 7366）</label>
+        <select id="etm">
+          <option value="none" data-i18n="opt.etm.none">无（不附加认证）</option>
+          <option value="hmac-sha256">EtM · HMAC-SHA-256</option>
+          <option value="hmac-sha512">EtM · HMAC-SHA-512</option>
+          <option value="hmac-sha3-256">EtM · HMAC-SHA3-256</option>
+          <option value="cmac-aes">EtM · AES-CMAC</option>
+          <option value="poly1305">EtM · Poly1305</option>
+        </select>
+      </div>
+      <div class="field hidden" id="aadField">
+        <label for="aad" data-i18n="label.aad">AAD 附加认证数据（可选）</label>
+        <input type="text" id="aad" placeholder="AEAD 模式下参与认证但不加密的数据" data-i18n-ph="ph.aad" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="field" id="containerField">
+        <label for="container" data-i18n="label.container">封装格式</label>
+        <select id="container">
+          <option value="none" data-i18n="opt.cont.none">无（裸密文）</option>
+          <option value="openssl" data-i18n="opt.cont.openssl">OpenSSL 兼容（Salted__）</option>
+          <option value="cryptojs">CryptoJS JSON</option>
+          <option value="pgp">PGP ASCII Armor</option>
+          <option value="jwe" data-i18n="opt.cont.jwe">JWE（紧凑序列化）</option>
+          <option value="ivct" data-i18n="opt.cont.ivct">IV‖密文（前缀拼接）</option>
+          <option value="openssl-nosalt" data-i18n="opt.cont.opensslns">OpenSSL 无盐（-nosalt）</option>
+          <option value="json" data-i18n="opt.cont.json">JSON 全参数（ct/iv/salt）</option>
+          <option value="pem" data-i18n="opt.cont.pem">PEM 装甲（BEGIN CIPHER）</option>
+        </select>
+      </div>
+      <div class="field" id="saltField">
+        <label for="salt" data-i18n="label.salt">Salt 盐值（Hex，留空自动生成）</label>
+        <input type="text" id="salt" placeholder="参与密钥派生；可与对端约定固定值" data-i18n-ph="ph.salt" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="field hidden" id="tagLenField">
+        <label for="tagLen" data-i18n="label.taglen">AEAD 标签长度</label>
+        <select id="tagLen">
+          <option value="16" data-i18n="opt.tag.16">16 字节（128 位，推荐）</option>
+          <option value="32" data-i18n="opt.tag.32">32 字节（256 位，仅 AEGIS 系列）</option>
+          <option value="15" data-i18n="opt.tag.15">15 字节（120 位）</option>
+          <option value="14" data-i18n="opt.tag.14">14 字节（112 位）</option>
+          <option value="13" data-i18n="opt.tag.13">13 字节（104 位）</option>
+          <option value="12" data-i18n="opt.tag.12">12 字节（96 位）</option>
+          <option value="8" data-i18n="opt.tag.8">8 字节（64 位，较弱）</option>
+          <option value="4" data-i18n="opt.tag.4">4 字节（32 位，仅测试）</option>
+        </select>
+      </div>
+      <div class="field" id="kdfField">
+        <label for="kdf" data-i18n="label.kdf" data-i18n-tip="tip.key" data-tip="密钥长度必须符合算法要求；口令模式会走下方 KDF 派生">口令派生（KDF）</label>
+        <select id="kdf">
+          <option value="kdf2" data-i18n="opt.kdf.kdf2">PBKDF2（可选摘要算法）</option>
+          <option value="argon2id" data-i18n="opt.kdf.argon2id" selected>Argon2id（推荐，抗 GPU/ASIC）</option>
+          <option value="argon2i" data-i18n="opt.kdf.argon2i">Argon2i（抗侧信道）</option>
+          <option value="argon2d" data-i18n="opt.kdf.argon2d">Argon2d（抗 GPU，最快）</option>
+          <option value="scrypt" data-i18n="opt.kdf.scrypt">scrypt（抗 ASIC）</option>
+          <option value="bcrypt" data-i18n="opt.kdf.bcrypt">bcrypt（经典口令哈希）</option>
+          <option value="pbkdf1" data-i18n="opt.kdf.pbkdf1">PBKDF1（SHA-1，≤20 字节，仅兼容旧系统）</option>
+          <option value="bcryptpbkdf" data-i18n="opt.kdf.bcryptpbkdf">bcrypt-pbkdf（OpenSSH 新版格式）</option>
+          <option value="sp56a" data-i18n="opt.kdf.sp56a">SP 800-56A 单步 KDF（HMAC 变体）</option>
+          <option value="sp56c" data-i18n="opt.kdf.sp56c">SP 800-56C 两步 KDF（HMAC 变体）</option>
+          <option value="tls12">TLS 1.2 PRF（P_hash）</option>
+          <option value="x942" data-i18n="opt.kdf.x942">ANSI X9.42 PRF（CMS 老式）</option>
+          <option value="legacy" data-i18n="opt.kdf.legacy">旧版单次 SHA-256（仅解历史数据）</option>
+        </select>
+      </div>
+      <div class="field hidden" id="kdfHashField">
+        <label for="kdfHash" data-i18n="label.kdfhash">PBKDF2 摘要算法</label>
+        <select id="kdfHash">
+          <option value="SHA-256" data-i18n="opt.hash.sha256">SHA-256（推荐）</option>
+          <option value="SHA-512">SHA-512</option>
+          <option value="SHA-384">SHA-384</option>
+          <option value="SHA-1" data-i18n="opt.hash.sha1">SHA-1（兼容旧系统，已弱化）</option>
+          <option value="SM3" data-i18n="opt.hash.sm3">SM3（国密）</option>
+        </select>
+      </div>
+      <div class="field" id="kdfIterField">
+        <label for="kdfIter" id="kdfIterLabel" data-i18n="lbl.iter">PBKDF2 迭代次数</label>
+        <input type="text" id="kdfIter" value="210000" placeholder="建议 ≥ 210000" data-i18n-ph="ph.kdfIter" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="field" id="nonceGuardField">
+        <label for="nonceGuard" data-i18n="label.nonce" data-i18n-tip="tip.nonce" data-tip="同一密钥 + 同一 nonce 加密两段明文会泄露明文异或，务必开启">nonce 复用检测</label>
+        <select id="nonceGuard">
+          <option value="block" data-i18n="opt.nonce.block">阻止（发现复用即中止）</option>
+          <option value="warn" data-i18n="opt.nonce.warn">仅警告</option>
+          <option value="off" data-i18n="opt.nonce.off">关闭</option>
+        </select>
+      </div>
+      <div class="field" id="padStrictField">
+        <label for="padStrict" data-i18n="label.padstrict">填充校验</label>
+        <select id="padStrict">
+          <option value="strict" data-i18n="opt.padstrict.strict">严格（防 Padding Oracle）</option>
+          <option value="loose" data-i18n="opt.padstrict.loose">宽松（仅排查旧数据）</option>
+        </select>
+      </div>
+      <div class="field hidden" id="ivField">
+        <label for="iv" data-i18n="label.iv">IV（留空则自动生成并回写）</label>
+        <input type="text" id="iv" placeholder="Hex 格式；留空则加密时自动生成并填回此处" data-i18n-ph="ph.iv" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="status" id="algoInfo"></div>
+    <details id="selftestBox" class="hidden" style="margin-top:8px">
+      <summary style="cursor:pointer;font-size:13px;color:var(--muted)" data-i18n="sum.selftest">自检结果</summary>
+      <div class="status" id="selftestOut" style="margin-top:8px;line-height:1.7;font-size:12px"></div>
+    </details>
+    <div class="status notice notice--warn hidden" id="secWarn"></div>
+  </div>
+
+  <div class="panel">
+    <div class="field">
+      <div class="field-head">
+        <label for="input" data-i18n="label.input">输入内容</label>
+        <span class="head-actions">
+          <label class="mini-btn" for="fileIn" data-i18n="btn.loadfile">载入文件</label>
+          <button type="button" id="btnImportKey" class="mini-btn" data-i18n="btn.importkey">导入密钥(PEM)</button>
+        </span>
+      </div>
+      <input type="file" id="fileIn" style="display:none">
+      <textarea id="input" placeholder="在此输入文本，或拖拽文件到下方" data-i18n-ph="ph.input"></textarea>
+    </div>
+
+    <div class="drop" id="drop">
+      <span id="dropText" data-i18n="lbl.drop">拖拽文件到此处，或点击选择文件</span>
+      <input type="file" id="file" aria-label="选择文件" data-i18n-aria="aria.file">
+    </div>
+
+    <div class="status" id="fileInfo"></div>
+
+    <div class="row" style="margin-top:12px">
+      <div class="field">
+        <label for="fmt" data-i18n="label.fmt" data-i18n-tip="tip.fmt" data-tip="加密与解密必须选同一种格式，否则解析会出错">密文格式</label>
+        <select id="fmt">
+          <option value="base64">Base64</option>
+          <option value="hex" data-i18n="opt.fmt.hex">十六进制</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="primary" id="btnEnc" type="button" data-i18n="btn.enc">加密</button>
+      <button class="primary" id="btnDec" type="button" data-i18n="btn.dec">解密</button>
+      <button id="btnClear" type="button" data-i18n="btn.clear">清空</button>
+      <button id="btnClearNonce" type="button" data-i18n="btn.clearnonce">清空 nonce 记录</button>
+      <button id="btnSelftest" type="button" data-i18n="btn.selftest">内置自检</button>
+      <button id="btnCancel" class="danger-btn hidden" type="button" data-i18n="btn.cancel">取消</button>
+    </div>
+
+    <div id="progBox" class="prog-box hidden">
+      <div class="prog-track"><div id="progBar" class="prog-bar"></div></div>
+      <span id="progText" class="prog-text">0%</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="field">
+      <label for="output" data-i18n="label.output" data-i18n-tip="tip.output" data-tip="结果为只读；可复制或下载">输出结果</label>
+      <textarea id="output" readonly></textarea>
+    </div>
+
+    <div id="ivInfoBox" class="iv-info hidden">
+      <span id="ivInfoLabel">IV：</span>
+      <span id="ivInfoValue" class="iv-value"></span>
+      <button id="btnCopyIV" type="button" class="mini" data-i18n="btn.copyiv">复制 IV</button>
+    </div>
+
+    <div class="buttons">
+      <button id="btnCopy" type="button" data-i18n="btn.copy">复制结果</button>
+      <button id="btnDownload" type="button" data-i18n="btn.download">下载结果</button>
+    </div>
+    <div class="status" id="msg"></div>
+  </div>
+</div>
+<script src="version.js"></script>
+<script src="Encryption_and_decryption_logic.js"></script>
+<script src="crypto_tables.js"></script>
+<script src="crypto_core.js"></script>
+<script src="crypto_modes.js"></script>
+<!-- 按算法族拆分的实现文件（取代原先不断膨胀的 crypto_extraN.js） -->
+<script src="CryptoJS/crypto_salsa20.js"></script>
+<script src="CryptoJS/crypto_outfmt.js"></script>
+<script src="CryptoJS/crypto_curve448.js"></script>
+<script src="CryptoJS/crypto_fpe.js"></script>
+<script src="CryptoJS/crypto_aead_adv.js"></script>
+<script src="CryptoJS/crypto_block_legacy.js"></script>
+<script src="CryptoJS/crypto_bip.js"></script>
+<script src="CryptoJS/crypto_pairing_bn254.js"></script>
+<script src="CryptoJS/b377_gen.js"></script>
+<script src="CryptoJS/b377_h2c.js"></script>
+<script src="CryptoJS/crypto_sss.js"></script>
+<script src="CryptoJS/crypto_hpke.js"></script>
+<script src="CryptoJS/crypto_spake2p.js"></script>
+<script src="CryptoJS/crypto_zuc.js"></script>
+<script src="CryptoJS/crypto_zuc_mode.js"></script>
+<script src="CryptoJS/crypto_whirlpool.js"></script>
+<script src="CryptoJS/crypto_ed25519.js"></script>
+<script src="CryptoJS/crypto_ristretto.js"></script>
+<script src="CryptoJS/crypto_sm2kx.js"></script>
+<script src="CryptoJS/crypto_decaf448.js"></script>
+<script src="CryptoJS/crypto_kzg.js"></script>
+<script src="CryptoJS/crypto_sm9.js"></script>
+<!-- 后量子 -->
+<script src="CryptoJS/pqc_core.js"></script>
+<script src="CryptoJS/pqc_dsa.js"></script>
+<script src="CryptoJS/crypto_sphincs+.js"></script>
+<!-- 椭圆曲线配对 -->
+<script src="CryptoJS/bls_const.js"></script>
+<script src="CryptoJS/pqc_bls.js"></script>
+<!-- 门限密码（FROST + GG20） -->
+<script src="CryptoJS/crypto_threshold.js"></script>
+<script src="CryptoJS/crypto_bulletproof.js"></script>
+<script src="CryptoJS/crypto_verkle_basis.js"></script>
+<script src="CryptoJS/crypto_verkle.js"></script>
+<script src="UI/algo_picker.js"></script>
+<script src="CryptoJS/crypto_hqc.js"></script>
+<script src="CryptoJS/crypto_bike.js"></script>
+<script src="CryptoJS/crypto_wideblock.js"></script>
+<script src="CryptoJS/crypto_encoding2.js"></script>
+<script src="CryptoJS/crypto_cbor.js"></script>
+<script src="CryptoJS/crypto_cose.js"></script>
+<script src="CryptoJS/crypto_jose.js"></script>
+<script src="CryptoJS/crypto_ibe.js"></script>
+<script src="CryptoJS/crypto_xts.js"></script>
+<script src="CryptoJS/crypto_otp.js"></script>
+<script src="CryptoJS/crypto_siphash.js"></script>
+<script src="CryptoJS/crypto_simon.js"></script>
+<script src="CryptoJS/crypto_speck.js"></script>
+<script src="CryptoJS/crypto_gift.js"></script>
+<script src="CryptoJS/crypto_shacal2.js"></script>
+<script src="CryptoJS/crypto_shacal1.js"></script>
+<script src="CryptoJS/crypto_present.js"></script>
+<script src="CryptoJS/crypto_noekeon.js"></script>
+<script src="CryptoJS/crypto_misty1.js"></script>
+<script src="CryptoJS/crypto_kasumi.js"></script>
+<script src="CryptoJS/crypto_skipjack.js"></script>
+<script src="CryptoJS/crypto_kasumi_mode.js"></script>
+<script src="CryptoJS/crypto_mars.js"></script>
+<script src="CryptoJS/crypto_lightweight.js"></script>
+<script src="CryptoJS/crypto_skinny.js"></script>
+<script src="CryptoJS/crypto_qarma.js"></script>
+<script src="CryptoJS/crypto_block_d.js"></script>
+<script src="CryptoJS/crypto_clefia.js"></script>
+<script src="CryptoJS/crypto_kalyna.js"></script>
+<script src="CryptoJS/crypto_khazad.js"></script>
+<script src="CryptoJS/crypto_loki.js"></script>
+<script src="CryptoJS/crypto_safer.js"></script>
+<script src="CryptoJS/crypto_anubis.js"></script>
+<script src="CryptoJS/crypto_turboshake.js"></script>
+<script src="CryptoJS/crypto_kdf_addr.js"></script>
+<script src="CryptoJS/crypto_merkle.js"></script>
+<script src="CryptoJS/crypto_bip39_words.js"></script>
+<script src="CryptoJS/crypto_bip39.js"></script>
+<script src="CryptoJS/crypto_adiantum.js"></script>
+<script src="CryptoJS/crypto_mceliece.js"></script>
+<script src="CryptoJS/crypto_mceliece5.js"></script>
+<script src="CryptoJS/crypto_frodo.js"></script>
+<script src="CryptoJS/crypto_sntrup.js"></script>
+<script src="CryptoJS/crypto_saber.js"></script>
+<script src="CryptoJS/crypto_ntru.js"></script>
+<script src="CryptoJS/crypto_ntrulpr.js"></script>
+<script src="CryptoJS/crypto_hctr2.js"></script>
+<script src="CryptoJS/crypto_eme2.js"></script>
+<script src="CryptoJS/crypto_blake2p.js"></script>
+<script src="CryptoJS/crypto_ascon.js"></script>
+<script src="CryptoJS/crypto_aegis.js"></script>
+<script src="CryptoJS/crypto_tiger.js"></script>
+<script src="CryptoJS/crypto_skein.js"></script>
+<script src="CryptoJS/crypto_kdf2.js"></script>
+<script src="CryptoJS/crypto_nistkdf.js"></script>
+<script src="CryptoJS/crypto_kdf_nist3.js"></script>
+<script src="CryptoJS/crypto_kdf5.js"></script>
+<script src="CryptoJS/crypto_lion_chacha.js"></script>
+<script src="CryptoJS/crypto_mtproto.js"></script>
+<script src="CryptoJS/crypto_srp6.js"></script>
+<script src="CryptoJS/crypto_checksum2.js"></script>
+<script src="CryptoJS/crypto_pc_eax.js"></script>
+<script src="CryptoJS/crypto_misc6.js"></script>
+<script src="CryptoJS/crypto_xmss.js"></script>
+<script src="CryptoJS/crypto_lms.js"></script>
+<script src="CryptoJS/crypto_falcon.js"></script>
+<script src="CryptoJS/crypto_falcon_kg.js"></script>
+<script src="CryptoJS/crypto_falcon_kg2.js"></script>
+<script src="CryptoJS/crypto_proto_a.js"></script>
+<script src="CryptoJS/crypto_mode_ext.js"></script>
+<script src="CryptoJS/crypto_age.js"></script>
+<script src="CryptoJS/crypto_gost3411.js"></script>
+<script src="CryptoJS/crypto_drbg.js"></script>
+
+<!-- 界面层：多语言 / 轻提示 / 左侧边栏 / 气泡提示（不参与任何密码运算） -->
+<script src="UI/ui_morph.js"></script>
+<script src="Multilingual/i18n.js"></script>
+<!-- 算法说明（ALGOS[i].info）的多语言，按条目 id 增量覆盖；未收录的回退中文原文 -->
+<script src="Multilingual/i18n_algo.js"></script>
+<script src="Multilingual/i18n_algo_hash.js"></script>
+<script src="Multilingual/i18n_algo_misc.js"></script>
+<script src="Multilingual/i18n_algo_sym.js"></script>
+<script src="Multilingual/i18n_algo_ecc.js"></script>
+<script src="Multilingual/i18n_algo_aead.js"></script>
+<script src="Multilingual/i18n_algo_asym.js"></script>
+<script src="Multilingual/i18n_algo_pq.js"></script>
+<script src="Multilingual/i18n_algo_hash2.js"></script>
+<script src="Multilingual/i18n_algo_sym2.js"></script>
+<script src="Multilingual/i18n_algo_sym3.js"></script>
+<script src="Multilingual/i18n_algo_final.js"></script>
+<script src="Multilingual/i18n_algo_eme2.js"></script>
+<script src="Multilingual/i18n_sec.js"></script>
+<script src="UI/ui_splash.js"></script>
+<script src="UI/ui_toast.js"></script>
+<script src="UI/ui_sidebar.js"></script>
+<script src="UI/ui_tooltip.js"></script>
+
+<div class="panel" id="docFormat">
+<details>
+<summary style="cursor:pointer;font-size:13px;color:var(--muted)" data-i18n="sum.fmt">输出格式与模式说明（23 种编码 / XTS / IGE / Argon2）</summary>
+<div class="status" style="margin-top:10px;line-height:1.9">
+<b>输出格式（23 种，任选）</b>：Base64、Base64URL、Base64（MIME 76 换行）、Hex 小写/大写/空格分隔/冒号分隔、C 数组、十进制数组、JSON 数组、二进制串、转义串、Base32、Base45、Base58、Ascii85、Z85、UUEncode、Hex dump、Python bytes、Go []byte、Rust 数组、PEM。<b>加密与解密要选同一种格式</b>，否则解析会出错；其中 UUEncode / Hex dump / 三种语言字面量只能编码、不能反向解码，别用于要解密的密文。<br><br>
+<b>IGE 模式</b>：Infinite Garble Extension（OpenSSL 的 <code>-ige</code>），<code>C_i = Enc(P_i ⊕ C_{i-1}) ⊕ P_{i-1}</code>，一个字节出错会污染后面全部块。<b>IV 框要填 32 字节</b>（AES 块长 16 的两倍）：前 16 字节是明文反馈初值，后 16 字节是密文反馈初值；留空会随机生成并回写。实现按定义编写并与独立 Python 实现交叉验证一致（<span style="color:#c8a86b">OpenSSL 3 的 enc 命令已不提供 ige，未能与官方直接对拍</span>）。<br><br>
+<b>XTS 模式（磁盘加密）</b>：IEEE 1619 标准，用于磁盘/扇区加密。选 XTS 后，<b>IV 框里填的就是 tweak</b>（16 字节），留空会随机生成并回写。特点：<b>不填充</b>，密文长度 = 明文长度；<b>明文至少 16 字节</b>；只支持 128 位块算法（AES/Serpent/Kuznyechik/Camellia/Twofish/SM4 等），DES/Blowfish/IDEA 会明确拒绝。<br><br>
+<b>Argon2（内存硬 KDF）</b>：RFC 9106，抗 ASIC/GPU 暴力破解，强于 PBKDF2 和 scrypt。用法：<b>输入栏填盐（至少 8 字节）</b>，密钥栏填口令，参数栏填 <code>轮数,内存KB,输出字节数</code>（如 <code>2,1024,32</code>）。三种变体：Argon2id（推荐）、Argon2i（抗侧信道）、Argon2d（抗 GPU 最强）。<br>
+<span style="color:#c8a86b">性能提示：本实现用 BigInt 做 64 位运算，1MB/2 轮约 0.24 秒；内存开得越大越慢，建议先用 1024 以内试。</span>
+</div>
+</details>
+</div>
+<div class="panel" id="docUsage">
+<details>
+<summary style="cursor:pointer;font-size:13px;color:var(--muted)" data-i18n="sum.usage">本批新增：填充 / 模式 / 容器 / 密钥导出 使用说明</summary>
+<div class="status" style="margin-top:10px;line-height:1.9">
+<b>填充模式（9 种）</b>：PKCS7、PKCS5（8 字节块）、ISO 10126（随机）、ANSI X9.23、ISO/IEC 7816-4、TBC（尾位补码）、ESP（RFC 4303）、Zero、无填充。<br>
+<b>填充校验</b>：默认<b>严格</b>——填充字节不符合规范就直接失败，这是防御 Padding Oracle 的正确姿势。切到<b>宽松</b>会容忍错误填充，但那本身就构成了攻击面，仅供排查旧数据。<br><br>
+<b>新增加密模式</b>：<br>
+· <b>PCBC</b>：错误会向后传播，一个字节损坏污染后续全部块。<br>
+· <b>LRW</b>：IEEE P1619，XTS 的前身，tweak 用 GF(2<sup>128</sup>) 乘法算，IV 框填的是起始 tweak。<br>
+· <b>CTS-CS1/CS2/CS3</b>：密文窃取，<b>密文长度 = 明文长度</b>（不填充）。CS1 是 NIST 变体，CS3 是 Kerberos5（RFC 3962）。明文至少 1 个块。<br>
+· <b>CFB8 / CFB1</b>：SP 800-38A 的 CFB 变体，按字节 / 按比特处理，无需填充。CFB1 极慢，仅小数据。<br>
+· XTS / LRW 只支持 128 位块算法；DES、Blowfish、IDEA 会明确拒绝。<br><br>
+<b>封装格式</b>：<br>
+· <b>IV‖密文</b>：把 IV 直接拼在密文前面，解密时自动切分，不用另外保存 IV（ECB 无 IV，不适用）。<br>
+· <b>OpenSSL 无盐</b>：等价于 <code>openssl enc -nosalt</code>，密钥走 EVP_BytesToKey(SHA-256) 但不带 <code>Salted__</code> 头，密文更短、可复现。<br>
+· <b>JSON 全参数</b>：<code>{v,alg,mode,pad,iv,salt,ct}</code>，算法/模式/填充/IV/盐全在里面，解密时自动读取，最省事。<br>
+· <b>PEM 装甲</b>：<code>-----BEGIN CIPHER-----</code> 包一层 Base64，纯文本封装，不携带 IV。<br>
+· <b>OpenSSL 兼容</b>：输出 <code>Salted__</code> + salt + 密文，密钥走 EVP_BytesToKey(SHA-256)，可与 <code>openssl enc -md sha256</code> 互通。<br>
+· <b>CryptoJS JSON</b>：<code>{ct, iv, s}</code>，密钥走 EVP_BytesToKey(MD5)，与 CryptoJS 默认一致。<br>
+· <b>PGP ASCII Armor</b>：带 CRC24 校验，篡改会被抓到。<br>
+· <b>JWE</b>：RFC 7516 紧凑序列化（alg=dir + A256GCM），五段式。<br>
+· 注意：PGP / JWE 不携带 IV，加密后请把 IV 框里的值一并保存。<br><br>
+<b>Salt</b>：填了就参与密钥派生（可与对端约定固定值）；选 OpenSSL / CryptoJS 容器时会自动生成并回写。<br>
+<b>AEAD 标签长度</b>：默认 16 字节；8 字节及以下安全性明显下降，仅用于互通或测试。<br>
+<b>nonce 复用检测（GCM / CCM）</b>：加密时登记用过的 (密钥指纹, nonce)，第二次撞上就直接中止。同一密钥 + 同一 nonce 加密两段明文，会泄露两段明文的异或，并能反推出 GHASH 的认证密钥 H 从而伪造标签——这是 GCM 最严重的误用。记录存在浏览器本地，<b>只保存密钥的 SHA-256 指纹，不保存密钥本身或任何明文</b>。切换密钥或清空记录后该组合可再次使用。<br>
+· <b>阻止</b>（默认）：发现复用立即中止；<b>仅警告</b>：照常加密但红字提示；<b>关闭</b>：不检测。<br>
+· 另一个相关改动：IV 框里<b>自动填入</b>的值只供你保存，再次加密会自动换新的（不会误用上一次的 nonce）；只有<b>你手动填写或修改过</b>的 IV 才会被实际采用。<br>
+· SIV 是确定性 AEAD，本身抗 nonce 误用，不参与检测。<br><br>
+<b>密钥栏的 6 种输入方式</b>：<br>
+· <b>口令</b>（默认）：走下面选的 KDF 派生，Salt 框可固定盐以便复现。<br>
+· <b>原始密钥 Hex / Base64 / 文本 UTF-8 / 十进制数组</b>：不经 KDF，长度必须正好等于算法要求（AES-256 就是 32 字节），否则明确报错而不是静默截断。<br>
+· <b>随机生成</b>：密钥框留空即可，加密时生成符合长度的随机密钥，并把实际用到的密钥<b>回写到密钥框</b>（同时切到 Hex 模式），方便保存复用。<br><br>
+<b>密钥对导出</b>：算法选「密钥工具 → 密钥对导出（JWK / PEM）」，参数栏填 <code>p256</code> / <code>p384</code> / <code>p521</code> / <code>rsa2048</code>，点【加密】即输出 JWK 与 PEM 两种格式。<span style="color:#c0392b">私钥 PEM 高度敏感，切勿外传。</span>
+</div>
+</details>
+</div>
+<div class="disclaimer" id="docDisclaimer" data-no-i18n="1" style="margin-top:24px;padding:12px 14px;border-top:1px solid #e5e7eb;font-size:11px;line-height:1.8;color:var(--muted);text-align:left">
+<b>字体署名（Font Attribution）</b><br>
+本工具箱界面使用 <b>HONOR Sans</b> 字体（Copyright 2022 Honor Device Co., Ltd.），依 <i>HONOR Sans Copyright License Agreement</i> 授权使用，字库未被修改、未被单独分发。协议原文见随包 <code>LICENSE-HONOR-Sans.txt</code>。韩文由 Noto Sans KR、密文输出由 JetBrains Mono 提供（均为 SIL OFL 1.1）。<br>
+<br>
+<b>免责声明（Disclaimer）</b><br>
+本工具箱（Laevatain_sky's Cryptography Toolbox）为纯密码学算法与协议的本地独立验证实现，仅供学习、研究与数据兼容性测试使用。本工具箱不包含任何网络通信（如 WebSocket/TCP）、自动化发包或鉴权劫持功能。<br>
+任何个人或组织若绕过本工具限制，擅自将其生成的测试数据接入真实网络协议（包括但不限于针对任何软件的服务器发起攻击、重放或未授权访问），所产生的一切法律后果与连带责任，由使用者自行承担。本工具箱作者及贡献者不承担任何直接或间接的法律与连带责任。
+</div>
+<script>
+// 版本号一律从 version.js 读取，禁止在此处或别处硬编码。规则见 版本规则.md
+(function () {
+  var _av = window.APP_VERSION;
+  /* 护栏：APP_VERSION 必须是对象。若被某处覆盖成字符串/数字，
+     v.core 会变 undefined 并渲染出 "vundefined"（第 122 批事故），此处直接兜底。 */
+  var v = (_av && typeof _av === "object") ? _av : { core: "?", full: "?", build: "?", batch: "—" };
+  var set = function (id, t) { var e = document.getElementById(id); if (e) e.textContent = t; };
+  set("verBadge", "v" + v.core);
+  set("verVer2", "v" + v.core);
+  set("verCore", "SemVer " + v.core);
+  set("verBuild", v.build || "");
+  set("verDate", "批次 " + (v.batch || "—"));
+  /* verAlgo2 在 <p class="ver-line"> 内部，而整段走 data-i18n-html —— 切语言时会被重建，
+     所以必须做成可复调用，并在语言切换后重新填充，否则会退回占位文案。 */
+  var n = (typeof ALGOS !== "undefined" && ALGOS && ALGOS.length) ? ALGOS.length : null;
+  window.__refreshVerAlgo2 = function () {
+    var I = window.I18N;
+    if (!I) { set("verAlgo2", n ? (n + " 个算法") : "全部算法"); return; }
+    set("verAlgo2", n ? I.t("ver.algoN").replace("%n", String(n)) : I.t("ver.allalgo"));
+    /* 正式名称：读 i18n 的 app.full（八种语言同一串，属专有名词不翻译）；
+       i18n 未就绪时回退常量 APP_NAME，避免渲染成 "—" 或 undefined。 */
+    var full = I.t("app.full");
+    if (!full || full === "app.full") {
+      try { full = (typeof APP_NAME !== "undefined" && APP_NAME) ? APP_NAME : "—"; } catch (e2) { full = "—"; }
+    }
+    set("verFullName", full);
+    var sub = document.getElementById("appSub");
+    if (sub && sub.textContent !== full) sub.textContent = full;
+  };
+  window.__refreshVerAlgo2();
+})();
+</script>
+<script>
+/* 多语言初始化：必须在 DOM 解析完成后跑，否则拿不到标了 data-i18n 的元素。
+   语言从 localStorage 恢复；刷新后保持上次选择。 */
+try {
+  if (window.I18N) {
+    window.I18N.init();
+    /* init 会重建 ver-line，把刚填好的 verAlgo2 冲掉，这里补一次 */
+    if (window.__refreshVerAlgo2) window.__refreshVerAlgo2();
+    /* 之后每次切语言都要再补 */
+    window.I18N.onChange(function () {
+      if (window.__refreshVerAlgo2) window.__refreshVerAlgo2();
+    });
+  }
+} catch (e) {}
+</script>
+</body>
+</html>

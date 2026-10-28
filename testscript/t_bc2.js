@@ -1,0 +1,15 @@
+const fs=require("fs"),vm=require("vm"),nc=require("crypto");
+global.crypto=nc.webcrypto;global.TextEncoder=require("util").TextEncoder;
+global.btoa=s=>Buffer.from(s,"binary").toString("base64");global.atob=s=>Buffer.from(s,"base64").toString("binary");
+const mk=id=>({id,value:"",_h:{},options:[],addEventListener(){},dispatchEvent(){},classList:{add(){},remove(){},toggle(){},contains(){return false;}},setAttribute(){},appendChild(){},style:{},innerHTML:"",textContent:""});
+const store={};global.document={getElementById:id=>store[id]||(store[id]=mk(id)),createElement:t=>mk(t),querySelector(){return mk('q');},querySelectorAll(){return [];},addEventListener(){},readyState:"complete",body:{appendChild(){}}};
+global.window=global;global.addEventListener=()=>{};global.Event=function(t){this.type=t;};
+const html=fs.readFileSync("index.html","utf8");
+for(const m of html.matchAll(/<script\s+src="([^"]+)"\s*>([\s\S]*?)<\/script>/g)) vm.runInThisContext(fs.readFileSync(m[1],"utf8"),{filename:m[1]});
+const bc=ALGOS.find(a=>a.id==='bcrypt');
+console.log("typeof enc:", typeof bc.enc);
+const r1=bc.enc("password","06,DCq7YPn5Rq63x1Lad4cll.");
+const r2=bc.enc("password","06,DCq7YPn5Rq63x1Lad4cll.");
+console.log("run1:", JSON.stringify(r1));
+console.log("run2:", JSON.stringify(r2));
+console.log("确定性:", JSON.stringify(r1)===JSON.stringify(r2));

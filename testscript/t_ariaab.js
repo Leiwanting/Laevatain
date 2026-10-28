@@ -1,0 +1,20 @@
+const fs=require("fs"),vm=require("vm"),nc=require("crypto");
+global.crypto=nc.webcrypto;global.TextEncoder=require("util").TextEncoder;
+global.btoa=s=>Buffer.from(s,"binary").toString("base64");global.atob=s=>Buffer.from(s,"base64").toString("binary");
+const mk=id=>({id,value:"",_h:{},options:[],addEventListener(e,f){(this._h[e]=this._h[e]||[]).push(f);},dispatchEvent(e){(this._h[e.type]||[]).forEach(f=>f.call(this,e));},classList:{add(){},remove(){},toggle(){},contains(){return false;}},setAttribute(){},appendChild(){},style:{},innerHTML:"",textContent:""});
+const store={};global.document={getElementById:id=>store[id]||(store[id]=mk(id)),createElement:t=>mk(t),querySelector(){return mk('q');},querySelectorAll(){return [];},addEventListener(){},readyState:"complete",body:{appendChild(){}}};
+global.window=global;global.addEventListener=()=>{};global.Event=function(t){this.type=t;};
+const html=fs.readFileSync("index.html","utf8");
+[...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m=>m[1]).forEach(f=>{try{vm.runInThisContext(fs.readFileSync(f,"utf8"),{filename:f});}catch(e){}});
+const data=new Uint8Array(64*1024); for(let i=0;i<data.length;i++)data[i]=i&255;
+function oldEnc(pt,ek){var n=ek.length-1,p=new Uint8Array(pt);
+  for(var r=1;r<=n-1;r++) p=ariaA(ariaSL(ariaXor(p,ek[r-1]),(r%2===1)?1:2));
+  return ariaXor(ariaSL(ariaXor(p,ek[n-1]),(n%2===1)?1:2),ek[n]);}
+const k16=new Uint8Array(16);
+const ek=ariaRoundKeys(ariaKeySchedule(k16),ariaNrounds(16));
+const nf=ariaMakeBlockFn(k16);
+const best=(fn,n)=>{let t=Infinity;for(let r=0;r<n;r++){const t0=process.hrtime.bigint();fn();
+  const ms=Number(process.hrtime.bigint()-t0)/1e6;if(ms<t)t=ms;}return t;};
+const o=best(()=>{for(let p=0;p<data.length;p+=16) oldEnc(data.subarray(p,p+16),ek);},5);
+const w=best(()=>{for(let p=0;p<data.length;p+=16) nf.enc(data.subarray(p,p+16));},5);
+console.log("ARIA-128 64KB: "+o.toFixed(1)+" ms → "+w.toFixed(1)+" ms  "+(o/w).toFixed(2)+"×");

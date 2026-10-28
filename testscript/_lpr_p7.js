@@ -1,0 +1,23 @@
+var fs=require('fs'),path=require('path'),vm=require('vm'),nc=require('crypto'),cp=require('child_process');
+global.crypto=nc.webcrypto;global.TextEncoder=require('util').TextEncoder;global.TextDecoder=require('util').TextDecoder;
+global.btoa=s=>Buffer.from(s,'binary').toString('base64');global.atob=s=>Buffer.from(s,'base64').toString('binary');
+var mk=id=>({id,value:'',_h:{},options:[],addEventListener(){},dispatchEvent(){},classList:{add(){},remove(){},toggle(){},contains(){return false}},setAttribute(){},appendChild(){},style:{},innerHTML:'',textContent:''});
+var store={};
+global.document={getElementById:id=>store[id]||(store[id]=mk(id)),createElement:t=>mk(t),querySelector(){return mk('q')},querySelectorAll(){return[]},addEventListener(){},readyState:'complete',body:{appendChild(){}}};
+global.window=global;global.addEventListener=()=>{};global.Event=function(t){this.type=t};
+var ROOT=path.resolve(__dirname,'..');
+var html=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+var files=[...html.matchAll(/<script\s+src="([^"]+)"\s*>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+files.push('CryptoJS/crypto_ntrulpr.js');
+files.forEach(f=>{ try{ vm.runInThisContext(fs.readFileSync(path.join(ROOT,f),'utf8'),{filename:f}); }catch(e){} });
+var K=globalThis.__ntrulprKat['ntrulpr653'];
+var D=K._dbg;
+var seed=nc.randomBytes(32);
+var r=cp.spawnSync('/data/workspace/lprdbg/dbg2',[seed.toString('hex').toUpperCase()],{encoding:'utf8'});
+var off=r.stdout.trim().split(',');
+var aG=new Int16Array(653);
+var fake=new Uint8Array(897); fake.set(seed,0);
+D.Generator(aG,fake);
+var first=-1,n=0;
+for(var i=0;i<653;i++){ if(aG[i]!==parseInt(off[i],10)){ if(first<0)first=i; n++; } }
+console.log('Generator 与官方 C:', n===0?'一致':('不一致 '+n+'/653, first='+first+' mine='+aG[first]+' off='+off[first]));
