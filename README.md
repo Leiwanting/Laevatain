@@ -34,7 +34,9 @@ loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/L
 | 自瞄 | CFrame / Mouse 两种模式、FOV 圈、平滑度、部位选择、相机诊断、自动开火（TriggerBot） |
 | 子追 | Hook / Mouse 两种实现、射线重定向 / 命中点覆盖 / 抛射物重定向 / Remote 改写、穿墙、Hitbox 扩大 |
 | 飞行 | BodyGyro + BodyVelocity 驱动，穿墙、速度档位、停止自动脱困 |
+| 通用 | 移动速度、跳跃力、生命上限、无限跳跃、重力、穿墙、视野 FOV、夜视、防 AFK 踢出、透视、传送到玩家、一键重置 |
 | 设置 | 8 国语言切换、外观主题、配置保存 / 读取 |
+| 脚本 | 脚本库：收录第三方脚本，按服务器分类，支持自定义 URL 加载 |
 
 ---
 
@@ -82,3 +84,40 @@ Sky.SetLanguage("en")     -- 切英文
 ## 说明
 
 本项目仅用于学习 Roblox Lua / Luau 脚本编写与 UI 开发，请在遵守游戏服务条款的前提下使用。作者不对任何使用后果负责。
+
+---
+
+## 如何往脚本库里加脚本
+
+打开 `LaevatainSky.lua`，搜索 `SCRIPT_LIB`，往数组里加一项：
+
+```lua
+local SCRIPT_LIB = {
+    {
+        Name    = "脚本名称",            -- 显示名，必填
+        Author  = "作者名",              -- 可留空
+        Game    = "适用服务器/游戏",     -- 分类名，相同的自动归到一组
+        Desc    = "一句话说明",          -- 可留空
+        Url     = "https://...",         -- 脚本直链，必填
+        Confirm = true,                  -- 加载前弹确认框
+    },
+
+    -- 继续加
+    -- {
+    --     Name = "xxx Hub",
+    --     Author = "某人",
+    --     Game = "某个服务器",
+    --     Desc = "功能说明",
+    --     Url  = "https://raw.githubusercontent.com/xxx/yyy/main/xxx.lua",
+    -- },
+}
+```
+
+**要点**
+
+- `Url` 必须是能直接返回 Lua 文本的直链：`raw.githubusercontent.com`、`gist` 的 `/raw/` 等
+- **不能**用 GitHub 网页地址（`github.com/xxx/blob/...`），那会返回 HTML 导致解析失败
+- `Game` 字段相同的条目会自动归入同一分类，界面上先选分类再选脚本
+- 加完保存，重新执行脚本即可看到新条目，无需改动其他代码
+
+界面里也有「自定义脚本」入口，可临时粘贴 URL 直接加载，不必写进代码。

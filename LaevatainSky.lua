@@ -9,7 +9,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.0.0"
+local LIB_VERSION = "1.3.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://raw.githubusercontent.com/Leiwanting/Laevatain/main/version.txt"
 
@@ -489,6 +489,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "1 stud 等于多少米，默认 0.28",
         ["THEME_SELECT"] = "选择主题",
         ["BULLET_REMOTE_LOG_DESC"] = "开火后点这里，看游戏用了哪些 Remote",
+        ["MISC_TAB"] = "通用",
+        ["MISC_DESC"] = "基础属性修改",
+        ["MISC_SEC_CHAR"] = "角色属性",
+        ["MISC_SEC_WORLD"] = "世界与视角",
+        ["MISC_SPEED"] = "移动速度",
+        ["MISC_SPEED_DESC"] = "提高角色移动速度",
+        ["MISC_JUMP"] = "跳跃力",
+        ["MISC_JUMP_DESC"] = "提高跳跃高度",
+        ["MISC_HEALTH"] = "生命上限",
+        ["MISC_HEALTH_DESC"] = "提高最大血量上限",
+        ["MISC_INFJUMP"] = "无限跳跃",
+        ["MISC_INFJUMP_DESC"] = "空中也能继续跳",
+        ["MISC_GRAVITY"] = "重力",
+        ["MISC_GRAVITY_DESC"] = "数值越小飘得越高，默认 196",
+        ["MISC_NOCLIP"] = "穿墙",
+        ["MISC_NOCLIP_DESC"] = "角色穿过所有物体",
+        ["MISC_FOV"] = "视野 FOV",
+        ["MISC_FOV_DESC"] = "调整视野范围，默认 70",
+        ["MISC_BRIGHT"] = "夜视",
+        ["MISC_BRIGHT_DESC"] = "提高亮度看清暗处",
+        ["MISC_RESET"] = "重置全部",
+        ["MISC_RESET_DESC"] = "恢复所有原始数值",
+        ["MISC_RESET_DONE"] = "已恢复默认",
+        ["MISC_SEC_AFK"] = "防踢与透视",
+        ["MISC_ANTIAFK"] = "防 AFK 踢出",
+        ["MISC_ANTIAFK_DESC"] = "挂机也不会被判定离开",
+        ["MISC_AFK_STATUS"] = "防 AFK 状态",
+        ["MISC_XRAY"] = "透视（透明墙）",
+        ["MISC_XRAY_DESC"] = "让墙体变透明，看到墙后的人",
+        ["MISC_XRAY_AMT"] = "透视程度",
+        ["MISC_XRAY_AMT_DESC"] = "0 = 不透明，1 = 完全透明",
+        ["MISC_SEC_TP"] = "传送到玩家",
+        ["MISC_TP_SELECT"] = "选择玩家",
+        ["MISC_TP_SELECT_DESC"] = "点刷新后再选目标",
+        ["MISC_TP_REFRESH"] = "刷新玩家列表",
+        ["MISC_TP_REFRESHED"] = "已刷新玩家列表",
+        ["MISC_TP_GO"] = "传送过去",
+        ["MISC_TP_BEHIND"] = "传送到其身后",
+        ["MISC_TP_BEHIND_DESC"] = "出现在目标背后，适合偷袭",
+        ["MISC_TP_VEH"] = "载具模式",
+        ["MISC_TP_VEH_DESC"] = "传送时保留座位（有车/船时开）",
+        ["MISC_TP_OK"] = "已传送",
+        ["MISC_TP_NONE"] = "没有可传送的目标",
+        ["MISC_TP_NOCHAR"] = "你的角色未就绪",
+        ["SCRIPT_SEC"] = "脚本",
+        ["SCRIPT_TAB"] = "脚本库",
+        ["SCRIPT_DESC"] = "收录各服务器/游戏的第三方脚本",
+        ["SCRIPT_CATEGORY"] = "分类",
+        ["SCRIPT_CATEGORY_DESC"] = "先选分类，再选脚本",
+        ["SCRIPT_SELECT"] = "选择脚本",
+        ["SCRIPT_SELECT_DESC"] = "选中后点下方按钮加载",
+        ["SCRIPT_INFO"] = "脚本信息",
+        ["SCRIPT_INFO_EMPTY"] = "未选择脚本",
+        ["SCRIPT_LOAD"] = "加载脚本",
+        ["SCRIPT_LOAD_DESC"] = "执行选中的脚本",
+        ["SCRIPT_COPY"] = "复制链接",
+        ["SCRIPT_COPY_DESC"] = "把脚本网址复制到剪贴板",
+        ["SCRIPT_CONFIRM_TITLE"] = "确认加载",
+        ["SCRIPT_CONFIRM_BODY"] = "即将执行第三方脚本，来源不明的代码有风险，确定继续？",
+        ["SCRIPT_LOADING"] = "正在加载…",
+        ["SCRIPT_LOADED"] = "脚本已执行",
+        ["SCRIPT_FAILED"] = "加载失败，检查链接或网络",
+        ["SCRIPT_NO_URL"] = "该脚本未配置链接",
+        ["SCRIPT_COPIED"] = "链接已复制",
+        ["SCRIPT_CUSTOM_SEC"] = "自定义脚本",
+        ["SCRIPT_CUSTOM_URL"] = "脚本链接",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "粘贴 raw 或 gist 直链",
+        ["SCRIPT_CUSTOM_LOAD"] = "加载自定义脚本",
+        ["SCRIPT_CUSTOM_EMPTY"] = "请先填写链接",
+        ["SCRIPT_GUIDE"] = "添加方法",
+        ["SCRIPT_GUIDE_DESC"] = "见脚本库代码顶部的 SCRIPT_LIB 数组",
+        ["CANCEL"] = "取消",
     },
     ["zh-tw"] = {
         ["PROFILE_TAB"] = "介紹",
@@ -768,6 +840,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "1 stud 等於多少公尺，預設 0.28",
         ["THEME_SELECT"] = "選擇主題",
         ["BULLET_REMOTE_LOG_DESC"] = "開火後點這裡，看遊戲用了哪些 Remote",
+        ["MISC_TAB"] = "通用",
+        ["MISC_DESC"] = "基礎屬性修改",
+        ["MISC_SEC_CHAR"] = "角色屬性",
+        ["MISC_SEC_WORLD"] = "世界與視角",
+        ["MISC_SPEED"] = "移動速度",
+        ["MISC_SPEED_DESC"] = "提高角色移動速度",
+        ["MISC_JUMP"] = "跳躍力",
+        ["MISC_JUMP_DESC"] = "提高跳躍高度",
+        ["MISC_HEALTH"] = "生命上限",
+        ["MISC_HEALTH_DESC"] = "提高最大血量上限",
+        ["MISC_INFJUMP"] = "無限跳躍",
+        ["MISC_INFJUMP_DESC"] = "空中也能繼續跳",
+        ["MISC_GRAVITY"] = "重力",
+        ["MISC_GRAVITY_DESC"] = "數值越小飄得越高，預設 196",
+        ["MISC_NOCLIP"] = "穿牆",
+        ["MISC_NOCLIP_DESC"] = "角色穿過所有物體",
+        ["MISC_FOV"] = "視野 FOV",
+        ["MISC_FOV_DESC"] = "調整視野範圍，預設 70",
+        ["MISC_BRIGHT"] = "夜視",
+        ["MISC_BRIGHT_DESC"] = "提高亮度看清暗處",
+        ["MISC_RESET"] = "重置全部",
+        ["MISC_RESET_DESC"] = "恢復所有原始數值",
+        ["MISC_RESET_DONE"] = "已恢復默認",
+        ["MISC_SEC_AFK"] = "防踢與透視",
+        ["MISC_ANTIAFK"] = "防 AFK 踢出",
+        ["MISC_ANTIAFK_DESC"] = "掛機也不會被判定離開",
+        ["MISC_AFK_STATUS"] = "防 AFK 狀態",
+        ["MISC_XRAY"] = "透視（透明牆）",
+        ["MISC_XRAY_DESC"] = "讓牆體變透明，看到牆後的人",
+        ["MISC_XRAY_AMT"] = "透視程度",
+        ["MISC_XRAY_AMT_DESC"] = "0 = 不透明，1 = 完全透明",
+        ["MISC_SEC_TP"] = "傳送到玩家",
+        ["MISC_TP_SELECT"] = "選擇玩家",
+        ["MISC_TP_SELECT_DESC"] = "點刷新後再選目標",
+        ["MISC_TP_REFRESH"] = "刷新玩家列表",
+        ["MISC_TP_REFRESHED"] = "已刷新玩家列表",
+        ["MISC_TP_GO"] = "傳送過去",
+        ["MISC_TP_BEHIND"] = "傳送到其身後",
+        ["MISC_TP_BEHIND_DESC"] = "出現在目標背後，適合偷襲",
+        ["MISC_TP_VEH"] = "載具模式",
+        ["MISC_TP_VEH_DESC"] = "傳送時保留座位（有車/船時開）",
+        ["MISC_TP_OK"] = "已傳送",
+        ["MISC_TP_NONE"] = "沒有可傳送的目標",
+        ["MISC_TP_NOCHAR"] = "你的角色未就緒",
+        ["SCRIPT_SEC"] = "腳本",
+        ["SCRIPT_TAB"] = "腳本庫",
+        ["SCRIPT_DESC"] = "收錄各伺服器/遊戲的第三方腳本",
+        ["SCRIPT_CATEGORY"] = "分類",
+        ["SCRIPT_CATEGORY_DESC"] = "先選分類，再選腳本",
+        ["SCRIPT_SELECT"] = "選擇腳本",
+        ["SCRIPT_SELECT_DESC"] = "選中後點下方按鈕加載",
+        ["SCRIPT_INFO"] = "腳本資訊",
+        ["SCRIPT_INFO_EMPTY"] = "未選擇腳本",
+        ["SCRIPT_LOAD"] = "加載腳本",
+        ["SCRIPT_LOAD_DESC"] = "執行選中的腳本",
+        ["SCRIPT_COPY"] = "複製連結",
+        ["SCRIPT_COPY_DESC"] = "把腳本網址複製到剪貼板",
+        ["SCRIPT_CONFIRM_TITLE"] = "確認加載",
+        ["SCRIPT_CONFIRM_BODY"] = "即將執行第三方腳本，來源不明的程式碼有風險，確定繼續？",
+        ["SCRIPT_LOADING"] = "正在加載…",
+        ["SCRIPT_LOADED"] = "腳本已執行",
+        ["SCRIPT_FAILED"] = "加載失敗，檢查連結或網路",
+        ["SCRIPT_NO_URL"] = "該腳本未配置連結",
+        ["SCRIPT_COPIED"] = "連結已複製",
+        ["SCRIPT_CUSTOM_SEC"] = "自訂腳本",
+        ["SCRIPT_CUSTOM_URL"] = "腳本連結",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "貼上 raw 或 gist 直鏈",
+        ["SCRIPT_CUSTOM_LOAD"] = "加載自訂腳本",
+        ["SCRIPT_CUSTOM_EMPTY"] = "請先填寫連結",
+        ["SCRIPT_GUIDE"] = "添加方法",
+        ["SCRIPT_GUIDE_DESC"] = "見腳本庫程式碼頂部的 SCRIPT_LIB 陣列",
+        ["CANCEL"] = "取消",
     },
     ["en"] = {
         ["PROFILE_TAB"] = "Introduction",
@@ -1047,6 +1191,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "How many meters per stud, default 0.28",
         ["THEME_SELECT"] = "Select Theme",
         ["BULLET_REMOTE_LOG_DESC"] = "Fire first, then check which remotes the game uses",
+        ["MISC_TAB"] = "Utility",
+        ["MISC_DESC"] = "Basic tweaks",
+        ["MISC_SEC_CHAR"] = "Character",
+        ["MISC_SEC_WORLD"] = "World & View",
+        ["MISC_SPEED"] = "Walk Speed",
+        ["MISC_SPEED_DESC"] = "Increase movement speed",
+        ["MISC_JUMP"] = "Jump Power",
+        ["MISC_JUMP_DESC"] = "Increase jump height",
+        ["MISC_HEALTH"] = "Max Health",
+        ["MISC_HEALTH_DESC"] = "Raise max health",
+        ["MISC_INFJUMP"] = "Infinite Jump",
+        ["MISC_INFJUMP_DESC"] = "Jump again mid-air",
+        ["MISC_GRAVITY"] = "Gravity",
+        ["MISC_GRAVITY_DESC"] = "Lower floats higher, default 196",
+        ["MISC_NOCLIP"] = "Noclip",
+        ["MISC_NOCLIP_DESC"] = "Walk through all objects",
+        ["MISC_FOV"] = "Field of View",
+        ["MISC_FOV_DESC"] = "Adjust view range, default 70",
+        ["MISC_BRIGHT"] = "Full Bright",
+        ["MISC_BRIGHT_DESC"] = "Brighten the scene",
+        ["MISC_RESET"] = "Reset All",
+        ["MISC_RESET_DESC"] = "Restore all original values",
+        ["MISC_RESET_DONE"] = "Restored to defaults",
+        ["MISC_SEC_AFK"] = "Anti-AFK & X-Ray",
+        ["MISC_ANTIAFK"] = "Anti-AFK Kick",
+        ["MISC_ANTIAFK_DESC"] = "Won't be kicked for idling",
+        ["MISC_AFK_STATUS"] = "Anti-AFK Status",
+        ["MISC_XRAY"] = "X-Ray (See Through Walls)",
+        ["MISC_XRAY_DESC"] = "Makes walls transparent to see behind them",
+        ["MISC_XRAY_AMT"] = "X-Ray Amount",
+        ["MISC_XRAY_AMT_DESC"] = "0 = opaque, 1 = fully transparent",
+        ["MISC_SEC_TP"] = "Teleport to Player",
+        ["MISC_TP_SELECT"] = "Select Player",
+        ["MISC_TP_SELECT_DESC"] = "Click refresh first, then pick",
+        ["MISC_TP_REFRESH"] = "Refresh List",
+        ["MISC_TP_REFRESHED"] = "Player list refreshed",
+        ["MISC_TP_GO"] = "Teleport",
+        ["MISC_TP_BEHIND"] = "Teleport Behind",
+        ["MISC_TP_BEHIND_DESC"] = "Appear behind the target",
+        ["MISC_TP_VEH"] = "Vehicle Mode",
+        ["MISC_TP_VEH_DESC"] = "Keep seat when teleporting (use in vehicles)",
+        ["MISC_TP_OK"] = "Teleported",
+        ["MISC_TP_NONE"] = "No target available",
+        ["MISC_TP_NOCHAR"] = "Your character is not ready",
+        ["SCRIPT_SEC"] = "Scripts",
+        ["SCRIPT_TAB"] = "Script Hub",
+        ["SCRIPT_DESC"] = "Third-party scripts for various games",
+        ["SCRIPT_CATEGORY"] = "Category",
+        ["SCRIPT_CATEGORY_DESC"] = "Pick a category first",
+        ["SCRIPT_SELECT"] = "Select Script",
+        ["SCRIPT_SELECT_DESC"] = "Then click load below",
+        ["SCRIPT_INFO"] = "Script Info",
+        ["SCRIPT_INFO_EMPTY"] = "No script selected",
+        ["SCRIPT_LOAD"] = "Load Script",
+        ["SCRIPT_LOAD_DESC"] = "Runs the selected script",
+        ["SCRIPT_COPY"] = "Copy URL",
+        ["SCRIPT_COPY_DESC"] = "Copy the script URL to clipboard",
+        ["SCRIPT_CONFIRM_TITLE"] = "Confirm Load",
+        ["SCRIPT_CONFIRM_BODY"] = "About to run a third-party script. Untrusted code is risky. Continue?",
+        ["SCRIPT_LOADING"] = "Loading…",
+        ["SCRIPT_LOADED"] = "Script executed",
+        ["SCRIPT_FAILED"] = "Failed; check URL or network",
+        ["SCRIPT_NO_URL"] = "This script has no URL",
+        ["SCRIPT_COPIED"] = "URL copied",
+        ["SCRIPT_CUSTOM_SEC"] = "Custom Script",
+        ["SCRIPT_CUSTOM_URL"] = "Script URL",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "Paste a raw or gist direct link",
+        ["SCRIPT_CUSTOM_LOAD"] = "Load Custom",
+        ["SCRIPT_CUSTOM_EMPTY"] = "Enter a URL first",
+        ["SCRIPT_GUIDE"] = "How to Add",
+        ["SCRIPT_GUIDE_DESC"] = "See the SCRIPT_LIB array at the top of the hub code",
+        ["CANCEL"] = "Cancel",
     },
     ["ja"] = {
         ["PROFILE_TAB"] = "紹介",
@@ -1326,6 +1542,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "1 stud は何メートルか、既定 0.28",
         ["THEME_SELECT"] = "テーマ選択",
         ["BULLET_REMOTE_LOG_DESC"] = "発射してから押すと使用 Remote が分かります",
+        ["MISC_TAB"] = "ユーティリティ",
+        ["MISC_DESC"] = "基本パラメータ変更",
+        ["MISC_SEC_CHAR"] = "キャラクター",
+        ["MISC_SEC_WORLD"] = "世界と視野",
+        ["MISC_SPEED"] = "移動速度",
+        ["MISC_SPEED_DESC"] = "移動速度を上げる",
+        ["MISC_JUMP"] = "ジャンプ力",
+        ["MISC_JUMP_DESC"] = "ジャンプの高さを上げる",
+        ["MISC_HEALTH"] = "最大体力",
+        ["MISC_HEALTH_DESC"] = "最大体力を上げる",
+        ["MISC_INFJUMP"] = "無限ジャンプ",
+        ["MISC_INFJUMP_DESC"] = "空中でもジャンプ可能",
+        ["MISC_GRAVITY"] = "重力",
+        ["MISC_GRAVITY_DESC"] = "小さいほど高く浮く、既定 196",
+        ["MISC_NOCLIP"] = "壁抜き",
+        ["MISC_NOCLIP_DESC"] = "すべてをすり抜ける",
+        ["MISC_FOV"] = "視野 FOV",
+        ["MISC_FOV_DESC"] = "視野範囲を調整、既定 70",
+        ["MISC_BRIGHT"] = "明るさ最大化",
+        ["MISC_BRIGHT_DESC"] = "画面を明るくする",
+        ["MISC_RESET"] = "すべてリセット",
+        ["MISC_RESET_DESC"] = "すべての値を元に戻す",
+        ["MISC_RESET_DONE"] = "既定値に戻しました",
+        ["MISC_SEC_AFK"] = "AFK対策と透視",
+        ["MISC_ANTIAFK"] = "AFK キック回避",
+        ["MISC_ANTIAFK_DESC"] = "放置してもキックされない",
+        ["MISC_AFK_STATUS"] = "AFK 対策状況",
+        ["MISC_XRAY"] = "透視（壁を透明化）",
+        ["MISC_XRAY_DESC"] = "壁を透明にして裏側が見える",
+        ["MISC_XRAY_AMT"] = "透視の度合い",
+        ["MISC_XRAY_AMT_DESC"] = "0 = 不透明、1 = 完全透明",
+        ["MISC_SEC_TP"] = "プレイヤーへテレポート",
+        ["MISC_TP_SELECT"] = "プレイヤー選択",
+        ["MISC_TP_SELECT_DESC"] = "更新してから選択",
+        ["MISC_TP_REFRESH"] = "リスト更新",
+        ["MISC_TP_REFRESHED"] = "リストを更新しました",
+        ["MISC_TP_GO"] = "テレポート",
+        ["MISC_TP_BEHIND"] = "背後へテレポート",
+        ["MISC_TP_BEHIND_DESC"] = "相手の背後に出現",
+        ["MISC_TP_VEH"] = "ビークルモード",
+        ["MISC_TP_VEH_DESC"] = "テレポート時に座席を維持",
+        ["MISC_TP_OK"] = "テレポートしました",
+        ["MISC_TP_NONE"] = "対象がいません",
+        ["MISC_TP_NOCHAR"] = "自分のキャラが未準備",
+        ["SCRIPT_SEC"] = "スクリプト",
+        ["SCRIPT_TAB"] = "スクリプト集",
+        ["SCRIPT_DESC"] = "各ゲームのサードパーティ製スクリプト",
+        ["SCRIPT_CATEGORY"] = "カテゴリ",
+        ["SCRIPT_CATEGORY_DESC"] = "先にカテゴリを選択",
+        ["SCRIPT_SELECT"] = "スクリプト選択",
+        ["SCRIPT_SELECT_DESC"] = "選択して読み込む",
+        ["SCRIPT_INFO"] = "スクリプト情報",
+        ["SCRIPT_INFO_EMPTY"] = "未選択",
+        ["SCRIPT_LOAD"] = "スクリプト読込",
+        ["SCRIPT_LOAD_DESC"] = "選択したスクリプトを実行",
+        ["SCRIPT_COPY"] = "リンクをコピー",
+        ["SCRIPT_COPY_DESC"] = "URL をクリップボードにコピー",
+        ["SCRIPT_CONFIRM_TITLE"] = "読込確認",
+        ["SCRIPT_CONFIRM_BODY"] = "サードパーティ製を実行します。続けますか？",
+        ["SCRIPT_LOADING"] = "読込中…",
+        ["SCRIPT_LOADED"] = "スクリプト実行完了",
+        ["SCRIPT_FAILED"] = "失敗。URL/通信を確認",
+        ["SCRIPT_NO_URL"] = "このスクリプトは URL 未設定",
+        ["SCRIPT_COPIED"] = "リンクをコピーしました",
+        ["SCRIPT_CUSTOM_SEC"] = "カスタムスクリプト",
+        ["SCRIPT_CUSTOM_URL"] = "スクリプト URL",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "raw / gist の直リンクを貼付",
+        ["SCRIPT_CUSTOM_LOAD"] = "カスタムを読込",
+        ["SCRIPT_CUSTOM_EMPTY"] = "先に URL を入力",
+        ["SCRIPT_GUIDE"] = "追加方法",
+        ["SCRIPT_GUIDE_DESC"] = "ハブ上部の SCRIPT_LIB を参照",
+        ["CANCEL"] = "キャンセル",
     },
     ["ko"] = {
         ["PROFILE_TAB"] = "소개",
@@ -1605,6 +1893,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "1 stud는 몇 m, 기본 0.28",
         ["THEME_SELECT"] = "테마 선택",
         ["BULLET_REMOTE_LOG_DESC"] = "발사 후 눌러 사용된 Remote 확인",
+        ["MISC_TAB"] = "유틸리티",
+        ["MISC_DESC"] = "기본 속성 변경",
+        ["MISC_SEC_CHAR"] = "캐릭터",
+        ["MISC_SEC_WORLD"] = "세계와 시야",
+        ["MISC_SPEED"] = "이동 속도",
+        ["MISC_SPEED_DESC"] = "이동 속도 증가",
+        ["MISC_JUMP"] = "점프력",
+        ["MISC_JUMP_DESC"] = "점프 높이 증가",
+        ["MISC_HEALTH"] = "최대 체력",
+        ["MISC_HEALTH_DESC"] = "최대 체력 증가",
+        ["MISC_INFJUMP"] = "무한 점프",
+        ["MISC_INFJUMP_DESC"] = "공중에서도 점프",
+        ["MISC_GRAVITY"] = "중력",
+        ["MISC_GRAVITY_DESC"] = "작을수록 높이, 기본 196",
+        ["MISC_NOCLIP"] = "벽 통과",
+        ["MISC_NOCLIP_DESC"] = "모든 오브젝트 통과",
+        ["MISC_FOV"] = "시야 FOV",
+        ["MISC_FOV_DESC"] = "시야 범위 조정, 기본 70",
+        ["MISC_BRIGHT"] = "야간 시야",
+        ["MISC_BRIGHT_DESC"] = "밝기 증가로 어두운 곳 확인",
+        ["MISC_RESET"] = "전체 초기화",
+        ["MISC_RESET_DESC"] = "모든 값 원래대로",
+        ["MISC_RESET_DONE"] = "기본값으로 복원",
+        ["MISC_SEC_AFK"] = "방출 방지와 투시",
+        ["MISC_ANTIAFK"] = "AFK 강퇴 방지",
+        ["MISC_ANTIAFK_DESC"] = "방치해도 강퇴 안 됨",
+        ["MISC_AFK_STATUS"] = "AFK 방지 상태",
+        ["MISC_XRAY"] = "투시(벽 투명화)",
+        ["MISC_XRAY_DESC"] = "벽을 투명하게 해 뒤를 봄",
+        ["MISC_XRAY_AMT"] = "투시 정도",
+        ["MISC_XRAY_AMT_DESC"] = "0=불투명, 1=완전 투명",
+        ["MISC_SEC_TP"] = "플레이어에게 순간이동",
+        ["MISC_TP_SELECT"] = "플레이어 선택",
+        ["MISC_TP_SELECT_DESC"] = "새로고침 후 선택",
+        ["MISC_TP_REFRESH"] = "목록 새로고침",
+        ["MISC_TP_REFRESHED"] = "목록 새로고침됨",
+        ["MISC_TP_GO"] = "순간이동",
+        ["MISC_TP_BEHIND"] = "뒤로 순간이동",
+        ["MISC_TP_BEHIND_DESC"] = "대상 뒤에 나타남",
+        ["MISC_TP_VEH"] = "탑승 모드",
+        ["MISC_TP_VEH_DESC"] = "순간이동 시 좌석 유지",
+        ["MISC_TP_OK"] = "순간이동됨",
+        ["MISC_TP_NONE"] = "대상 없음",
+        ["MISC_TP_NOCHAR"] = "내 캐릭터 미준비",
+        ["SCRIPT_SEC"] = "스크립트",
+        ["SCRIPT_TAB"] = "스크립트 허브",
+        ["SCRIPT_DESC"] = "각 서버 서드파티 스크립트",
+        ["SCRIPT_CATEGORY"] = "카테고리",
+        ["SCRIPT_CATEGORY_DESC"] = "먼저 카테고리 선택",
+        ["SCRIPT_SELECT"] = "스크립트 선택",
+        ["SCRIPT_SELECT_DESC"] = "선택 후 로드",
+        ["SCRIPT_INFO"] = "스크립트 정보",
+        ["SCRIPT_INFO_EMPTY"] = "선택 안 됨",
+        ["SCRIPT_LOAD"] = "스크립트 로드",
+        ["SCRIPT_LOAD_DESC"] = "선택한 스크립트 실행",
+        ["SCRIPT_COPY"] = "링크 복사",
+        ["SCRIPT_COPY_DESC"] = "URL 클립보드 복사",
+        ["SCRIPT_CONFIRM_TITLE"] = "로드 확인",
+        ["SCRIPT_CONFIRM_BODY"] = "서드파티 스크립트 실행, 계속?",
+        ["SCRIPT_LOADING"] = "로드 중…",
+        ["SCRIPT_LOADED"] = "스크립트 실행됨",
+        ["SCRIPT_FAILED"] = "실패, URL 확인",
+        ["SCRIPT_NO_URL"] = "이 스크립트는 URL 없음",
+        ["SCRIPT_COPIED"] = "링크 복사됨",
+        ["SCRIPT_CUSTOM_SEC"] = "사용자 스크립트",
+        ["SCRIPT_CUSTOM_URL"] = "스크립트 URL",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "raw/gist 링크 붙여넣기",
+        ["SCRIPT_CUSTOM_LOAD"] = "사용자 스크립트 로드",
+        ["SCRIPT_CUSTOM_EMPTY"] = "URL 입력 필요",
+        ["SCRIPT_GUIDE"] = "추가 방법",
+        ["SCRIPT_GUIDE_DESC"] = "상단 SCRIPT_LIB 참조",
+        ["CANCEL"] = "취소",
     },
     ["ru"] = {
         ["PROFILE_TAB"] = "Введение",
@@ -1884,6 +2244,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "Сколько метров в stud, по умолчанию 0.28",
         ["THEME_SELECT"] = "Выберите тему",
         ["BULLET_REMOTE_LOG_DESC"] = "Сначала выстрелите, затем посмотрите",
+        ["MISC_TAB"] = "Утилиты",
+        ["MISC_DESC"] = "Базовые настройки",
+        ["MISC_SEC_CHAR"] = "Персонаж",
+        ["MISC_SEC_WORLD"] = "Мир и обзор",
+        ["MISC_SPEED"] = "Скорость ходьбы",
+        ["MISC_SPEED_DESC"] = "Увеличить скорость ходьбы",
+        ["MISC_JUMP"] = "Сила прыжка",
+        ["MISC_JUMP_DESC"] = "Увеличить высоту прыжка",
+        ["MISC_HEALTH"] = "Макс. здоровье",
+        ["MISC_HEALTH_DESC"] = "Повысить макс. здоровье",
+        ["MISC_INFJUMP"] = "Бесконечный прыжок",
+        ["MISC_INFJUMP_DESC"] = "Прыжок в воздухе",
+        ["MISC_GRAVITY"] = "Гравитация",
+        ["MISC_GRAVITY_DESC"] = "Меньше = выше, по умолч. 196",
+        ["MISC_NOCLIP"] = "Проход сквозь стены",
+        ["MISC_NOCLIP_DESC"] = "Проходить сквозь объекты",
+        ["MISC_FOV"] = "Поле зрения",
+        ["MISC_FOV_DESC"] = "Настроить обзор, по умолч. 70",
+        ["MISC_BRIGHT"] = "Полная яркость",
+        ["MISC_BRIGHT_DESC"] = "Осветлить сцену",
+        ["MISC_RESET"] = "Сбросить всё",
+        ["MISC_RESET_DESC"] = "Вернуть исходные значения",
+        ["MISC_RESET_DONE"] = "Сброшено",
+        ["MISC_SEC_AFK"] = "Анти-АФК и рентген",
+        ["MISC_ANTIAFK"] = "Защита от кика за АФК",
+        ["MISC_ANTIAFK_DESC"] = "Не закикают за бездействие",
+        ["MISC_AFK_STATUS"] = "Статус анти-АФК",
+        ["MISC_XRAY"] = "Рентген (стены прозрачные)",
+        ["MISC_XRAY_DESC"] = "Стены становятся прозрачными",
+        ["MISC_XRAY_AMT"] = "Степень прозрачности",
+        ["MISC_XRAY_AMT_DESC"] = "0 = непрозрачно, 1 = полностью",
+        ["MISC_SEC_TP"] = "Телепорт к игроку",
+        ["MISC_TP_SELECT"] = "Выбрать игрока",
+        ["MISC_TP_SELECT_DESC"] = "Сначала обновите, затем выберите",
+        ["MISC_TP_REFRESH"] = "Обновить список",
+        ["MISC_TP_REFRESHED"] = "Список обновлён",
+        ["MISC_TP_GO"] = "Телепортироваться",
+        ["MISC_TP_BEHIND"] = "Телепорт за спину",
+        ["MISC_TP_BEHIND_DESC"] = "Появиться за спиной цели",
+        ["MISC_TP_VEH"] = "По транспорту",
+        ["MISC_TP_VEH_DESC"] = "Сохранять сиденье при ТП",
+        ["MISC_TP_OK"] = "Телепортировано",
+        ["MISC_TP_NONE"] = "Нет цели",
+        ["MISC_TP_NOCHAR"] = "Ваш персонаж не готов",
+        ["SCRIPT_SEC"] = "Скрипты",
+        ["SCRIPT_TAB"] = "Библиотека скриптов",
+        ["SCRIPT_DESC"] = "Сторонние скрипты для игр",
+        ["SCRIPT_CATEGORY"] = "Категория",
+        ["SCRIPT_CATEGORY_DESC"] = "Сначала выберите категорию",
+        ["SCRIPT_SELECT"] = "Выбрать скрипт",
+        ["SCRIPT_SELECT_DESC"] = "Затем нажмите загрузить",
+        ["SCRIPT_INFO"] = "Информация о скрипте",
+        ["SCRIPT_INFO_EMPTY"] = "Скрипт не выбран",
+        ["SCRIPT_LOAD"] = "Загрузить скрипт",
+        ["SCRIPT_LOAD_DESC"] = "Запускает выбранный скрипт",
+        ["SCRIPT_COPY"] = "Копировать ссылку",
+        ["SCRIPT_COPY_DESC"] = "Скопировать URL",
+        ["SCRIPT_CONFIRM_TITLE"] = "Подтвердить",
+        ["SCRIPT_CONFIRM_BODY"] = "Сторонний скрипт. Продолжить?",
+        ["SCRIPT_LOADING"] = "Загрузка…",
+        ["SCRIPT_LOADED"] = "Скрипт выполнен",
+        ["SCRIPT_FAILED"] = "Ошибка; проверьте ссылку",
+        ["SCRIPT_NO_URL"] = "URL не задан",
+        ["SCRIPT_COPIED"] = "Ссылка скопирована",
+        ["SCRIPT_CUSTOM_SEC"] = "Свой скрипт",
+        ["SCRIPT_CUSTOM_URL"] = "URL скрипта",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "Вставьте прямую ссылку",
+        ["SCRIPT_CUSTOM_LOAD"] = "Загрузить свой",
+        ["SCRIPT_CUSTOM_EMPTY"] = "Сначала введите URL",
+        ["SCRIPT_GUIDE"] = "Как добавить",
+        ["SCRIPT_GUIDE_DESC"] = "См. массив SCRIPT_LIB",
+        ["CANCEL"] = "Отмена",
     },
     ["es"] = {
         ["PROFILE_TAB"] = "Introducción",
@@ -2163,6 +2595,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "Cuántos metros por stud, 0.28 por defecto",
         ["THEME_SELECT"] = "Seleccionar tema",
         ["BULLET_REMOTE_LOG_DESC"] = "Dispara y luego mira qué remotos usa",
+        ["MISC_TAB"] = "Utilidades",
+        ["MISC_DESC"] = "Ajustes básicos",
+        ["MISC_SEC_CHAR"] = "Personaje",
+        ["MISC_SEC_WORLD"] = "Mundo y vista",
+        ["MISC_SPEED"] = "Velocidad de caminar",
+        ["MISC_SPEED_DESC"] = "Aumenta la velocidad",
+        ["MISC_JUMP"] = "Potencia de salto",
+        ["MISC_JUMP_DESC"] = "Aumenta el salto",
+        ["MISC_HEALTH"] = "Vida máxima",
+        ["MISC_HEALTH_DESC"] = "Aumenta la vida máxima",
+        ["MISC_INFJUMP"] = "Salto infinito",
+        ["MISC_INFJUMP_DESC"] = "Saltar en el aire",
+        ["MISC_GRAVITY"] = "Gravedad",
+        ["MISC_GRAVITY_DESC"] = "Menor flota más, 196 por defecto",
+        ["MISC_NOCLIP"] = "Atravesar muros",
+        ["MISC_NOCLIP_DESC"] = "Atravesar objetos",
+        ["MISC_FOV"] = "Campo de visión",
+        ["MISC_FOV_DESC"] = "Ajustar rango, 70 por defecto",
+        ["MISC_BRIGHT"] = "Visión nocturna",
+        ["MISC_BRIGHT_DESC"] = "Aclara la escena",
+        ["MISC_RESET"] = "Restablecer todo",
+        ["MISC_RESET_DESC"] = "Restaura los valores",
+        ["MISC_RESET_DONE"] = "Restaurado",
+        ["MISC_SEC_AFK"] = "Anti-AFK y visión X",
+        ["MISC_ANTIAFK"] = "Evitar expulsión por AFK",
+        ["MISC_ANTIAFK_DESC"] = "No te expulsan por inactividad",
+        ["MISC_AFK_STATUS"] = "Estado anti-AFK",
+        ["MISC_XRAY"] = "Visión X (ver a través)",
+        ["MISC_XRAY_DESC"] = "Hace las paredes transparentes",
+        ["MISC_XRAY_AMT"] = "Cantidad de visión X",
+        ["MISC_XRAY_AMT_DESC"] = "0 = opaco, 1 = transparente",
+        ["MISC_SEC_TP"] = "Teletransporte al jugador",
+        ["MISC_TP_SELECT"] = "Seleccionar jugador",
+        ["MISC_TP_SELECT_DESC"] = "Actualiza y luego elige",
+        ["MISC_TP_REFRESH"] = "Actualizar lista",
+        ["MISC_TP_REFRESHED"] = "Lista actualizada",
+        ["MISC_TP_GO"] = "Teletransportar",
+        ["MISC_TP_BEHIND"] = "Detrás del jugador",
+        ["MISC_TP_BEHIND_DESC"] = "Aparecer detrás",
+        ["MISC_TP_VEH"] = "Modo vehículo",
+        ["MISC_TP_VEH_DESC"] = "Mantener asiento al TP",
+        ["MISC_TP_OK"] = "Teletransportado",
+        ["MISC_TP_NONE"] = "Sin objetivo",
+        ["MISC_TP_NOCHAR"] = "Tu personaje no está listo",
+        ["SCRIPT_SEC"] = "Scripts",
+        ["SCRIPT_TAB"] = "Biblioteca de scripts",
+        ["SCRIPT_DESC"] = "Scripts de terceros para varios juegos",
+        ["SCRIPT_CATEGORY"] = "Categoría",
+        ["SCRIPT_CATEGORY_DESC"] = "Elige categoría primero",
+        ["SCRIPT_SELECT"] = "Seleccionar script",
+        ["SCRIPT_SELECT_DESC"] = "Luego pulsa cargar",
+        ["SCRIPT_INFO"] = "Info del script",
+        ["SCRIPT_INFO_EMPTY"] = "Ningún script",
+        ["SCRIPT_LOAD"] = "Cargar script",
+        ["SCRIPT_LOAD_DESC"] = "Ejecuta el script",
+        ["SCRIPT_COPY"] = "Copiar enlace",
+        ["SCRIPT_COPY_DESC"] = "Copiar URL",
+        ["SCRIPT_CONFIRM_TITLE"] = "Confirmar",
+        ["SCRIPT_CONFIRM_BODY"] = "¿Ejecutar script de terceros?",
+        ["SCRIPT_LOADING"] = "Cargando…",
+        ["SCRIPT_LOADED"] = "Script ejecutado",
+        ["SCRIPT_FAILED"] = "Falló; revisa el enlace",
+        ["SCRIPT_NO_URL"] = "Sin URL",
+        ["SCRIPT_COPIED"] = "Enlace copiado",
+        ["SCRIPT_CUSTOM_SEC"] = "Script personalizado",
+        ["SCRIPT_CUSTOM_URL"] = "URL del script",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "Pega enlace directo",
+        ["SCRIPT_CUSTOM_LOAD"] = "Cargar personalizado",
+        ["SCRIPT_CUSTOM_EMPTY"] = "Introduce una URL",
+        ["SCRIPT_GUIDE"] = "Cómo añadir",
+        ["SCRIPT_GUIDE_DESC"] = "Ver el array SCRIPT_LIB",
+        ["CANCEL"] = "Cancelar",
     },
     ["fr"] = {
         ["PROFILE_TAB"] = "Introduction",
@@ -2442,6 +2946,78 @@ local LANG_TABLE = {
         ["UNIT_SCALE_DESC"] = "Combien de mètres par stud, 0.28 par défaut",
         ["THEME_SELECT"] = "Choisir un thème",
         ["BULLET_REMOTE_LOG_DESC"] = "Tirez puis voyez quels remotes sont utilisés",
+        ["MISC_TAB"] = "Utilitaires",
+        ["MISC_DESC"] = "Réglages de base",
+        ["MISC_SEC_CHAR"] = "Personnage",
+        ["MISC_SEC_WORLD"] = "Monde et vue",
+        ["MISC_SPEED"] = "Vitesse de marche",
+        ["MISC_SPEED_DESC"] = "Augmente la vitesse",
+        ["MISC_JUMP"] = "Puissance de saut",
+        ["MISC_JUMP_DESC"] = "Augmente le saut",
+        ["MISC_HEALTH"] = "Santé max",
+        ["MISC_HEALTH_DESC"] = "Augmente la santé max",
+        ["MISC_INFJUMP"] = "Saut infini",
+        ["MISC_INFJUMP_DESC"] = "Sauter en l'air",
+        ["MISC_GRAVITY"] = "Gravité",
+        ["MISC_GRAVITY_DESC"] = "Plus bas flotte plus haut, 196 par défaut",
+        ["MISC_NOCLIP"] = "Passage à travers les murs",
+        ["MISC_NOCLIP_DESC"] = "Traverser les objets",
+        ["MISC_FOV"] = "Champ de vision",
+        ["MISC_FOV_DESC"] = "Ajuster la portée, 70 par défaut",
+        ["MISC_BRIGHT"] = "Vision nocturne",
+        ["MISC_BRIGHT_DESC"] = "Éclaircit la scène",
+        ["MISC_RESET"] = "Réinitialiser tout",
+        ["MISC_RESET_DESC"] = "Restaure les valeurs",
+        ["MISC_RESET_DONE"] = "Restauré",
+        ["MISC_SEC_AFK"] = "Anti-AFK et rayons X",
+        ["MISC_ANTIAFK"] = "Éviter l'expulsion AFK",
+        ["MISC_ANTIAFK_DESC"] = "Pas d'expulsion pour inactivité",
+        ["MISC_AFK_STATUS"] = "État anti-AFK",
+        ["MISC_XRAY"] = "Rayons X (voir à travers)",
+        ["MISC_XRAY_DESC"] = "Rend les murs transparents",
+        ["MISC_XRAY_AMT"] = "Degré de transparence",
+        ["MISC_XRAY_AMT_DESC"] = "0 = opaque, 1 = transparent",
+        ["MISC_SEC_TP"] = "Téléportation au joueur",
+        ["MISC_TP_SELECT"] = "Choisir le joueur",
+        ["MISC_TP_SELECT_DESC"] = "Actualise puis choisis",
+        ["MISC_TP_REFRESH"] = "Actualiser la liste",
+        ["MISC_TP_REFRESHED"] = "Liste actualisée",
+        ["MISC_TP_GO"] = "Téléporter",
+        ["MISC_TP_BEHIND"] = "Derrière le joueur",
+        ["MISC_TP_BEHIND_DESC"] = "Apparaître derrière",
+        ["MISC_TP_VEH"] = "Mode véhicule",
+        ["MISC_TP_VEH_DESC"] = "Garder le siège au TP",
+        ["MISC_TP_OK"] = "Téléporté",
+        ["MISC_TP_NONE"] = "Aucune cible",
+        ["MISC_TP_NOCHAR"] = "Votre personnage n'est pas prêt",
+        ["SCRIPT_SEC"] = "Scripts",
+        ["SCRIPT_TAB"] = "Bibliothèque de scripts",
+        ["SCRIPT_DESC"] = "Scripts tiers pour divers jeux",
+        ["SCRIPT_CATEGORY"] = "Catégorie",
+        ["SCRIPT_CATEGORY_DESC"] = "Choisissez une catégorie",
+        ["SCRIPT_SELECT"] = "Choisir un script",
+        ["SCRIPT_SELECT_DESC"] = "Puis cliquez sur charger",
+        ["SCRIPT_INFO"] = "Infos du script",
+        ["SCRIPT_INFO_EMPTY"] = "Aucun script",
+        ["SCRIPT_LOAD"] = "Charger le script",
+        ["SCRIPT_LOAD_DESC"] = "Exécute le script",
+        ["SCRIPT_COPY"] = "Copier le lien",
+        ["SCRIPT_COPY_DESC"] = "Copier l'URL",
+        ["SCRIPT_CONFIRM_TITLE"] = "Confirmer",
+        ["SCRIPT_CONFIRM_BODY"] = "Exécuter un script tiers ?",
+        ["SCRIPT_LOADING"] = "Chargement…",
+        ["SCRIPT_LOADED"] = "Script exécuté",
+        ["SCRIPT_FAILED"] = "Échec ; vérifiez le lien",
+        ["SCRIPT_NO_URL"] = "Pas d'URL",
+        ["SCRIPT_COPIED"] = "Lien copié",
+        ["SCRIPT_CUSTOM_SEC"] = "Script personnalisé",
+        ["SCRIPT_CUSTOM_URL"] = "URL du script",
+        ["SCRIPT_CUSTOM_URL_DESC"] = "Collez un lien direct",
+        ["SCRIPT_CUSTOM_LOAD"] = "Charger personnalisé",
+        ["SCRIPT_CUSTOM_EMPTY"] = "Entrez une URL",
+        ["SCRIPT_GUIDE"] = "Comment ajouter",
+        ["SCRIPT_GUIDE_DESC"] = "Voir le tableau SCRIPT_LIB",
+        ["CANCEL"] = "Annuler",
     },
 }
 local CurrentLang = "zh-cn"   -- 默认简体中文
@@ -2646,7 +3222,8 @@ end, 990)
 
 local Tabs = {
     Main = Window:Section({ Title = "loc:FEATURES", Opened = true }),
-    Settings = Window:Section({ Title = "loc:SETTINGS", Opened = true })
+    Settings = Window:Section({ Title = "loc:SETTINGS", Opened = true }),
+    Scripts = Window:Section({ Title = "脚本", Opened = false })
 }
 
 local TabHandles = {
@@ -2656,9 +3233,11 @@ local TabHandles = {
     Aimbot = Tabs.Main:Tab({ Title = T("AIM_TAB"), Icon = "crosshair", Desc = T("AIM_DESC") }),
     Bullet = Tabs.Main:Tab({ Title = T("BULLET_TAB"), Icon = "target", Desc = T("BULLET_DESC") }),
     Fly = Tabs.Main:Tab({ Title = T("FLY_TAB"), Icon = "wind", Desc = T("FLY_DESC") }),
+    Misc = Tabs.Main:Tab({ Title = T("MISC_TAB"), Icon = "type", Desc = T("MISC_DESC") }),
     Language = Tabs.Settings:Tab({ Title = T("LANG_TAB"), Icon = "globe", Desc = T("LANG_DESC") }),
     Appearance = Tabs.Settings:Tab({ Title = "loc:APPEARANCE", Icon = "brush" }),
-    Elements = Tabs.Settings:Tab({ Title = "loc:UI_ELEMENTS", Icon = "layout-grid", Desc = "UI Elements Example" })
+    Elements = Tabs.Settings:Tab({ Title = "loc:UI_ELEMENTS", Icon = "layout-grid", Desc = "UI Elements Example" }),
+    ScriptHub = Tabs.Scripts:Tab({ Title = "脚本库", Icon = "list", Desc = "收录各服务器/游戏的第三方脚本" })
 }
 
 -- ========================= ESP 功能模块 =========================
@@ -2670,7 +3249,7 @@ local ESPDrawnCount = 0
 local espWasEnabled = false
 
 -- ESP 全局状态
-local ESPState = {
+Ctl.ESPState = {
     Enabled = false,
     Box = true,
     Name = true,
@@ -2738,7 +3317,7 @@ end
 
 local function applyFont(textObj)
     pcall(function()
-        textObj.Font = DrawingFonts[ESPState.FontName] or DrawingFonts.UI
+        textObj.Font = DrawingFonts[Ctl.ESPState.FontName] or DrawingFonts.UI
     end)
 end
 
@@ -2755,11 +3334,11 @@ local function createESPObject(plr)
     obj.Box = box
 
     local name = newDrawing("Text")
-    if name then pcall(function() name.Center = true; name.Outline = true; name.Size = ESPState.TextSize; name.Visible = false end); applyFont(name) end
+    if name then pcall(function() name.Center = true; name.Outline = true; name.Size = Ctl.ESPState.TextSize; name.Visible = false end); applyFont(name) end
     obj.Name = name
 
     local dist = newDrawing("Text")
-    if dist then pcall(function() dist.Center = true; dist.Outline = true; dist.Size = ESPState.TextSize - 1; dist.Visible = false end); applyFont(dist) end
+    if dist then pcall(function() dist.Center = true; dist.Outline = true; dist.Size = Ctl.ESPState.TextSize - 1; dist.Visible = false end); applyFont(dist) end
     obj.Dist = dist
 
     local hBg = newDrawing("Square")
@@ -2806,7 +3385,7 @@ local function ensureOne(obj, key, class)
     if not d then return nil end
     pcall(function()
         d.Visible = false
-        if class == "Text" then d.Center = true; d.Outline = true; d.Size = ESPState.TextSize - 1 end
+        if class == "Text" then d.Center = true; d.Outline = true; d.Size = Ctl.ESPState.TextSize - 1 end
         if class == "Circle" then d.Filled = false; d.NumSides = 24; d.Thickness = 1 end
         if class == "Line" then d.Thickness = 1 end
     end)
@@ -2830,7 +3409,7 @@ local function ensureHighlight(obj)
 end
 
 -- 骨架定义：兼容 R15 与 R6，{ 起点候选名, 终点候选名 }
-local BONE_LINKS = {
+Ctl.BONE_LINKS = {
     { { "Head" }, { "UpperTorso", "Torso" } },
     { { "UpperTorso", "Torso" }, { "LowerTorso", "Torso" } },
     { { "UpperTorso", "Torso" }, { "LeftUpperArm", "Left Arm" } },
@@ -2854,7 +3433,7 @@ local function findPart(char, names)
 end
 
 -- 3D 立方体 12 条边（顶点索引）
-local BOX3D_EDGES = {
+Ctl.BOX3D_EDGES = {
     { 1, 2 }, { 2, 3 }, { 3, 4 }, { 4, 1 },   -- 底面
     { 5, 6 }, { 6, 7 }, { 7, 8 }, { 8, 5 },   -- 顶面
     { 1, 5 }, { 2, 6 }, { 3, 7 }, { 4, 8 },   -- 竖边
@@ -2896,12 +3475,12 @@ end
 
 local function getNameText(plr)
     local dn = plr.DisplayName or plr.Name
-    local mode = ESPState.NameMode
+    local mode = Ctl.ESPState.NameMode
     if mode == "显示名" then
-        if ESPState.AsciiFallback and hasNonAscii(dn) then return plr.Name end
+        if Ctl.ESPState.AsciiFallback and hasNonAscii(dn) then return plr.Name end
         return dn
     elseif mode == "两者" then
-        if ESPState.AsciiFallback and hasNonAscii(dn) then return plr.Name end
+        if Ctl.ESPState.AsciiFallback and hasNonAscii(dn) then return plr.Name end
         if dn == plr.Name then return plr.Name end
         return dn .. " (@" .. plr.Name .. ")"
     end
@@ -2909,17 +3488,17 @@ local function getNameText(plr)
 end
 
 local function isEnemy(plr)
-    if ESPState.TeamCheck and LocalPlayer.Team and plr.Team then
+    if Ctl.ESPState.TeamCheck and LocalPlayer.Team and plr.Team then
         return plr.Team ~= LocalPlayer.Team
     end
     return true
 end
 
 -- 视线检测：true = 没被墙挡住（复用 params，角色为空时不会崩）
-local LOSParams = RaycastParams.new()
-LOSParams.FilterType = Enum.RaycastFilterType.Blacklist
-LOSParams.IgnoreWater = true
-local LOSCharCache = nil
+Ctl.LOSParams = RaycastParams.new()
+Ctl.LOSParams.FilterType = Enum.RaycastFilterType.Blacklist
+Ctl.LOSParams.IgnoreWater = true
+Ctl.LOSCharCache = nil
 
 local function hasLineOfSight(part)
     local origin = Camera.CFrame.Position
@@ -2928,15 +3507,15 @@ local function hasLineOfSight(part)
     if len <= 0 then return true end
 
     local myChar = LocalPlayer.Character
-    if LOSCharCache ~= myChar then
+    if Ctl.LOSCharCache ~= myChar then
         LOSCharCache = myChar
         pcall(function()
-            LOSParams.FilterDescendantsInstances = myChar and { myChar } or {}
+            Ctl.LOSParams.FilterDescendantsInstances = myChar and { myChar } or {}
         end)
     end
 
     local ok, result = pcall(function()
-        return workspace:Raycast(origin, dir.Unit * len, LOSParams)
+        return workspace:Raycast(origin, dir.Unit * len, Ctl.LOSParams)
     end)
     if not ok or not result or not result.Instance then return true end
 
@@ -2947,48 +3526,48 @@ local function hasLineOfSight(part)
 end
 
 -- 雷达
-local RadarRing = nil
-local RadarDots = {}
+Ctl.RadarRing = nil
+Ctl.RadarDots = {}
 
 pcall(function()
     RadarRing = Drawing.new("Circle")
-    RadarRing.Filled = false
-    RadarRing.Thickness = 1
-    RadarRing.NumSides = 48
-    RadarRing.Transparency = 0.8
-    RadarRing.Visible = false
+    Ctl.RadarRing.Filled = false
+    Ctl.RadarRing.Thickness = 1
+    Ctl.RadarRing.NumSides = 48
+    Ctl.RadarRing.Transparency = 0.8
+    Ctl.RadarRing.Visible = false
 end)
 
 local function getRadarCenter()
-    local size = ESPState.RadarSize
+    local size = Ctl.ESPState.RadarSize
     local vs = Camera.ViewportSize
     local m = 20
-    if ESPState.RadarPos == "右下" then
+    if Ctl.ESPState.RadarPos == "右下" then
         return Vector2.new(vs.X - size / 2 - m, vs.Y - size / 2 - m)
-    elseif ESPState.RadarPos == "右上" then
+    elseif Ctl.ESPState.RadarPos == "右上" then
         return Vector2.new(vs.X - size / 2 - m, size / 2 + m)
-    elseif ESPState.RadarPos == "左下" then
+    elseif Ctl.ESPState.RadarPos == "左下" then
         return Vector2.new(size / 2 + m, vs.Y - size / 2 - m)
     end
     return Vector2.new(size / 2 + m, size / 2 + m)
 end
 
 local function updateRadar()
-    if not RadarRing then return end
-    if not (ESPState.Enabled and ESPState.Radar and not ESPState.Minimal) then
-        RadarRing.Visible = false
-        for plr, dot in pairs(RadarDots) do
+    if not Ctl.RadarRing then return end
+    if not (Ctl.ESPState.Enabled and Ctl.ESPState.Radar and not Ctl.ESPState.Minimal) then
+        Ctl.RadarRing.Visible = false
+        for plr, dot in pairs(Ctl.RadarDots) do
             pcall(function() dot.Visible = false end)
         end
         return
     end
     local center = getRadarCenter()
-    local radius = ESPState.RadarSize / 2
-    local range = math.max(ESPState.RadarRange, 1)
-    RadarRing.Position = center
-    RadarRing.Radius = radius
-    RadarRing.Color = ESPState.Color
-    RadarRing.Visible = true
+    local radius = Ctl.ESPState.RadarSize / 2
+    local range = math.max(Ctl.ESPState.RadarRange, 1)
+    Ctl.RadarRing.Position = center
+    Ctl.RadarRing.Radius = radius
+    Ctl.RadarRing.Color = Ctl.ESPState.Color
+    Ctl.RadarRing.Visible = true
 
     local myHRP = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not myHRP then return end
@@ -3006,7 +3585,7 @@ local function updateRadar()
                 local rel = hrp.Position - myPos
                 local d3 = rel.Magnitude
                 if d3 <= range then
-                    local dot = RadarDots[plr]
+                    local dot = Ctl.RadarDots[plr]
                     if not dot then
                         local ok2, d = pcall(function() return Drawing.new("Circle") end)
                         if ok2 and d then
@@ -3014,7 +3593,7 @@ local function updateRadar()
                             d.NumSides = 12
                             d.Thickness = 1
                             dot = d
-                            RadarDots[plr] = dot
+                            Ctl.RadarDots[plr] = dot
                         end
                     end
                     if dot then
@@ -3024,7 +3603,7 @@ local function updateRadar()
                         pcall(function()
                             dot.Position = center + Vector2.new(rx, ry)
                             dot.Radius = 3
-                            dot.Color = ESPState.Color
+                            dot.Color = Ctl.ESPState.Color
                             dot.Visible = true
                         end)
                         seen[plr] = true
@@ -3033,7 +3612,7 @@ local function updateRadar()
             end
         end
     end
-    for plr, dot in pairs(RadarDots) do
+    for plr, dot in pairs(Ctl.RadarDots) do
         if not seen[plr] then
             pcall(function() dot.Visible = false end)
         end
@@ -3044,7 +3623,7 @@ end
 CurrentBulletTarget = nil
 RunService.RenderStepped:Connect(function()
     pcall(function()
-        if BulletState and BulletState.Enabled then
+        if Ctl.BulletState and Ctl.BulletState.Enabled then
             local ok2, t = pcall(findBulletTarget)
             CurrentBulletTarget = (ok2 and t) or nil
         else
@@ -3055,18 +3634,18 @@ end)
 
 local function cleanupAllESP()
     for _, obj in pairs(ESPDrawings) do hideAll(obj) end
-    if RadarRing then setVis(RadarRing, false) end
-    for _, dot in pairs(RadarDots) do setVis(dot, false) end
+    if Ctl.RadarRing then setVis(Ctl.RadarRing, false) end
+    for _, dot in pairs(Ctl.RadarDots) do setVis(dot, false) end
 end
 
 local function formatDistance(studs)
-    local scale = tonumber(ESPState.UnitScale) or 0.28
+    local scale = tonumber(Ctl.ESPState.UnitScale) or 0.28
     if scale <= 0 then scale = 0.28 end
     local meters = studs * scale
 
-    if ESPState.DistanceUnit == "UNIT_STUD" then
+    if Ctl.ESPState.DistanceUnit == "UNIT_STUD" then
         return string.format("%d st", math.floor(studs + 0.5))
-    elseif ESPState.DistanceUnit == "UNIT_KM" then
+    elseif Ctl.ESPState.DistanceUnit == "UNIT_KM" then
         if meters >= 1000 then
             return string.format("%.2f km", meters / 1000)
         elseif meters >= 100 then
@@ -3086,7 +3665,7 @@ end
 
 local function updateESP()
     if not ESPSupported then return end
-    if not ESPState.Enabled then
+    if not Ctl.ESPState.Enabled then
         if espWasEnabled then cleanupAllESP(); espWasEnabled = false end
         return
     end
@@ -3101,15 +3680,15 @@ local function updateESP()
         if plr.Parent ~= Players then removeESPObject(plr) end
     end
 
-    local minimal = ESPState.Minimal
-    local useSkel = ESPState.Skeleton and not minimal
-    local useBox3d = ESPState.Box3D and not minimal
-    local useHL = ESPState.Highlight and not minimal
-    local useHeadDot = ESPState.HeadDot and not minimal
-    local useViewLine = ESPState.ViewLine and not minimal
-    local useWeapon = ESPState.ShowWeapon and not minimal
-    local useTeamInfo = ESPState.ShowTeam and not minimal
-    local useHpNum = ESPState.HealthNumber and not minimal
+    local minimal = Ctl.ESPState.Minimal
+    local useSkel = Ctl.ESPState.Skeleton and not minimal
+    local useBox3d = Ctl.ESPState.Box3D and not minimal
+    local useHL = Ctl.ESPState.Highlight and not minimal
+    local useHeadDot = Ctl.ESPState.HeadDot and not minimal
+    local useViewLine = Ctl.ESPState.ViewLine and not minimal
+    local useWeapon = Ctl.ESPState.ShowWeapon and not minimal
+    local useTeamInfo = Ctl.ESPState.ShowTeam and not minimal
+    local useHpNum = Ctl.ESPState.HealthNumber and not minimal
 
     ESPDrawnCount = 0
     for _, plr in ipairs(Players:GetPlayers()) do
@@ -3122,12 +3701,12 @@ local function updateESP()
         local hum = char and char:FindFirstChildOfClass("Humanoid")
         local head = char and char:FindFirstChild("Head")
 
-        local show = ESPState.Enabled and hrp ~= nil and hum ~= nil and hum.Health > 0 and isEnemy(plr)
+        local show = Ctl.ESPState.Enabled and hrp ~= nil and hum ~= nil and hum.Health > 0 and isEnemy(plr)
         local dist = 0
         if show then
             dist = (hrp.Position - camPos).Magnitude
-            if dist > ESPState.MaxDistance then show = false end
-            if show and ESPState.VisibleCheck and not hasLineOfSight(hrp) then show = false end
+            if dist > Ctl.ESPState.MaxDistance then show = false end
+            if show and Ctl.ESPState.VisibleCheck and not hasLineOfSight(hrp) then show = false end
         end
         if not show then hideAll(obj); continue end
         obj._hidden = false
@@ -3138,14 +3717,14 @@ local function updateESP()
         if not onScreen then hideAll(obj); continue end
 
         -- 锁定目标用不同颜色
-        local drawColor = ESPState.Color
+        local drawColor = Ctl.ESPState.Color
         local isTarget = false
-        if ESPState.TargetHighlight and CurrentBulletTarget then
+        if Ctl.ESPState.TargetHighlight and CurrentBulletTarget then
             local okT, r = pcall(function() return CurrentBulletTarget:IsDescendantOf(char) end)
             isTarget = okT and r
         end
         if isTarget then
-            drawColor = ESPState.TargetColor
+            drawColor = Ctl.ESPState.TargetColor
         end
 
         local height = math.max(math.abs(bottomPos.Y - topPos.Y), 4)
@@ -3154,29 +3733,29 @@ local function updateESP()
         local y = topPos.Y
 
         -- 方框
-        obj.Box.Visible = ESPState.Box
-        if ESPState.Box then
+        obj.Box.Visible = Ctl.ESPState.Box
+        if Ctl.ESPState.Box then
             obj.Box.Size = Vector2.new(width, height)
             obj.Box.Position = Vector2.new(x, y)
             obj.Box.Color = drawColor
-            obj.Box.Thickness = ESPState.Thickness
+            obj.Box.Thickness = Ctl.ESPState.Thickness
         end
 
         -- 名字（框上方）
-        obj.Name.Visible = ESPState.Name
-        if ESPState.Name then
+        obj.Name.Visible = Ctl.ESPState.Name
+        if Ctl.ESPState.Name then
             obj.Name.Text = getNameText(plr)
-            obj.Name.Position = Vector2.new(rootPos.X, y - ESPState.TextSize - 3)
+            obj.Name.Position = Vector2.new(rootPos.X, y - Ctl.ESPState.TextSize - 3)
             obj.Name.Color = drawColor
-            obj.Name.Size = ESPState.TextSize
+            obj.Name.Size = Ctl.ESPState.TextSize
         end
 
         -- 血量条（框正下方水平条，宽度与框一致，保证可见）
         local ratio = math.clamp(hum.Health / math.max(hum.MaxHealth, 1), 0, 1)
-        obj.HealthBg.Visible = ESPState.Health
-        obj.HealthBar.Visible = ESPState.Health
+        obj.HealthBg.Visible = Ctl.ESPState.Health
+        obj.HealthBar.Visible = Ctl.ESPState.Health
         local barH = 4
-        if ESPState.Health then
+        if Ctl.ESPState.Health then
             local barY = y + height + 3
             obj.HealthBg.Size = Vector2.new(width, barH)
             obj.HealthBg.Position = Vector2.new(x, barY)
@@ -3191,24 +3770,24 @@ local function updateESP()
         end
 
         -- 距离（血条下方，避免重叠）
-        obj.Dist.Visible = ESPState.Distance
-        if ESPState.Distance then
-            local distY = y + height + (ESPState.Health and (barH + 6) or 4)
+        obj.Dist.Visible = Ctl.ESPState.Distance
+        if Ctl.ESPState.Distance then
+            local distY = y + height + (Ctl.ESPState.Health and (barH + 6) or 4)
             obj.Dist.Text = formatDistance(dist)
             obj.Dist.Position = Vector2.new(rootPos.X, distY)
             obj.Dist.Color = Color3.new(1, 1, 1)
-            obj.Dist.Size = ESPState.TextSize - 1
+            obj.Dist.Size = Ctl.ESPState.TextSize - 1
         end
 
         ESPDrawnCount = ESPDrawnCount + 1
 
         -- 追踪线
-        obj.Tracer.Visible = ESPState.Tracer
-        if ESPState.Tracer then
+        obj.Tracer.Visible = Ctl.ESPState.Tracer
+        if Ctl.ESPState.Tracer then
             obj.Tracer.From = Vector2.new(screenSize.X / 2, screenSize.Y)
             obj.Tracer.To = Vector2.new(rootPos.X, y + height)
             obj.Tracer.Color = drawColor
-            obj.Tracer.Thickness = ESPState.Thickness
+            obj.Tracer.Thickness = Ctl.ESPState.Thickness
         end
 
         -- 骨架连线
@@ -3219,7 +3798,7 @@ local function updateESP()
         for i, line in ipairs(bones) do
             local vis = false
             if true then
-                local link = BONE_LINKS[i]
+                local link = Ctl.BONE_LINKS[i]
                 if link then
                     local a = findPart(char, link[1])
                     local b = findPart(char, link[2])
@@ -3230,7 +3809,7 @@ local function updateESP()
                             line.From = Vector2.new(pa.X, pa.Y)
                             line.To = Vector2.new(pb.X, pb.Y)
                             line.Color = drawColor
-                            line.Thickness = ESPState.Thickness
+                            line.Thickness = Ctl.ESPState.Thickness
                             vis = true
                         end
                     end
@@ -3271,14 +3850,14 @@ local function updateESP()
         for i, line in ipairs(box3dLines) do
             local vis = false
             if corners then
-                local e = BOX3D_EDGES[i]
+                local e = Ctl.BOX3D_EDGES[i]
                 local a = corners[e[1]]
                 local b = corners[e[2]]
                 if a and b then
                     line.From = a
                     line.To = b
                     line.Color = drawColor
-                    line.Thickness = ESPState.Thickness
+                    line.Thickness = Ctl.ESPState.Thickness
                     vis = true
                 end
             end
@@ -3297,7 +3876,7 @@ local function updateESP()
                     headDot.Position = Vector2.new(hp2.X, hp2.Y)
                     headDot.Radius = math.clamp(width / 4, 3, 60)
                     headDot.Color = drawColor
-                    headDot.Thickness = ESPState.Thickness
+                    headDot.Thickness = Ctl.ESPState.Thickness
                     headDot.Visible = true
                 end
             end
@@ -3316,7 +3895,7 @@ local function updateESP()
                     viewLine.From = Vector2.new(p1.X, p1.Y)
                     viewLine.To = Vector2.new(p2.X, p2.Y)
                     viewLine.Color = drawColor
-                    viewLine.Thickness = ESPState.Thickness
+                    viewLine.Thickness = Ctl.ESPState.Thickness
                     viewLine.Visible = true
                 end
             end
@@ -3343,8 +3922,8 @@ local function updateESP()
         if obj.Arrow then setVis(obj.Arrow, false) end
 
         -- 信息文本：武器 / 队伍 / 血量数字
-        local infoY = y + height + (ESPState.Health and (barH + 6) or 4)
-            + (ESPState.Distance and (ESPState.TextSize + 2) or 0)
+        local infoY = y + height + (Ctl.ESPState.Health and (barH + 6) or 4)
+            + (Ctl.ESPState.Distance and (Ctl.ESPState.TextSize + 2) or 0)
 
         local wpn = useWeapon and ensureOne(obj, "Weapon", "Text") or nil
         if obj.Weapon and not useWeapon then setVis(obj.Weapon, false) end
@@ -3356,10 +3935,10 @@ local function updateESP()
                     wpn.Text = tostring(tool.Name)
                     wpn.Position = Vector2.new(rootPos.X, infoY)
                     wpn.Color = Color3.new(1, 1, 1)
-                    wpn.Size = ESPState.TextSize - 1
+                    wpn.Size = Ctl.ESPState.TextSize - 1
                     wpn.Visible = true
                 end)
-                infoY = infoY + ESPState.TextSize + 2
+                infoY = infoY + Ctl.ESPState.TextSize + 2
             end
         end
 
@@ -3370,11 +3949,11 @@ local function updateESP()
             pcall(function()
                 tm.Text = "[" .. tostring(plr.Team.Name) .. "]"
                 tm.Position = Vector2.new(rootPos.X, infoY)
-                tm.Color = ESPState.TeamCheck and Color3.fromHex("#315dff") or Color3.new(1, 1, 1)
-                tm.Size = ESPState.TextSize - 1
+                tm.Color = Ctl.ESPState.TeamCheck and Color3.fromHex("#315dff") or Color3.new(1, 1, 1)
+                tm.Size = Ctl.ESPState.TextSize - 1
                 tm.Visible = true
             end)
-            infoY = infoY + ESPState.TextSize + 2
+            infoY = infoY + Ctl.ESPState.TextSize + 2
         elseif tm then
             setVis(tm, false)
         end
@@ -3386,14 +3965,14 @@ local function updateESP()
                 hpTxt.Text = tostring(math.floor(hum.Health)) .. " / " .. tostring(math.floor(hum.MaxHealth))
                 hpTxt.Position = Vector2.new(rootPos.X, infoY)
                 hpTxt.Color = Color3.fromRGB(math.floor(255 * (1 - ratio)), math.floor(255 * ratio), 60)
-                hpTxt.Size = ESPState.TextSize - 1
+                hpTxt.Size = Ctl.ESPState.TextSize - 1
                 hpTxt.Visible = true
             end)
         end
     end
 
     -- 屏幕外箭头：为不在画面内的目标绘制
-    if ESPState.OffScreenArrow and not minimal and ESPState.Enabled then
+    if Ctl.ESPState.OffScreenArrow and not minimal and Ctl.ESPState.Enabled then
         for plr, obj in pairs(ESPDrawings) do
             if plr == LocalPlayer then continue end
             local char = plr.Character
@@ -3401,7 +3980,7 @@ local function updateESP()
             local hum = char and char:FindFirstChildOfClass("Humanoid")
             if hrp and hum and hum.Health > 0 and isEnemy(plr) then
                 local d3 = (hrp.Position - camPos).Magnitude
-                if d3 <= ESPState.MaxDistance then
+                if d3 <= Ctl.ESPState.MaxDistance then
                     local sp, onScreen = Camera:WorldToViewportPoint(hrp.Position)
                     if not onScreen then
                         local dir = Vector2.new(sp.X - screenSize.X / 2, sp.Y - screenSize.Y / 2)
@@ -3428,7 +4007,7 @@ local function updateESP()
                                     pcall(function()
                                         arrow.Text = ch
                                         arrow.Position = Vector2.new(px, py)
-                                        arrow.Color = ESPState.Color
+                                        arrow.Color = Ctl.ESPState.Color
                                         arrow.Size = 20
                                         arrow.Visible = true
                                     end)
@@ -3505,19 +4084,19 @@ local espToggle = safeCreate(TabHandles.ESP, "Toggle", {
             espToggle:Set(false)
             return
         end
-        ESPState.Enabled = state
+        Ctl.ESPState.Enabled = state
         if not state then
             for plr in pairs(ESPDrawings) do hideAll(ESPDrawings[plr]) end
         end
     end
 })
 
-local espSectionDraw = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_DRAW"), Icon = "shapes" })
-Ctl.espBoxToggle = safeCreate(espSectionDraw, "Toggle", { Title = T("ESP_BOX"), Value = ESPState.Box, Callback = function(s) ESPState.Box = s end })
-Ctl.espNameToggle = safeCreate(espSectionDraw, "Toggle", { Title = T("ESP_NAME"), Value = ESPState.Name, Callback = function(s) ESPState.Name = s end })
-Ctl.espDistToggle = safeCreate(espSectionDraw, "Toggle", { Title = T("ESP_DISTANCE"), Value = ESPState.Distance, Callback = function(s) ESPState.Distance = s end })
-Ctl.espHealthToggle = safeCreate(espSectionDraw, "Toggle", { Title = T("ESP_HEALTH"), Value = ESPState.Health, Callback = function(s) ESPState.Health = s end })
-Ctl.espTracerToggle = safeCreate(espSectionDraw, "Toggle", { Title = T("ESP_TRACER"), Value = ESPState.Tracer, Callback = function(s) ESPState.Tracer = s end })
+Ctl.espSectionDraw = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_DRAW"), Icon = "shapes" })
+Ctl.espBoxToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_BOX"), Value = Ctl.ESPState.Box, Callback = function(s) Ctl.ESPState.Box = s end })
+Ctl.espNameToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_NAME"), Value = Ctl.ESPState.Name, Callback = function(s) Ctl.ESPState.Name = s end })
+Ctl.espDistToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_DISTANCE"), Value = Ctl.ESPState.Distance, Callback = function(s) Ctl.ESPState.Distance = s end })
+Ctl.espHealthToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_HEALTH"), Value = Ctl.ESPState.Health, Callback = function(s) Ctl.ESPState.Health = s end })
+Ctl.espTracerToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_TRACER"), Value = Ctl.ESPState.Tracer, Callback = function(s) Ctl.ESPState.Tracer = s end })
 
 safeCreate(TabHandles.ESPPlus, "Paragraph", {
     Title = "ESP 扩展绘制",
@@ -3531,69 +4110,69 @@ safeCreate(TabHandles.ESPPlus, "Divider", {}, "espPlusDivider")
 Ctl.espMinimalToggle = safeCreate(TabHandles.ESPPlus, "Toggle", {
     Title = "最小模式",
     Desc = "开启后只画方框/名字/距离/血条，暂停全部扩展绘制",
-    Value = ESPState.Minimal,
-    Callback = function(v) ESPState.Minimal = v end
+    Value = Ctl.ESPState.Minimal,
+    Callback = function(v) Ctl.ESPState.Minimal = v end
 }, "espMinimalToggle")
 
-local espSectionExt = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_DRAW_EXT"), Icon = "shapes" })
-bindLang(function() setTitleSafe(espSectionExt, T("ESP_DRAW_EXT")) end)
+Ctl.espSectionExt = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_DRAW_EXT"), Icon = "shapes" })
+bindLang(function() setTitleSafe(Ctl.espSectionExt, T("ESP_DRAW_EXT")) end)
 
-Ctl.espSkeletonToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espSkeletonToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_SKELETON"),
     Desc = T("ESP_SKELETON_DESC"),
-    Value = ESPState.Skeleton,
-    Callback = function(v) ESPState.Skeleton = v end
+    Value = Ctl.ESPState.Skeleton,
+    Callback = function(v) Ctl.ESPState.Skeleton = v end
 })
 bindLang(function()
     pcall(function() Ctl.espSkeletonToggle:SetTitle(T("ESP_SKELETON")) end)
     pcall(function() Ctl.espSkeletonToggle:SetDesc(T("ESP_SKELETON_DESC")) end)
 end)
 
-Ctl.espBox3dToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espBox3dToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_BOX3D"),
     Desc = T("ESP_BOX3D_DESC"),
-    Value = ESPState.Box3D,
-    Callback = function(v) ESPState.Box3D = v end
+    Value = Ctl.ESPState.Box3D,
+    Callback = function(v) Ctl.ESPState.Box3D = v end
 })
 bindLang(function()
     pcall(function() Ctl.espBox3dToggle:SetTitle(T("ESP_BOX3D")) end)
     pcall(function() Ctl.espBox3dToggle:SetDesc(T("ESP_BOX3D_DESC")) end)
 end)
 
-Ctl.espHighlightToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espHighlightToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_HIGHLIGHT"),
     Desc = T("ESP_HIGHLIGHT_DESC"),
-    Value = ESPState.Highlight,
-    Callback = function(v) ESPState.Highlight = v end
+    Value = Ctl.ESPState.Highlight,
+    Callback = function(v) Ctl.ESPState.Highlight = v end
 })
 bindLang(function()
     pcall(function() Ctl.espHighlightToggle:SetTitle(T("ESP_HIGHLIGHT")) end)
     pcall(function() Ctl.espHighlightToggle:SetDesc(T("ESP_HIGHLIGHT_DESC")) end)
 end)
 
-Ctl.espHeadDotToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espHeadDotToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_HEADDOT"),
-    Value = ESPState.HeadDot,
-    Callback = function(v) ESPState.HeadDot = v end
+    Value = Ctl.ESPState.HeadDot,
+    Callback = function(v) Ctl.ESPState.HeadDot = v end
 })
 bindLang(function() pcall(function() Ctl.espHeadDotToggle:SetTitle(T("ESP_HEADDOT")) end) end)
 
-Ctl.espViewLineToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espViewLineToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_VIEWLINE"),
     Desc = T("ESP_VIEWLINE_DESC"),
-    Value = ESPState.ViewLine,
-    Callback = function(v) ESPState.ViewLine = v end
+    Value = Ctl.ESPState.ViewLine,
+    Callback = function(v) Ctl.ESPState.ViewLine = v end
 })
 bindLang(function()
     pcall(function() Ctl.espViewLineToggle:SetTitle(T("ESP_VIEWLINE")) end)
     pcall(function() Ctl.espViewLineToggle:SetDesc(T("ESP_VIEWLINE_DESC")) end)
 end)
 
-Ctl.espArrowToggle = safeCreate(espSectionExt, "Toggle", {
+Ctl.espArrowToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_OFFSCREEN"),
     Desc = T("ESP_OFFSCREEN_DESC"),
-    Value = ESPState.OffScreenArrow,
-    Callback = function(v) ESPState.OffScreenArrow = v end
+    Value = Ctl.ESPState.OffScreenArrow,
+    Callback = function(v) Ctl.ESPState.OffScreenArrow = v end
 })
 bindLang(function()
     pcall(function() Ctl.espArrowToggle:SetTitle(T("ESP_OFFSCREEN")) end)
@@ -3601,167 +4180,167 @@ bindLang(function()
 end)
 
 -- 信息显示
-local espSectionInfo = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_INFO"), Icon = "info" })
-bindLang(function() setTitleSafe(espSectionInfo, T("ESP_INFO")) end)
+Ctl.espSectionInfo = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_INFO"), Icon = "info" })
+bindLang(function() setTitleSafe(Ctl.espSectionInfo, T("ESP_INFO")) end)
 
-Ctl.espWeaponToggle = safeCreate(espSectionInfo, "Toggle", {
+Ctl.espWeaponToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_WEAPON"),
-    Value = ESPState.ShowWeapon,
-    Callback = function(v) ESPState.ShowWeapon = v end
+    Value = Ctl.ESPState.ShowWeapon,
+    Callback = function(v) Ctl.ESPState.ShowWeapon = v end
 })
 bindLang(function() pcall(function() Ctl.espWeaponToggle:SetTitle(T("ESP_WEAPON")) end) end)
 
-Ctl.espTeamInfoToggle = safeCreate(espSectionInfo, "Toggle", {
+Ctl.espTeamInfoToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_TEAM"),
-    Value = ESPState.ShowTeam,
-    Callback = function(v) ESPState.ShowTeam = v end
+    Value = Ctl.ESPState.ShowTeam,
+    Callback = function(v) Ctl.ESPState.ShowTeam = v end
 })
 bindLang(function() pcall(function() Ctl.espTeamInfoToggle:SetTitle(T("ESP_TEAM")) end) end)
 
-Ctl.espHpNumToggle = safeCreate(espSectionInfo, "Toggle", {
+Ctl.espHpNumToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_HEALTHNUM"),
-    Value = ESPState.HealthNumber,
-    Callback = function(v) ESPState.HealthNumber = v end
+    Value = Ctl.ESPState.HealthNumber,
+    Callback = function(v) Ctl.ESPState.HealthNumber = v end
 })
 bindLang(function() pcall(function() Ctl.espHpNumToggle:SetTitle(T("ESP_HEALTHNUM")) end) end)
 
-Ctl.espTargetHlToggle = safeCreate(espSectionInfo, "Toggle", {
+Ctl.espTargetHlToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_TARGETHL"),
     Desc = T("ESP_TARGETHL_DESC"),
-    Value = ESPState.TargetHighlight,
-    Callback = function(v) ESPState.TargetHighlight = v end
+    Value = Ctl.ESPState.TargetHighlight,
+    Callback = function(v) Ctl.ESPState.TargetHighlight = v end
 })
 bindLang(function()
     pcall(function() Ctl.espTargetHlToggle:SetTitle(T("ESP_TARGETHL")) end)
     pcall(function() Ctl.espTargetHlToggle:SetDesc(T("ESP_TARGETHL_DESC")) end)
 end)
 
-Ctl.espTargetColor = safeCreate(espSectionInfo, "Colorpicker", {
+Ctl.espTargetColor = safeCreate(Ctl.espSectionInfo, "Colorpicker", {
     Title = T("ESP_TARGETHL"),
-    Default = ESPState.TargetColor,
-    Callback = function(c) ESPState.TargetColor = c end
+    Default = Ctl.ESPState.TargetColor,
+    Callback = function(c) Ctl.ESPState.TargetColor = c end
 })
 
 -- 雷达分区
-local espSectionRadar = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_RADAR_SEC"), Icon = "crosshair" })
-bindLang(function() setTitleSafe(espSectionRadar, T("ESP_RADAR_SEC")) end)
+Ctl.espSectionRadar = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_RADAR_SEC"), Icon = "crosshair" })
+bindLang(function() setTitleSafe(Ctl.espSectionRadar, T("ESP_RADAR_SEC")) end)
 
-Ctl.espRadarToggle = safeCreate(espSectionRadar, "Toggle", {
+Ctl.espRadarToggle = safeCreate(Ctl.espSectionRadar, "Toggle", {
     Title = T("ESP_RADAR"),
     Desc = T("ESP_RADAR_DESC"),
-    Value = ESPState.Radar,
-    Callback = function(v) ESPState.Radar = v end
+    Value = Ctl.ESPState.Radar,
+    Callback = function(v) Ctl.ESPState.Radar = v end
 })
 bindLang(function()
     pcall(function() Ctl.espRadarToggle:SetTitle(T("ESP_RADAR")) end)
     pcall(function() Ctl.espRadarToggle:SetDesc(T("ESP_RADAR_DESC")) end)
 end)
 
-Ctl.espRadarSize = safeCreate(espSectionRadar, "Slider", {
+Ctl.espRadarSize = safeCreate(Ctl.espSectionRadar, "Slider", {
     Title = T("RADAR_SIZE"),
-    Value = { Min = 80, Max = 300, Default = ESPState.RadarSize },
+    Value = { Min = 80, Max = 300, Default = Ctl.ESPState.RadarSize },
     Step = 10,
-    Callback = function(v) ESPState.RadarSize = tonumber(v) or 150 end
+    Callback = function(v) Ctl.ESPState.RadarSize = tonumber(v) or 150 end
 })
 bindLang(function() pcall(function() Ctl.espRadarSize:SetTitle(T("RADAR_SIZE")) end) end)
 
-Ctl.espRadarRange = safeCreate(espSectionRadar, "Slider", {
+Ctl.espRadarRange = safeCreate(Ctl.espSectionRadar, "Slider", {
     Title = T("RADAR_RANGE"),
     Desc = T("RADAR_RANGE_DESC"),
-    Value = { Min = 50, Max = 1000, Default = ESPState.RadarRange },
+    Value = { Min = 50, Max = 1000, Default = Ctl.ESPState.RadarRange },
     Step = 50,
-    Callback = function(v) ESPState.RadarRange = tonumber(v) or 150 end
+    Callback = function(v) Ctl.ESPState.RadarRange = tonumber(v) or 150 end
 })
 bindLang(function()
     pcall(function() Ctl.espRadarRange:SetTitle(T("RADAR_RANGE")) end)
     pcall(function() Ctl.espRadarRange:SetDesc(T("RADAR_RANGE_DESC")) end)
 end)
 
-Ctl.espRadarPos = safeCreate(espSectionRadar, "Dropdown", {
+Ctl.espRadarPos = safeCreate(Ctl.espSectionRadar, "Dropdown", {
     Title = T("RADAR_POS"),
     Values = { "右下", "右上", "左下", "左上" },
-    Value = ESPState.RadarPos,
-    Callback = function(v) ESPState.RadarPos = v end
+    Value = Ctl.ESPState.RadarPos,
+    Callback = function(v) Ctl.ESPState.RadarPos = v end
 })
 bindLang(function() pcall(function() Ctl.espRadarPos:SetTitle(T("RADAR_POS")) end) end)
 
-local espSectionUnit = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_UNIT"), Icon = "type" })
-bindLang(function() setTitleSafe(espSectionUnit, T("ESP_UNIT")) end)
+Ctl.espSectionUnit = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_UNIT"), Icon = "type" })
+bindLang(function() setTitleSafe(Ctl.espSectionUnit, T("ESP_UNIT")) end)
 
-Ctl.espUnitDropdown = safeCreate(espSectionUnit, "Dropdown", {
+Ctl.espUnitDropdown = safeCreate(Ctl.espSectionUnit, "Dropdown", {
     Title = T("ESP_UNIT"),
     Desc = T("ESP_UNIT_DESC"),
     Values = { T("UNIT_STUD"), T("UNIT_M"), T("UNIT_KM") },
-    Value = T(ESPState.DistanceUnit),
+    Value = T(Ctl.ESPState.DistanceUnit),
     Callback = function(v)
         for _, key in ipairs({ "UNIT_STUD", "UNIT_M", "UNIT_KM" }) do
-            if v == T(key) then ESPState.DistanceUnit = key; break end
+            if v == T(key) then Ctl.ESPState.DistanceUnit = key; break end
         end
     end
 })
 bindLang(function()
     pcall(function() Ctl.espUnitDropdown:SetTitle(T("ESP_UNIT")) end)
     pcall(function()
-        Ctl.espUnitDropdown:Select(T(ESPState.DistanceUnit))
+        Ctl.espUnitDropdown:Select(T(Ctl.ESPState.DistanceUnit))
     end)
 end)
 
-Ctl.espUnitScale = safeCreate(espSectionUnit, "Slider", {
+Ctl.espUnitScale = safeCreate(Ctl.espSectionUnit, "Slider", {
     Title = T("UNIT_SCALE"),
     Desc = T("UNIT_SCALE_DESC"),
-    Value = { Min = 5, Max = 100, Default = math.floor((ESPState.UnitScale or 0.28) * 100 + 0.5) },
+    Value = { Min = 5, Max = 100, Default = math.floor((Ctl.ESPState.UnitScale or 0.28) * 100 + 0.5) },
     Step = 1,
-    Callback = function(v) ESPState.UnitScale = (tonumber(v) or 28) / 100 end
+    Callback = function(v) Ctl.ESPState.UnitScale = (tonumber(v) or 28) / 100 end
 })
 bindLang(function() pcall(function() Ctl.espUnitScale:SetTitle(T("UNIT_SCALE")) end) end)
 
-local espSectionName = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_NAMESEC"), Icon = "type" })
-Ctl.espNameMode = safeCreate(espSectionName, "Dropdown", {
+Ctl.espSectionName = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_NAMESEC"), Icon = "type" })
+Ctl.espNameMode = safeCreate(Ctl.espSectionName, "Dropdown", {
     Title = T("ESP_NAMESRC"),
     Desc = T("ESP_NAMESRC_DESC"),
     Values = { "用户名", "显示名", "两者" },
-    Value = ESPState.NameMode,
-    Callback = function(v) ESPState.NameMode = v end
+    Value = Ctl.ESPState.NameMode,
+    Callback = function(v) Ctl.ESPState.NameMode = v end
 })
-Ctl.espFontDropdown = safeCreate(espSectionName, "Dropdown", {
+Ctl.espFontDropdown = safeCreate(Ctl.espSectionName, "Dropdown", {
     Title = T("ESP_FONT"),
     Desc = T("ESP_FONT_DESC"),
     Values = { "UI", "Roblox", "System", "Code", "Plex", "Monospace" },
-    Value = ESPState.FontName,
+    Value = Ctl.ESPState.FontName,
     Callback = function(v)
-        ESPState.FontName = v
+        Ctl.ESPState.FontName = v
         for _, o in pairs(ESPDrawings) do applyFont(o.Name); applyFont(o.Dist) end
     end
 })
-Ctl.espAsciiToggle = safeCreate(espSectionName, "Toggle", {
+Ctl.espAsciiToggle = safeCreate(Ctl.espSectionName, "Toggle", {
     Title = T("ESP_ASCII"),
     Desc = T("ESP_ASCII_DESC"),
-    Value = ESPState.AsciiFallback,
-    Callback = function(v) ESPState.AsciiFallback = v end
+    Value = Ctl.ESPState.AsciiFallback,
+    Callback = function(v) Ctl.ESPState.AsciiFallback = v end
 })
 
-local espSectionFilter = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_FILTER"), Icon = "filter" })
-Ctl.espTeamToggle = safeCreate(espSectionFilter, "Toggle", { Title = T("ESP_TEAM"), Desc = T("ESP_TEAM_DESC"), Value = ESPState.TeamCheck, Callback = function(s) ESPState.TeamCheck = s end })
-Ctl.espLosToggle = safeCreate(espSectionFilter, "Toggle", { Title = T("ESP_LOS"), Desc = T("ESP_LOS_DESC"), Value = ESPState.VisibleCheck, Callback = function(s) ESPState.VisibleCheck = s end })
+Ctl.espSectionFilter = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_FILTER"), Icon = "filter" })
+Ctl.espTeamToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_TEAM"), Desc = T("ESP_TEAM_DESC"), Value = Ctl.ESPState.TeamCheck, Callback = function(s) Ctl.ESPState.TeamCheck = s end })
+Ctl.espLosToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_LOS"), Desc = T("ESP_LOS_DESC"), Value = Ctl.ESPState.VisibleCheck, Callback = function(s) Ctl.ESPState.VisibleCheck = s end })
 
-Ctl.espDistSlider = safeCreate(espSectionFilter, "Slider", {
+Ctl.espDistSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_MAXDIST"),
     Desc = T("ESP_MAXDIST_DESC"),
-    Value = { Min = 50, Max = 3000, Default = ESPState.MaxDistance },
+    Value = { Min = 50, Max = 3000, Default = Ctl.ESPState.MaxDistance },
     Step = 50,
-    Callback = function(v) ESPState.MaxDistance = tonumber(v) or ESPState.MaxDistance end
+    Callback = function(v) Ctl.ESPState.MaxDistance = tonumber(v) or Ctl.ESPState.MaxDistance end
 })
-Ctl.espThickSlider = safeCreate(espSectionFilter, "Slider", {
+Ctl.espThickSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_THICK"),
-    Value = { Min = 1, Max = 5, Default = ESPState.Thickness },
+    Value = { Min = 1, Max = 5, Default = Ctl.ESPState.Thickness },
     Step = 1,
-    Callback = function(v) ESPState.Thickness = tonumber(v) or 1 end
+    Callback = function(v) Ctl.ESPState.Thickness = tonumber(v) or 1 end
 })
-Ctl.espTextSlider = safeCreate(espSectionFilter, "Slider", {
+Ctl.espTextSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_TEXTSIZE"),
-    Value = { Min = 10, Max = 24, Default = ESPState.TextSize },
+    Value = { Min = 10, Max = 24, Default = Ctl.ESPState.TextSize },
     Step = 1,
-    Callback = function(v) ESPState.TextSize = tonumber(v) or 14 end
+    Callback = function(v) Ctl.ESPState.TextSize = tonumber(v) or 14 end
 })
 bindLang(function() setTitleSafe(TabHandles.Profile, T("PROFILE_TAB")) end)
 bindLang(function() setTitleSafe(TabHandles.ESP, T("ESP_TAB")) end)
@@ -3782,7 +4361,7 @@ end)
 local UserInputService = game:GetService("UserInputService")
 Camera = workspace.CurrentCamera or Camera
 
-local AimState = {
+Ctl.AimState = {
     Enabled = false,
     Mode = "CFrame",
     HoldMode = true,
@@ -3827,7 +4406,7 @@ if not AimbotFOVCircle then aimbotSupported = false end
 -- 目标部位
 local function getAimPart(char)
     if not char then return nil end
-    if AimState.Part == "头部" then
+    if Ctl.AimState.Part == "头部" then
         return char:FindFirstChild("Head")
     end
     return char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Head")
@@ -3845,12 +4424,12 @@ local function findAimTarget()
             local part = getAimPart(char)
             if part and hum and hum.Health > 0 then
                 local dist3d = (part.Position - Camera.CFrame.Position).Magnitude
-                if dist3d <= AimState.MaxDistance then
+                if dist3d <= Ctl.AimState.MaxDistance then
                     local sp, onScreen = Camera:WorldToViewportPoint(part.Position)
                     if onScreen then
                         local sd = (Vector2.new(sp.X, sp.Y) - center).Magnitude
-                        if sd <= AimState.FOV and sd < bestDist then
-                            if (not AimState.VisibleCheck) or hasLineOfSight(part) then
+                        if sd <= Ctl.AimState.FOV and sd < bestDist then
+                            if (not Ctl.AimState.VisibleCheck) or hasLineOfSight(part) then
                                 best, bestDist = part, sd
                             end
                         end
@@ -3864,44 +4443,44 @@ end
 
 -- 触发键判定
 local function triggerActive()
-    if AimState.Trigger == "常开" then return true end
+    if Ctl.AimState.Trigger == "常开" then return true end
     return holdingTrigger
 end
 
 UserInputService.InputBegan:Connect(function(input, gpe)
     if gpe then return end
-    local want = (AimState.Trigger == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
-        or (AimState.Trigger == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
+    local want = (Ctl.AimState.Trigger == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
+        or (Ctl.AimState.Trigger == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
     if want then holdingTrigger = true end
 end)
 UserInputService.InputEnded:Connect(function(input)
-    local want = (AimState.Trigger == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
-        or (AimState.Trigger == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
+    local want = (Ctl.AimState.Trigger == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
+        or (Ctl.AimState.Trigger == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
     if want then holdingTrigger = false end
 end)
 
 RunService.RenderStepped:Connect(function()
     if AimbotFOVCircle then
-        AimbotFOVCircle.Visible = AimState.Enabled and AimState.ShowFOV
-        AimbotFOVCircle.Radius = AimState.FOV
+        AimbotFOVCircle.Visible = Ctl.AimState.Enabled and Ctl.AimState.ShowFOV
+        AimbotFOVCircle.Radius = Ctl.AimState.FOV
         AimbotFOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-        AimbotFOVCircle.Color = AimState.Color
+        AimbotFOVCircle.Color = Ctl.AimState.Color
     end
-    if (not AimState.Enabled) or (not triggerActive()) then return end
+    if (not Ctl.AimState.Enabled) or (not triggerActive()) then return end
 
     local target = findAimTarget()
     if not target then return end
 
-    if AimState.Mode == "Mouse" then
+    if Ctl.AimState.Mode == "Mouse" then
         local sp = Camera:WorldToViewportPoint(target.Position)
         local center = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
-        local dx = (sp.X - center.X) * AimState.Smoothness
-        local dy = (sp.Y - center.Y) * AimState.Smoothness
+        local dx = (sp.X - center.X) * Ctl.AimState.Smoothness
+        local dy = (sp.Y - center.Y) * Ctl.AimState.Smoothness
         pcall(function() mousemoverel(dx, dy) end)
     else
         local cf = CFrame.new(Camera.CFrame.Position, target.Position)
-        local goal = Camera.CFrame:Lerp(cf, math.clamp(AimState.Smoothness, 0.01, 1))
-        if AimState.CamMode == "Hook 拦截" and CamHookInstalled then
+        local goal = Camera.CFrame:Lerp(cf, math.clamp(Ctl.AimState.Smoothness, 0.01, 1))
+        if Ctl.AimState.CamMode == "Hook 拦截" and CamHookInstalled then
             CamDesiredCFrame = goal
             pcall(function() Camera.CFrame = goal end)
         else
@@ -3925,42 +4504,42 @@ local aimToggle = safeCreate(TabHandles.Aimbot, "Toggle", {
     Desc = T("AIM_ENABLE_DESC"),
     Value = false,
     Callback = function(state)
-        AimState.Enabled = state
+        Ctl.AimState.Enabled = state
     end
 })
 
-local aimSectionBasic = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_BASIC"), Icon = "target" })
-local aimModeDropdown = safeCreate(aimSectionBasic, "Dropdown", {
+Ctl.aimSectionBasic = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_BASIC"), Icon = "target" })
+local aimModeDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_MODE"),
     Desc = T("AIM_MODE_DESC"),
     Values = { "CFrame", "Mouse" },
-    Value = AimState.Mode,
-    Callback = function(v) AimState.Mode = v end
+    Value = Ctl.AimState.Mode,
+    Callback = function(v) Ctl.AimState.Mode = v end
 })
-local aimTriggerDropdown = safeCreate(aimSectionBasic, "Dropdown", {
+local aimTriggerDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_TRIGGER"),
     Values = { "右键", "左键", "常开" },
     Value = "常开",
-    Callback = function(v) AimState.Trigger = v; holdingTrigger = false end
+    Callback = function(v) Ctl.AimState.Trigger = v; holdingTrigger = false end
 })
-local aimPartDropdown = safeCreate(aimSectionBasic, "Dropdown", {
+local aimPartDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_PART"),
     Values = { "头部", "躯干" },
-    Value = AimState.Part,
-    Callback = function(v) AimState.Part = v end
+    Value = Ctl.AimState.Part,
+    Callback = function(v) Ctl.AimState.Part = v end
 })
-local aimSmoothSlider = safeCreate(aimSectionBasic, "Slider", {
+local aimSmoothSlider = safeCreate(Ctl.aimSectionBasic, "Slider", {
     Title = T("AIM_SMOOTH"),
     Desc = T("AIM_SMOOTH_DESC"),
-    Value = { Min = 0.05, Max = 1, Default = AimState.Smoothness },
+    Value = { Min = 0.05, Max = 1, Default = Ctl.AimState.Smoothness },
     Step = 0.05,
-    Callback = function(v) AimState.Smoothness = tonumber(v) or 0.35 end
+    Callback = function(v) Ctl.AimState.Smoothness = tonumber(v) or 0.35 end
 })
 
-local aimSectionCam = safeCreate(TabHandles.Aimbot, "Section", { Title = T("CAM_SEC"), Icon = "video" })
-bindLang(function() setTitleSafe(aimSectionCam, T("CAM_SEC")) end)
+Ctl.aimSectionCam = safeCreate(TabHandles.Aimbot, "Section", { Title = T("CAM_SEC"), Icon = "video" })
+bindLang(function() setTitleSafe(Ctl.aimSectionCam, T("CAM_SEC")) end)
 
-safeCreate(aimSectionCam, "Button", {
+safeCreate(Ctl.aimSectionCam, "Button", {
     Title = T("CAM_CHECK"),
     Desc = T("CAM_CHECK_DESC"),
     Icon = "search",
@@ -3984,13 +4563,13 @@ safeCreate(aimSectionCam, "Button", {
     end
 })
 
-local aimCamMode = safeCreate(aimSectionCam, "Dropdown", {
+local aimCamMode = safeCreate(Ctl.aimSectionCam, "Dropdown", {
     Title = T("CAM_MODE"),
     Desc = T("CAM_MODE_DESC"),
     Values = { "直接写", "Hook 拦截" },
-    Value = AimState.CamMode,
+    Value = Ctl.AimState.CamMode,
     Callback = function(v)
-        AimState.CamMode = v
+        Ctl.AimState.CamMode = v
         if v == "Hook 拦截" then
             local ok = installCameraHook()
             WindUI:Notify({
@@ -4004,47 +4583,47 @@ local aimCamMode = safeCreate(aimSectionCam, "Dropdown", {
 })
 bindLang(function() pcall(function() aimCamMode:SetTitle(T("CAM_MODE")) end) end)
 
-local aimSectionFilter = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_FILTER"), Icon = "filter" })
-local aimFovSlider = safeCreate(aimSectionFilter, "Slider", {
+Ctl.aimSectionFilter = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_FILTER"), Icon = "filter" })
+local aimFovSlider = safeCreate(Ctl.aimSectionFilter, "Slider", {
     Title = T("AIM_FOV"),
     Desc = T("AIM_FOV_DESC"),
-    Value = { Min = 30, Max = 500, Default = AimState.FOV },
+    Value = { Min = 30, Max = 500, Default = Ctl.AimState.FOV },
     Step = 10,
-    Callback = function(v) AimState.FOV = tonumber(v) or 150 end
+    Callback = function(v) Ctl.AimState.FOV = tonumber(v) or 150 end
 })
-local aimDistSlider = safeCreate(aimSectionFilter, "Slider", {
+local aimDistSlider = safeCreate(Ctl.aimSectionFilter, "Slider", {
     Title = T("AIM_MAXDIST"),
-    Value = { Min = 50, Max = 2000, Default = AimState.MaxDistance },
+    Value = { Min = 50, Max = 2000, Default = Ctl.AimState.MaxDistance },
     Step = 50,
-    Callback = function(v) AimState.MaxDistance = tonumber(v) or 300 end
+    Callback = function(v) Ctl.AimState.MaxDistance = tonumber(v) or 300 end
 })
-local aimTeamToggle = safeCreate(aimSectionFilter, "Toggle", {
+local aimTeamToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_TEAM"),
-    Value = AimState.TeamCheck,
-    Callback = function(v) AimState.TeamCheck = v end
+    Value = Ctl.AimState.TeamCheck,
+    Callback = function(v) Ctl.AimState.TeamCheck = v end
 })
-local aimVisibleToggle = safeCreate(aimSectionFilter, "Toggle", {
+local aimVisibleToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_VIS"),
     Desc = T("AIM_VIS_DESC"),
-    Value = AimState.VisibleCheck,
-    Callback = function(v) AimState.VisibleCheck = v end
+    Value = Ctl.AimState.VisibleCheck,
+    Callback = function(v) Ctl.AimState.VisibleCheck = v end
 })
-local aimShowFovToggle = safeCreate(aimSectionFilter, "Toggle", {
+local aimShowFovToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_SHOWFOV"),
-    Value = AimState.ShowFOV,
-    Callback = function(v) AimState.ShowFOV = v end
+    Value = Ctl.AimState.ShowFOV,
+    Callback = function(v) Ctl.AimState.ShowFOV = v end
 })
-local aimColor = safeCreate(aimSectionFilter, "Colorpicker", {
+local aimColor = safeCreate(Ctl.aimSectionFilter, "Colorpicker", {
     Title = T("AIM_FOVCOLOR"),
-    Default = AimState.Color,
-    Callback = function(c) AimState.Color = c end
+    Default = Ctl.AimState.Color,
+    Callback = function(c) Ctl.AimState.Color = c end
 })
 
 -- TriggerBot
-local tbSection = safeCreate(TabHandles.Aimbot, "Section", { Title = T("TB_SEC"), Icon = "zap" })
-bindLang(function() setTitleSafe(tbSection, T("TB_SEC")) end)
+Ctl.tbSection = safeCreate(TabHandles.Aimbot, "Section", { Title = T("TB_SEC"), Icon = "zap" })
+bindLang(function() setTitleSafe(Ctl.tbSection, T("TB_SEC")) end)
 
-local tbToggle = safeCreate(tbSection, "Toggle", {
+local tbToggle = safeCreate(Ctl.tbSection, "Toggle", {
     Title = T("TB_ENABLE"),
     Desc = T("TB_ENABLE_DESC"),
     Value = TBState.Enabled,
@@ -4065,7 +4644,7 @@ end)
 
 local FireRemote = nil   -- 手动指定的开火 Remote
 
-local tbMethod = safeCreate(tbSection, "Dropdown", {
+local tbMethod = safeCreate(Ctl.tbSection, "Dropdown", {
     Title = T("TB_METHOD"),
     Desc = T("TB_METHOD_DESC"),
     Values = { "自动", "Remote 调用", "mouse1press", "mouse1click", "VirtualInputManager" },
@@ -4105,7 +4684,7 @@ local function refreshFireRemoteList()
     return names
 end
 
-fireRemoteDropdown = safeCreate(tbSection, "Dropdown", {
+fireRemoteDropdown = safeCreate(Ctl.tbSection, "Dropdown", {
     Title = "开火 Remote",
     Desc = "先开子追的 Remote 模式开几枪捕获，再在这里选",
     Values = refreshFireRemoteList(),
@@ -4116,7 +4695,7 @@ fireRemoteDropdown = safeCreate(tbSection, "Dropdown", {
     end
 })
 
-Ctl.tbRemoteFire = safeCreate(tbSection, "Toggle", {
+Ctl.tbRemoteFire = safeCreate(Ctl.tbSection, "Toggle", {
     Title = "用 Remote 开火",
     Desc = "直接调用选中的开火 Remote，绕过模拟输入",
     Value = false,
@@ -4129,7 +4708,7 @@ Ctl.tbRemoteFire = safeCreate(tbSection, "Toggle", {
     end
 })
 
-safeCreate(tbSection, "Button", {
+safeCreate(Ctl.tbSection, "Button", {
     Title = "测试 Remote 开火",
     Icon = "play",
     Callback = function()
@@ -4147,7 +4726,7 @@ safeCreate(tbSection, "Button", {
     end
 })
 
-Ctl.tbDelay = safeCreate(tbSection, "Slider", {
+Ctl.tbDelay = safeCreate(Ctl.tbSection, "Slider", {
     Title = T("TB_DELAY"),
     Desc = T("TB_DELAY_DESC"),
     Value = { Min = 0, Max = 500, Default = TBState.Delay },
@@ -4156,7 +4735,7 @@ Ctl.tbDelay = safeCreate(tbSection, "Slider", {
 })
 bindLang(function() pcall(function() Ctl.tbDelay:SetTitle(T("TB_DELAY")) end) end)
 
-Ctl.tbCooldown = safeCreate(tbSection, "Slider", {
+Ctl.tbCooldown = safeCreate(Ctl.tbSection, "Slider", {
     Title = T("TB_COOLDOWN"),
     Desc = T("TB_COOLDOWN_DESC"),
     Value = { Min = 50, Max = 1000, Default = TBState.Cooldown },
@@ -4165,7 +4744,7 @@ Ctl.tbCooldown = safeCreate(tbSection, "Slider", {
 })
 bindLang(function() pcall(function() Ctl.tbCooldown:SetTitle(T("TB_COOLDOWN")) end) end)
 
-Ctl.tbBurst = safeCreate(tbSection, "Toggle", {
+Ctl.tbBurst = safeCreate(Ctl.tbSection, "Toggle", {
     Title = T("TB_BURST"),
     Desc = T("TB_BURST_DESC"),
     Value = TBState.Burst,
@@ -4176,14 +4755,14 @@ bindLang(function()
     pcall(function() Ctl.tbBurst:SetDesc(T("TB_BURST_DESC")) end)
 end)
 
-Ctl.tbOnlyVis = safeCreate(tbSection, "Toggle", {
+Ctl.tbOnlyVis = safeCreate(Ctl.tbSection, "Toggle", {
     Title = T("TB_ONLYVIS"),
     Value = TBState.OnlyVisible,
     Callback = function(v) TBState.OnlyVisible = v end
 })
 bindLang(function() pcall(function() Ctl.tbOnlyVis:SetTitle(T("TB_ONLYVIS")) end) end)
 
-Ctl.tbUseBullet = safeCreate(tbSection, "Toggle", {
+Ctl.tbUseBullet = safeCreate(Ctl.tbSection, "Toggle", {
     Title = T("TB_HITCHK"),
     Desc = T("TB_HITCHK_DESC"),
     Value = TBState.UseBulletTarget,
@@ -4194,7 +4773,7 @@ bindLang(function()
     pcall(function() Ctl.tbUseBullet:SetDesc(T("TB_HITCHK_DESC")) end)
 end)
 
-safeCreate(tbSection, "Button", {
+safeCreate(Ctl.tbSection, "Button", {
     Title = T("TB_TEST"),
     Desc = T("TB_TEST_DESC"),
     Icon = "play",
@@ -4215,10 +4794,10 @@ safeCreate(TabHandles.Aimbot, "Button", {
     Title = T("AIM_RESET"),
     Icon = "refresh-cw",
     Callback = function()
-        AimState.Mode = "CFrame"; AimState.Trigger = "常开"; AimState.Part = "头部"
-        AimState.Smoothness = 0.35; AimState.FOV = 150; AimState.MaxDistance = 300
-        AimState.TeamCheck = true; AimState.VisibleCheck = true; AimState.ShowFOV = true
-        AimState.CamMode = "直接写"
+        Ctl.AimState.Mode = "CFrame"; Ctl.AimState.Trigger = "常开"; Ctl.AimState.Part = "头部"
+        Ctl.AimState.Smoothness = 0.35; Ctl.AimState.FOV = 150; Ctl.AimState.MaxDistance = 300
+        Ctl.AimState.TeamCheck = true; Ctl.AimState.VisibleCheck = true; Ctl.AimState.ShowFOV = true
+        Ctl.AimState.CamMode = "直接写"
         pcall(function() aimCamMode:Select("直接写") end)
         aimModeDropdown:Select("CFrame"); aimTriggerDropdown:Select("常开"); aimPartDropdown:Select("头部")
         aimSmoothSlider:Set(0.35); aimFovSlider:Set(150); aimDistSlider:Set(300)
@@ -4228,7 +4807,7 @@ safeCreate(TabHandles.Aimbot, "Button", {
 -- ======================= 自瞄模块结束 =======================
 
 -- ========================= 子弹追踪（子追）模块 =========================
-local BulletState = {
+Ctl.BulletState = {
     Enabled = false,          -- 总开关
     Mode = "射线重定向",       -- 射线重定向 / 命中点覆盖
     Part = "头部",             -- 头部 / 躯干
@@ -4269,7 +4848,7 @@ local hookInstalled = false
 
 local function getBulletPart(char)
     if not char then return nil end
-    if BulletState.Part == "头部" then
+    if Ctl.BulletState.Part == "头部" then
         return char:FindFirstChild("Head")
     end
     return char:FindFirstChild("HumanoidRootPart") or char:FindFirstChild("Head")
@@ -4277,14 +4856,14 @@ end
 
 -- 命中率判定
 local function rollHitChance()
-    if BulletState.HitChance >= 100 then return true end
-    if BulletState.HitChance <= 0 then return false end
-    return math.random(1, 100) <= BulletState.HitChance
+    if Ctl.BulletState.HitChance >= 100 then return true end
+    if Ctl.BulletState.HitChance <= 0 then return false end
+    return math.random(1, 100) <= Ctl.BulletState.HitChance
 end
 
 -- 找追踪目标
 local function findBulletTarget()
-    if BulletState.FollowAimbot and AimState and AimState.Enabled then
+    if Ctl.BulletState.FollowAimbot and Ctl.AimState and Ctl.AimState.Enabled then
         local ok, t = pcall(findAimTarget)
         if ok and t then return t end
     end
@@ -4292,20 +4871,20 @@ local function findBulletTarget()
     local best, bestDist = nil, math.huge
     for _, plr in ipairs(Players:GetPlayers()) do
         if plr ~= LocalPlayer then
-            local skipTeam = BulletState.TeamCheck and isEnemy(plr) == false
+            local skipTeam = Ctl.BulletState.TeamCheck and isEnemy(plr) == false
             if not skipTeam then
                 local char = plr.Character
                 local hum = char and char:FindFirstChildOfClass("Humanoid")
                 local part = getBulletPart(char)
                 if part and hum and hum.Health > 0 then
                     local d3 = (part.Position - Camera.CFrame.Position).Magnitude
-                    if d3 <= BulletState.MaxDistance then
+                    if d3 <= Ctl.BulletState.MaxDistance then
                         local sp, onScreen = Camera:WorldToViewportPoint(part.Position)
                         if onScreen then
                             local sd = (Vector2.new(sp.X, sp.Y) - center).Magnitude
-                            if sd <= BulletState.FOV and sd < bestDist then
-                                local pass = BulletState.Wallbang
-                                    or (not BulletState.VisibleCheck)
+                            if sd <= Ctl.BulletState.FOV and sd < bestDist then
+                                local pass = Ctl.BulletState.Wallbang
+                                    or (not Ctl.BulletState.VisibleCheck)
                                     or hasLineOfSight(part)
                                 if pass then
                                     best, bestDist = part, sd
@@ -4365,7 +4944,7 @@ local function redirectProjectile(p, v)
 end
 
 local function updateProjectiles()
-    if not (BulletState.Enabled and BulletState.Mode == "抛射物重定向") then
+    if not (Ctl.BulletState.Enabled and Ctl.BulletState.Mode == "抛射物重定向") then
         if #Projectiles > 0 then for i = #Projectiles, 1, -1 do Projectiles[i] = nil end end
         return
     end
@@ -4383,8 +4962,8 @@ local function updateProjectiles()
                 table.remove(Projectiles, i)
             else
                 local v = p.Velocity
-                if v.Magnitude >= BulletState.ProjMinSpeed then
-                    if (p.Position - myHRP.Position).Magnitude <= BulletState.ProjRange then
+                if v.Magnitude >= Ctl.BulletState.ProjMinSpeed then
+                    if (p.Position - myHRP.Position).Magnitude <= Ctl.BulletState.ProjRange then
                         if rollHitChance() then redirectProjectile(p, v) end
                     end
                 end
@@ -4412,7 +4991,7 @@ local function updateHitbox()
     end
     local wanted = {}
     for _, plr in ipairs(Players:GetPlayers()) do
-        if plr ~= LocalPlayer and (not BulletState.TeamCheck or isEnemy(plr)) then
+        if plr ~= LocalPlayer and (not Ctl.BulletState.TeamCheck or isEnemy(plr)) then
             local char = plr.Character
             local hum = char and char:FindFirstChildOfClass("Humanoid")
             if hum and hum.Health > 0 then
@@ -4421,9 +5000,9 @@ local function updateHitbox()
                     or char:FindFirstChild("HumanoidRootPart")
                 if part then
                     local d3 = (part.Position - Camera.CFrame.Position).Magnitude
-                    if d3 <= BulletState.MaxDistance then
-                        local vis = BulletState.Wallbang
-                            or (not BulletState.VisibleCheck)
+                    if d3 <= Ctl.BulletState.MaxDistance then
+                        local vis = Ctl.BulletState.Wallbang
+                            or (not Ctl.BulletState.VisibleCheck)
                             or hasLineOfSight(part)
                         if vis then wanted[part] = true end
                     end
@@ -4464,7 +5043,7 @@ local mousemoveFn = rawget(_G, "mousemoverel") or rawget(getfenv(0), "mousemover
 local mouseWarned = false
 
 local function bulletMouseSnap()
-    if not (BulletState.Enabled and BulletState.Impl == "Mouse") then return end
+    if not (Ctl.BulletState.Enabled and Ctl.BulletState.Impl == "Mouse") then return end
     if not rollHitChance() then return end
     local t = findBulletTarget()
     if not t then return end
@@ -4498,9 +5077,9 @@ end
 
 UserInputService.InputBegan:Connect(function(input, gpe)
     if gpe then return end
-    if not (BulletState.Enabled and BulletState.Impl == "Mouse") then return end
-    local want = (BulletState.FireKey == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
-        or (BulletState.FireKey == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
+    if not (Ctl.BulletState.Enabled and Ctl.BulletState.Impl == "Mouse") then return end
+    local want = (Ctl.BulletState.FireKey == "左键" and input.UserInputType == Enum.UserInputType.MouseButton1)
+        or (Ctl.BulletState.FireKey == "右键" and input.UserInputType == Enum.UserInputType.MouseButton2)
     if want then
         task.defer(bulletMouseSnap)
     end
@@ -4539,8 +5118,8 @@ local function installCameraHook()
         local oldNewIndex = mt.__newindex
         HookEnv.setreadonly(mt, false)
         mt.__newindex = HookEnv.newcclosure(function(t, k, v)
-            if k == "CFrame" and type(t) == "userdata" and AimState.Enabled
-                and AimState.CamMode == "Hook 拦截" and CamDesiredCFrame then
+            if k == "CFrame" and type(t) == "userdata" and Ctl.AimState.Enabled
+                and Ctl.AimState.CamMode == "Hook 拦截" and CamDesiredCFrame then
                 return oldNewIndex(t, k, CamDesiredCFrame)
             end
             return oldNewIndex(t, k, v)
@@ -4609,7 +5188,7 @@ end
 
 -- 判断准星下是否是敌人
 local function crosshairOnEnemy()
-    if TBState.UseBulletTarget and BulletState and BulletState.Enabled and CurrentBulletTarget then
+    if TBState.UseBulletTarget and Ctl.BulletState and Ctl.BulletState.Enabled and CurrentBulletTarget then
         return true
     end
     local cam = workspace.CurrentCamera
@@ -4621,11 +5200,11 @@ local function crosshairOnEnemy()
             local part = char and (char:FindFirstChild("Head") or char:FindFirstChild("HumanoidRootPart"))
             if part and hum and hum.Health > 0 then
                 local d3 = (part.Position - cam.CFrame.Position).Magnitude
-                if d3 <= AimState.MaxDistance then
+                if d3 <= Ctl.AimState.MaxDistance then
                     local sp, onScreen = cam:WorldToViewportPoint(part.Position)
                     if onScreen then
                         local sd = (Vector2.new(sp.X, sp.Y) - center).Magnitude
-                        if sd <= AimState.FOV then
+                        if sd <= Ctl.AimState.FOV then
                             if (not TBState.OnlyVisible) or hasLineOfSight(part) then
                                 return true
                             end
@@ -4654,7 +5233,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- 安装 hook（只装一次，靠 BulletState.Enabled 控制是否生效）
+-- 安装 hook（只装一次，靠 Ctl.BulletState.Enabled 控制是否生效）
 local function installBulletHook()
     if hookInstalled then return hookReady end
     if not (HookEnv.getrawmetatable and HookEnv.setreadonly and HookEnv.newcclosure) then
@@ -4683,7 +5262,7 @@ local function installBulletHook()
             pcall(function() method = HookEnv.getnamecallmethod() end)
             local args = { ... }
 
-            if BulletState.Enabled and BulletState.Mode == "射线重定向" then
+            if Ctl.BulletState.Enabled and Ctl.BulletState.Mode == "射线重定向" then
                 local hit = rollHitChance()
                 local t = findBulletTarget()
                 if hit and t then
@@ -4699,7 +5278,7 @@ local function installBulletHook()
                             local r = toTargetRay(args[1], args[2].Magnitude)
                             if r then
                                 args[2] = r
-                                if BulletState.Wallbang then
+                                if Ctl.BulletState.Wallbang then
                                     args[3] = makeTargetParams(t)
                                 end
                             end
@@ -4710,7 +5289,7 @@ local function installBulletHook()
                             if r then args[1] = Ray.new(args[1].Origin, r) end
                         end
                         -- 穿墙：改用白名单版本，只命中目标角色
-                        if BulletState.Wallbang and #args >= 1 and typeof(args[1]) == "Ray" then
+                        if Ctl.BulletState.Wallbang and #args >= 1 and typeof(args[1]) == "Ray" then
                             local ok2, res2 = pcall(function()
                                 return self.FindPartOnRayWithWhitelist(self, args[1], { t.Parent })
                             end)
@@ -4721,7 +5300,7 @@ local function installBulletHook()
                             local r = toTargetRay(args[1].Origin, args[1].Direction.Magnitude)
                             if r then args[1] = Ray.new(args[1].Origin, r) end
                         end
-                        if BulletState.Wallbang then
+                        if Ctl.BulletState.Wallbang then
                             args[2] = { t.Parent }
                         end
                     end
@@ -4729,10 +5308,10 @@ local function installBulletHook()
             end
 
             -- Remote 包改写：拦截 FireServer 并替换参数
-            if BulletState.Enabled and BulletState.Mode == "Remote 包改写" and method == "FireServer" then
+            if Ctl.BulletState.Enabled and Ctl.BulletState.Mode == "Remote 包改写" and method == "FireServer" then
                 local rname = ""
                 pcall(function() rname = tostring(self.Name) end)
-                local kw = BulletState.RemoteKeyword or ""
+                local kw = Ctl.BulletState.RemoteKeyword or ""
                 local match = (kw == "") or (string.find(string.lower(rname), string.lower(kw), 1, true) ~= nil)
                 if match then
                     local entry = RemoteLog[rname]
@@ -4744,7 +5323,7 @@ local function installBulletHook()
                     if rollHitChance() then
                         local t = findBulletTarget()
                         if t then
-                            local typ = BulletState.RemoteArgType
+                            local typ = Ctl.BulletState.RemoteArgType
                             local val = nil
                             if typ == T("T_POSITION") or typ == "目标坐标" then
                                 val = t.Position
@@ -4757,7 +5336,7 @@ local function installBulletHook()
                                 val = t
                             end
                             if val ~= nil then
-                                local idx = math.clamp(tonumber(BulletState.RemoteArgIndex) or 1, 1, 10)
+                                local idx = math.clamp(tonumber(Ctl.BulletState.RemoteArgIndex) or 1, 1, 10)
                                 args[idx] = val
                             end
                         end
@@ -4768,7 +5347,7 @@ local function installBulletHook()
             local res = oldNamecall(self, unpack(args))
 
             -- ScreenPointToRay / ViewportPointToRay 改返回值
-            if BulletState.Enabled and BulletState.Mode == "射线重定向" and rollHitChance() then
+            if Ctl.BulletState.Enabled and Ctl.BulletState.Mode == "射线重定向" and rollHitChance() then
                 if method == "ScreenPointToRay" or method == "ViewportPointToRay" then
                     local t = findBulletTarget()
                     if t and typeof(res) == "Ray" then
@@ -4785,7 +5364,7 @@ local function installBulletHook()
 
         -- mouse.Hit / Target / UnitRay 覆盖
         mt.__index = HookEnv.newcclosure(function(t, k)
-            if BulletState.Enabled and BulletState.Mode == "命中点覆盖" then
+            if Ctl.BulletState.Enabled and Ctl.BulletState.Mode == "命中点覆盖" then
                 local target = findBulletTarget()
                 if target then
                     -- 穿墙时 mouse.Hit 直接给目标坐标，不看中间遮挡
@@ -4838,14 +5417,14 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
     Value = false,
     Callback = function(state)
         -- 抛射物重定向不依赖底层 hook；其余 Hook 模式都需要
-        local needHook = (BulletState.Impl ~= "Mouse") and (BulletState.Mode ~= "抛射物重定向")
-        if state and BulletState.Impl == "Mouse" then
-            BulletState.Enabled = true
+        local needHook = (Ctl.BulletState.Impl ~= "Mouse") and (Ctl.BulletState.Mode ~= "抛射物重定向")
+        if state and Ctl.BulletState.Impl == "Mouse" then
+            Ctl.BulletState.Enabled = true
             pcall(function() bulletStatus:SetDesc(T("BULLET_MOUSE_READY")) end)
             return
         end
         if state and not needHook then
-            BulletState.Enabled = true
+            Ctl.BulletState.Enabled = true
             pcall(function() bulletStatus:SetDesc(T("BULLET_PROJ_NOTE")) end)
             return
         end
@@ -4858,7 +5437,7 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
                     Icon = "x",
                     Duration = 4
                 })
-                BulletState.Enabled = false
+                Ctl.BulletState.Enabled = false
                 pcall(function() bulletToggle:Set(false) end)
                 pcall(function() bulletStatus:SetDesc(T("BULLET_NOTSUP_MSG")) end)
                 return
@@ -4871,7 +5450,7 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
             })
             pcall(function() bulletStatus:SetDesc(T("BULLET_READY_MSG")) end)
         end
-        BulletState.Enabled = state
+        Ctl.BulletState.Enabled = state
     end
 })
 bindLang(function()
@@ -4879,16 +5458,16 @@ bindLang(function()
     pcall(function() bulletToggle:SetDesc(T("BULLET_ENABLE_DESC")) end)
 end)
 
-local bulletSectionBasic = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_BASIC"), Icon = "target" })
-bindLang(function() setTitleSafe(bulletSectionBasic, T("BULLET_BASIC")) end)
+Ctl.bulletSectionBasic = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_BASIC"), Icon = "target" })
+bindLang(function() setTitleSafe(Ctl.bulletSectionBasic, T("BULLET_BASIC")) end)
 
-local bulletImpl = safeCreate(bulletSectionBasic, "Dropdown", {
+local bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_IMPL"),
     Desc = T("BULLET_IMPL_DESC"),
     Values = { "Hook", "Mouse" },
-    Value = BulletState.Impl,
+    Value = Ctl.BulletState.Impl,
     Callback = function(v)
-        BulletState.Impl = v
+        Ctl.BulletState.Impl = v
         pcall(function()
             if v == "Mouse" then
                 bulletStatus:SetDesc(T("BULLET_MOUSE_READY"))
@@ -4903,25 +5482,25 @@ bindLang(function()
     pcall(function() bulletImpl:SetDesc(T("BULLET_IMPL_DESC")) end)
 end)
 
-local bulletFireKey = safeCreate(bulletSectionBasic, "Dropdown", {
+local bulletFireKey = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_FIREKEY"),
     Desc = T("BULLET_FIREKEY_DESC"),
     Values = { "左键", "右键" },
-    Value = BulletState.FireKey,
-    Callback = function(v) BulletState.FireKey = v end
+    Value = Ctl.BulletState.FireKey,
+    Callback = function(v) Ctl.BulletState.FireKey = v end
 })
 bindLang(function()
     pcall(function() bulletFireKey:SetTitle(T("BULLET_FIREKEY")) end)
     pcall(function() bulletFireKey:SetDesc(T("BULLET_FIREKEY_DESC")) end)
 end)
 
-local bulletMethod = safeCreate(bulletSectionBasic, "Dropdown", {
+local bulletMethod = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_METHOD"),
     Desc = T("BULLET_METHOD_DESC") .. "（" .. T("BULLET_HOOK_ONLY") .. "）",
     Values = { "射线重定向", "命中点覆盖", "抛射物重定向", "Remote 包改写" },
-    Value = BulletState.Mode,
+    Value = Ctl.BulletState.Mode,
     Callback = function(v)
-        BulletState.Mode = v
+        Ctl.BulletState.Mode = v
         pcall(function()
             if v == "抛射物重定向" then
                 bulletStatus:SetDesc(T("BULLET_PROJ_NOTE"))
@@ -4935,60 +5514,60 @@ local bulletMethod = safeCreate(bulletSectionBasic, "Dropdown", {
 })
 bindLang(function() pcall(function() bulletMethod:SetTitle(T("BULLET_METHOD")) end) end)
 
-local bulletPart = safeCreate(bulletSectionBasic, "Dropdown", {
+local bulletPart = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_PART"),
     Values = { "头部", "躯干" },
-    Value = BulletState.Part,
-    Callback = function(v) BulletState.Part = v end
+    Value = Ctl.BulletState.Part,
+    Callback = function(v) Ctl.BulletState.Part = v end
 })
 bindLang(function() pcall(function() bulletPart:SetTitle(T("BULLET_PART")) end) end)
 
-local bulletHitChance = safeCreate(bulletSectionBasic, "Slider", {
+local bulletHitChance = safeCreate(Ctl.bulletSectionBasic, "Slider", {
     Title = T("BULLET_HITCHANCE"),
     Desc = T("BULLET_HITCHANCE_DESC"),
-    Value = { Min = 0, Max = 100, Default = BulletState.HitChance },
+    Value = { Min = 0, Max = 100, Default = Ctl.BulletState.HitChance },
     Step = 5,
-    Callback = function(v) BulletState.HitChance = tonumber(v) or 100 end
+    Callback = function(v) Ctl.BulletState.HitChance = tonumber(v) or 100 end
 })
 bindLang(function() pcall(function() bulletHitChance:SetTitle(T("BULLET_HITCHANCE")) end) end)
 
-local bulletFollow = safeCreate(bulletSectionBasic, "Toggle", {
+local bulletFollow = safeCreate(Ctl.bulletSectionBasic, "Toggle", {
     Title = T("BULLET_FOLLOW"),
     Desc = T("BULLET_FOLLOW_DESC"),
-    Value = BulletState.FollowAimbot,
-    Callback = function(v) BulletState.FollowAimbot = v end
+    Value = Ctl.BulletState.FollowAimbot,
+    Callback = function(v) Ctl.BulletState.FollowAimbot = v end
 })
 bindLang(function()
     pcall(function() bulletFollow:SetTitle(T("BULLET_FOLLOW")) end)
     pcall(function() bulletFollow:SetDesc(T("BULLET_FOLLOW_DESC")) end)
 end)
 
-local bulletSectionFilter = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_FILTER"), Icon = "filter" })
-bindLang(function() setTitleSafe(bulletSectionFilter, T("BULLET_FILTER")) end)
+Ctl.bulletSectionFilter = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_FILTER"), Icon = "filter" })
+bindLang(function() setTitleSafe(Ctl.bulletSectionFilter, T("BULLET_FILTER")) end)
 
-local bulletFov = safeCreate(bulletSectionFilter, "Slider", {
+local bulletFov = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_FOV"),
     Desc = T("BULLET_FOV_DESC"),
-    Value = { Min = 30, Max = 600, Default = BulletState.FOV },
+    Value = { Min = 30, Max = 600, Default = Ctl.BulletState.FOV },
     Step = 10,
-    Callback = function(v) BulletState.FOV = tonumber(v) or 200 end
+    Callback = function(v) Ctl.BulletState.FOV = tonumber(v) or 200 end
 })
 bindLang(function() pcall(function() bulletFov:SetTitle(T("BULLET_FOV")) end) end)
 
-local bulletDist = safeCreate(bulletSectionFilter, "Slider", {
+local bulletDist = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_MAXDIST"),
-    Value = { Min = 50, Max = 2000, Default = BulletState.MaxDistance },
+    Value = { Min = 50, Max = 2000, Default = Ctl.BulletState.MaxDistance },
     Step = 50,
-    Callback = function(v) BulletState.MaxDistance = tonumber(v) or 500 end
+    Callback = function(v) Ctl.BulletState.MaxDistance = tonumber(v) or 500 end
 })
 bindLang(function() pcall(function() bulletDist:SetTitle(T("BULLET_MAXDIST")) end) end)
 
-local bulletWallbang = safeCreate(bulletSectionFilter, "Toggle", {
+local bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_WALLBANG"),
     Desc = T("BULLET_WALLBANG_DESC"),
-    Value = BulletState.Wallbang,
+    Value = Ctl.BulletState.Wallbang,
     Callback = function(v)
-        BulletState.Wallbang = v
+        Ctl.BulletState.Wallbang = v
         pcall(function()
             if v then
                 bulletStatus:SetDesc(T("BULLET_WALLBANG_NOTE") .. "\n" .. T("BULLET_SERVER_WARN"))
@@ -5003,18 +5582,18 @@ bindLang(function()
     pcall(function() bulletWallbang:SetDesc(T("BULLET_WALLBANG_DESC")) end)
 end)
 
-local bulletTeam = safeCreate(bulletSectionFilter, "Toggle", {
+local bulletTeam = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_TEAM"),
-    Value = BulletState.TeamCheck,
-    Callback = function(v) BulletState.TeamCheck = v end
+    Value = Ctl.BulletState.TeamCheck,
+    Callback = function(v) Ctl.BulletState.TeamCheck = v end
 })
 bindLang(function() pcall(function() bulletTeam:SetTitle(T("BULLET_TEAM")) end) end)
 
-local bulletVisible = safeCreate(bulletSectionFilter, "Toggle", {
+local bulletVisible = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_VIS"),
     Desc = T("BULLET_VIS_DESC"),
-    Value = BulletState.VisibleCheck,
-    Callback = function(v) BulletState.VisibleCheck = v end
+    Value = Ctl.BulletState.VisibleCheck,
+    Callback = function(v) Ctl.BulletState.VisibleCheck = v end
 })
 bindLang(function()
     pcall(function() bulletVisible:SetTitle(T("BULLET_VIS")) end)
@@ -5022,10 +5601,10 @@ bindLang(function()
 end)
 
 -- Hitbox 分区
-local bulletSectionHitbox = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_HITBOX"), Icon = "maximize", Opened = true })
-bindLang(function() setTitleSafe(bulletSectionHitbox, T("BULLET_HITBOX")) end)
+Ctl.bulletSectionHitbox = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_HITBOX"), Icon = "maximize", Opened = true })
+bindLang(function() setTitleSafe(Ctl.bulletSectionHitbox, T("BULLET_HITBOX")) end)
 
-local bulletHbToggle = safeCreate(bulletSectionHitbox, "Toggle", {
+local bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
     Title = T("BULLET_HITBOX"),
     Desc = T("BULLET_HITBOX_DESC"),
     Value = HitboxState.Enabled,
@@ -5042,7 +5621,7 @@ bindLang(function()
     pcall(function() bulletHbToggle:SetDesc(T("BULLET_HITBOX_DESC")) end)
 end)
 
-Ctl.bulletHbPart = safeCreate(bulletSectionHitbox, "Dropdown", {
+Ctl.bulletHbPart = safeCreate(Ctl.bulletSectionHitbox, "Dropdown", {
     Title = T("BULLET_HB_PART"),
     Values = { "躯干", "头部" },
     Value = HitboxState.Part,
@@ -5050,7 +5629,7 @@ Ctl.bulletHbPart = safeCreate(bulletSectionHitbox, "Dropdown", {
 })
 bindLang(function() pcall(function() Ctl.bulletHbPart:SetTitle(T("BULLET_HB_PART")) end) end)
 
-Ctl.bulletHbMult = safeCreate(bulletSectionHitbox, "Slider", {
+Ctl.bulletHbMult = safeCreate(Ctl.bulletSectionHitbox, "Slider", {
     Title = T("BULLET_HB_MULT"),
     Desc = T("BULLET_HB_MULT_DESC"),
     Value = { Min = 1, Max = 10, Default = HitboxState.Multiplier },
@@ -5060,29 +5639,29 @@ Ctl.bulletHbMult = safeCreate(bulletSectionHitbox, "Slider", {
 bindLang(function() pcall(function() Ctl.bulletHbMult:SetTitle(T("BULLET_HB_MULT")) end) end)
 
 -- 抛射物参数
-Ctl.bulletProjSpeed = safeCreate(bulletSectionFilter, "Slider", {
+Ctl.bulletProjSpeed = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_PROJ_SPEED"),
     Desc = T("BULLET_PROJ_SPEED_DESC"),
-    Value = { Min = 10, Max = 500, Default = BulletState.ProjMinSpeed },
+    Value = { Min = 10, Max = 500, Default = Ctl.BulletState.ProjMinSpeed },
     Step = 10,
-    Callback = function(v) BulletState.ProjMinSpeed = tonumber(v) or 50 end
+    Callback = function(v) Ctl.BulletState.ProjMinSpeed = tonumber(v) or 50 end
 })
 bindLang(function() pcall(function() Ctl.bulletProjSpeed:SetTitle(T("BULLET_PROJ_SPEED")) end) end)
 
-Ctl.bulletProjRange = safeCreate(bulletSectionFilter, "Slider", {
+Ctl.bulletProjRange = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_PROJ_RANGE"),
     Desc = T("BULLET_PROJ_RANGE_DESC"),
-    Value = { Min = 5, Max = 200, Default = BulletState.ProjRange },
+    Value = { Min = 5, Max = 200, Default = Ctl.BulletState.ProjRange },
     Step = 5,
-    Callback = function(v) BulletState.ProjRange = tonumber(v) or 25 end
+    Callback = function(v) Ctl.BulletState.ProjRange = tonumber(v) or 25 end
 })
 bindLang(function() pcall(function() Ctl.bulletProjRange:SetTitle(T("BULLET_PROJ_RANGE")) end) end)
 
 -- Remote 分区
-local bulletSectionRemote = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_REMOTE"), Icon = "activity", Opened = true })
-bindLang(function() setTitleSafe(bulletSectionRemote, T("BULLET_REMOTE")) end)
+Ctl.bulletSectionRemote = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_REMOTE"), Icon = "activity", Opened = true })
+bindLang(function() setTitleSafe(Ctl.bulletSectionRemote, T("BULLET_REMOTE")) end)
 
-safeCreate(bulletSectionRemote, "Paragraph", {
+safeCreate(Ctl.bulletSectionRemote, "Paragraph", {
     Title = T("BULLET_REMOTE"),
     Desc = T("BULLET_REMOTE_LOG_DESC"),
     Image = "info",
@@ -5090,33 +5669,33 @@ safeCreate(bulletSectionRemote, "Paragraph", {
     Color = "Grey",
 })
 
-safeCreate(bulletSectionRemote, "Input", {
+safeCreate(Ctl.bulletSectionRemote, "Input", {
     Title = T("BULLET_RM_KW"),
     Desc = T("BULLET_RM_KW_DESC"),
-    Value = BulletState.RemoteKeyword,
+    Value = Ctl.BulletState.RemoteKeyword,
     Type = "Input",
     Placeholder = "shoot",
-    Callback = function(text) BulletState.RemoteKeyword = tostring(text or "") end
+    Callback = function(text) Ctl.BulletState.RemoteKeyword = tostring(text or "") end
 })
 
-Ctl.bulletRmIdx = safeCreate(bulletSectionRemote, "Slider", {
+Ctl.bulletRmIdx = safeCreate(Ctl.bulletSectionRemote, "Slider", {
     Title = T("BULLET_RM_IDX"),
     Desc = T("BULLET_RM_IDX_DESC"),
-    Value = { Min = 1, Max = 10, Default = BulletState.RemoteArgIndex },
+    Value = { Min = 1, Max = 10, Default = Ctl.BulletState.RemoteArgIndex },
     Step = 1,
-    Callback = function(v) BulletState.RemoteArgIndex = math.floor(tonumber(v) or 1) end
+    Callback = function(v) Ctl.BulletState.RemoteArgIndex = math.floor(tonumber(v) or 1) end
 })
 bindLang(function() pcall(function() Ctl.bulletRmIdx:SetTitle(T("BULLET_RM_IDX")) end) end)
 
-Ctl.bulletRmType = safeCreate(bulletSectionRemote, "Dropdown", {
+Ctl.bulletRmType = safeCreate(Ctl.bulletSectionRemote, "Dropdown", {
     Title = T("BULLET_RM_TYPE"),
     Values = { "目标部位", T("T_PLAYER"), T("T_POSITION") },
-    Value = BulletState.RemoteArgType,
-    Callback = function(v) BulletState.RemoteArgType = v end
+    Value = Ctl.BulletState.RemoteArgType,
+    Callback = function(v) Ctl.BulletState.RemoteArgType = v end
 })
 bindLang(function() pcall(function() Ctl.bulletRmType:SetTitle(T("BULLET_RM_TYPE")) end) end)
 
-safeCreate(bulletSectionRemote, "Button", {
+safeCreate(Ctl.bulletSectionRemote, "Button", {
     Title = T("BULLET_RM_LOG"),
     Icon = "list",
     Callback = function()
@@ -5143,16 +5722,16 @@ safeCreate(TabHandles.Bullet, "Button", {
     Title = T("BULLET_RESET"),
     Icon = "refresh-cw",
     Callback = function()
-        BulletState.Mode = "射线重定向"; BulletState.Part = "头部"
-        BulletState.HitChance = 100; BulletState.FOV = 200
-        BulletState.MaxDistance = 500; BulletState.TeamCheck = true
-        BulletState.VisibleCheck = true; BulletState.FollowAimbot = true
-        BulletState.Wallbang = false
-        BulletState.Impl = "Hook"; BulletState.FireKey = "左键"
+        Ctl.BulletState.Mode = "射线重定向"; Ctl.BulletState.Part = "头部"
+        Ctl.BulletState.HitChance = 100; Ctl.BulletState.FOV = 200
+        Ctl.BulletState.MaxDistance = 500; Ctl.BulletState.TeamCheck = true
+        Ctl.BulletState.VisibleCheck = true; Ctl.BulletState.FollowAimbot = true
+        Ctl.BulletState.Wallbang = false
+        Ctl.BulletState.Impl = "Hook"; Ctl.BulletState.FireKey = "左键"
         pcall(function() bulletWallbang:Set(false) end)
-        BulletState.ProjMinSpeed = 50; BulletState.ProjRange = 25
-        BulletState.RemoteKeyword = ""; BulletState.RemoteArgIndex = 1
-        BulletState.RemoteArgType = "目标部位"
+        Ctl.BulletState.ProjMinSpeed = 50; Ctl.BulletState.ProjRange = 25
+        Ctl.BulletState.RemoteKeyword = ""; Ctl.BulletState.RemoteArgIndex = 1
+        Ctl.BulletState.RemoteArgType = "目标部位"
         HitboxState.Enabled = false; HitboxState.Multiplier = 1.5; HitboxState.Part = "躯干"
         restoreAllHitbox()
         pcall(function() bulletImpl:Select("Hook") end)
@@ -5174,7 +5753,7 @@ safeCreate(TabHandles.Bullet, "Button", {
 
 
 -- ========================= 飞行模块 =========================
-local FlyState = {
+Ctl.FlyState = {
     Enabled = false,
     Noclip = true,
     NoclipMode = "关闭碰撞",
@@ -5214,7 +5793,7 @@ local function flyRoot(c)
 end
 
 -- 穿墙：优先用「关闭碰撞」，避免 TranslateBy 把角色推进地形深处卡死
-local NoclipSaved = {}
+Ctl.NoclipSaved = {}
 
 local function applyNoclipParts(enable)
     local c = flyChar()
@@ -5223,12 +5802,12 @@ local function applyNoclipParts(enable)
         if part:IsA("BasePart") then
             if enable then
                 if part.CanCollide then
-                    NoclipSaved[part] = true
+                    Ctl.NoclipSaved[part] = true
                     part.CanCollide = false
                 end
-            elseif NoclipSaved[part] then
+            elseif Ctl.NoclipSaved[part] then
                 part.CanCollide = true
-                NoclipSaved[part] = nil
+                Ctl.NoclipSaved[part] = nil
             end
         end
     end
@@ -5267,7 +5846,7 @@ local function resetHumanoidState(hum)
     task.spawn(function()
         for i = 1, 4 do
             task.wait(0.12 * i)
-            if FlyState.Enabled then return end
+            if Ctl.FlyState.Enabled then return end
             if not (hum and hum.Parent) then return end
             pcall(function()
                 hum.PlatformStand = false
@@ -5275,54 +5854,54 @@ local function resetHumanoidState(hum)
                 hum:ChangeState(Enum.HumanoidStateType.Landed)
             end)
             task.wait(0.1)
-            if FlyState.Enabled then return end
+            if Ctl.FlyState.Enabled then return end
             pcall(function() hum:ChangeState(Enum.HumanoidStateType.Running) end)
             task.wait(0.1)
-            if FlyState.Enabled then return end
+            if Ctl.FlyState.Enabled then return end
             pcall(function() hum:ChangeState(Enum.HumanoidStateType.RunningNoPhysics) end)
         end
     end)
 end
 
 local function stopNoclip()
-    if FlyState.noclipConn then
-        FlyState.noclipConn:Disconnect()
-        FlyState.noclipConn = nil
+    if Ctl.FlyState.noclipConn then
+        Ctl.FlyState.noclipConn:Disconnect()
+        Ctl.FlyState.noclipConn = nil
     end
     applyNoclipParts(false)
-    for k in pairs(NoclipSaved) do NoclipSaved[k] = nil end
+    for k in pairs(Ctl.NoclipSaved) do Ctl.NoclipSaved[k] = nil end
 end
 
 local function startNoclip()
     stopNoclip()
-    if not FlyState.Noclip then return end
+    if not Ctl.FlyState.Noclip then return end
 
-    if FlyState.NoclipMode == "关闭碰撞" then
+    if Ctl.FlyState.NoclipMode == "关闭碰撞" then
         applyNoclipParts(true)
-        FlyState.noclipConn = RunService.Heartbeat:Connect(function()
-            if not FlyState.Enabled then return end
+        Ctl.FlyState.noclipConn = RunService.Heartbeat:Connect(function()
+            if not Ctl.FlyState.Enabled then return end
             applyNoclipParts(true)
         end)
     else
-        FlyState.noclipConn = RunService.Heartbeat:Connect(function()
-            if not FlyState.Enabled then return end
+        Ctl.FlyState.noclipConn = RunService.Heartbeat:Connect(function()
+            if not Ctl.FlyState.Enabled then return end
             local c = flyChar()
             local h = flyHum(c)
             if not (c and c.Parent and h and h.Parent) then return end
             if h.MoveDirection.Magnitude > 0 then
-                pcall(function() c:TranslateBy(h.MoveDirection * FlyState.Speed) end)
+                pcall(function() c:TranslateBy(h.MoveDirection * Ctl.FlyState.Speed) end)
             end
         end)
     end
 end
 
 local function stopFly()
-    FlyState.Enabled = false
-    if FlyState.upConn then FlyState.upConn:Disconnect(); FlyState.upConn = nil end
-    if FlyState.downConn then FlyState.downConn:Disconnect(); FlyState.downConn = nil end
-    if FlyState.flyConn then FlyState.flyConn:Disconnect(); FlyState.flyConn = nil end
-    if FlyState.bg then pcall(function() FlyState.bg:Destroy() end); FlyState.bg = nil end
-    if FlyState.bv then pcall(function() FlyState.bv:Destroy() end); FlyState.bv = nil end
+    Ctl.FlyState.Enabled = false
+    if Ctl.FlyState.upConn then Ctl.FlyState.upConn:Disconnect(); Ctl.FlyState.upConn = nil end
+    if Ctl.FlyState.downConn then Ctl.FlyState.downConn:Disconnect(); Ctl.FlyState.downConn = nil end
+    if Ctl.FlyState.flyConn then Ctl.FlyState.flyConn:Disconnect(); Ctl.FlyState.flyConn = nil end
+    if Ctl.FlyState.bg then pcall(function() Ctl.FlyState.bg:Destroy() end); Ctl.FlyState.bg = nil end
+    if Ctl.FlyState.bv then pcall(function() Ctl.FlyState.bv:Destroy() end); Ctl.FlyState.bv = nil end
     stopNoclip()
 
     local c = flyChar()
@@ -5334,7 +5913,7 @@ local function stopFly()
         pcall(function() h.PlatformStand = false end)
         setAllStates(h, true)
         -- 脱困：穿墙可能把角色留在实体内，先抬出来再恢复状态
-        if root and FlyState.AutoUnstick then
+        if root and Ctl.FlyState.AutoUnstick then
             pcall(function() unstick(root) end)
         end
         resetHumanoidState(h)
@@ -5351,29 +5930,29 @@ local function startFly()
         return false
     end
 
-    FlyState.Enabled = true
+    Ctl.FlyState.Enabled = true
     setAllStates(h, false)
     pcall(function() h:ChangeState(Enum.HumanoidStateType.Swimming) end)
     local animate = c:FindFirstChild("Animate")
     if animate then animate.Disabled = true end
     h.PlatformStand = true
 
-    FlyState.bg = Instance.new("BodyGyro")
-    FlyState.bg.P = 9e4
-    FlyState.bg.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
-    FlyState.bg.CFrame = root.CFrame
-    FlyState.bg.Parent = root
+    Ctl.FlyState.bg = Instance.new("BodyGyro")
+    Ctl.FlyState.bg.P = 9e4
+    Ctl.FlyState.bg.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+    Ctl.FlyState.bg.CFrame = root.CFrame
+    Ctl.FlyState.bg.Parent = root
 
-    FlyState.bv = Instance.new("BodyVelocity")
-    FlyState.bv.Velocity = Vector3.new(0, 0.1, 0)
-    FlyState.bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-    FlyState.bv.Parent = root
+    Ctl.FlyState.bv = Instance.new("BodyVelocity")
+    Ctl.FlyState.bv.Velocity = Vector3.new(0, 0.1, 0)
+    Ctl.FlyState.bv.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+    Ctl.FlyState.bv.Parent = root
 
     local cur = 0
-    local maxSpd = 50 * FlyState.Speed
+    local maxSpd = 50 * Ctl.FlyState.Speed
 
-    FlyState.flyConn = RunService.Heartbeat:Connect(function()
-        if not FlyState.Enabled then return end
+    Ctl.FlyState.flyConn = RunService.Heartbeat:Connect(function()
+        if not Ctl.FlyState.Enabled then return end
         local c2 = flyChar()
         local h2 = flyHum(c2)
         if not (c2 and c2.Parent and h2 and h2.Parent) then stopFly(); return end
@@ -5393,25 +5972,25 @@ local function startFly()
             local rgt = Vector3.new(cf.RightVector.X, 0, cf.RightVector.Z).Unit
             local dir = fwd * -moveDir.Z + rgt * moveDir.X
             if dir.Magnitude > 0 then dir = dir.Unit end
-            FlyState.bv.Velocity = dir * cur
+            Ctl.FlyState.bv.Velocity = dir * cur
         else
-            FlyState.bv.Velocity = Vector3.new(0, FlyState.bv.Velocity.Y, 0)
+            Ctl.FlyState.bv.Velocity = Vector3.new(0, Ctl.FlyState.bv.Velocity.Y, 0)
         end
-        FlyState.bg.CFrame = cam.CFrame
+        Ctl.FlyState.bg.CFrame = cam.CFrame
     end)
 
-    if FlyState.Noclip then startNoclip() end
+    if Ctl.FlyState.Noclip then startNoclip() end
     return true
 end
 
 local function startVertical(dir)
     local key = dir > 0 and "upConn" or "downConn"
-    if FlyState[key] then return end
-    FlyState[key] = RunService.Heartbeat:Connect(function()
+    if Ctl.FlyState[key] then return end
+    Ctl.FlyState[key] = RunService.Heartbeat:Connect(function()
         local root = flyRoot(flyChar())
         if root then
             pcall(function()
-                root.CFrame = root.CFrame * CFrame.new(0, dir * FlyState.VertSpeed, 0)
+                root.CFrame = root.CFrame * CFrame.new(0, dir * Ctl.FlyState.VertSpeed, 0)
             end)
         end
     end)
@@ -5419,9 +5998,9 @@ end
 
 local function stopVertical(dir)
     local key = dir > 0 and "upConn" or "downConn"
-    if FlyState[key] then
-        FlyState[key]:Disconnect()
-        FlyState[key] = nil
+    if Ctl.FlyState[key] then
+        Ctl.FlyState[key]:Disconnect()
+        Ctl.FlyState[key] = nil
     end
 end
 
@@ -5453,11 +6032,11 @@ safeCreate(TabHandles.Fly, "Divider", {})
 Ctl.flySpeedSlider = safeCreate(TabHandles.Fly, "Slider", {
     Title = T("FLY_SPEED"),
     Desc = T("FLY_SPEED_DESC"),
-    Value = { Min = 1, Max = 20, Default = FlyState.Speed },
+    Value = { Min = 1, Max = 20, Default = Ctl.FlyState.Speed },
     Step = 1,
     Callback = function(v)
-        FlyState.Speed = tonumber(v) or 1
-        if FlyState.Noclip and FlyState.Enabled then startNoclip() end
+        Ctl.FlyState.Speed = tonumber(v) or 1
+        if Ctl.FlyState.Noclip and Ctl.FlyState.Enabled then startNoclip() end
     end
 })
 bindLang(function() pcall(function() Ctl.flySpeedSlider:SetTitle(T("FLY_SPEED")) end) end)
@@ -5465,19 +6044,19 @@ bindLang(function() pcall(function() Ctl.flySpeedSlider:SetTitle(T("FLY_SPEED"))
 Ctl.flyVertSlider = safeCreate(TabHandles.Fly, "Slider", {
     Title = T("FLY_VERTSPD"),
     Desc = T("FLY_VERTSPD_DESC"),
-    Value = { Min = 1, Max = 10, Default = FlyState.VertSpeed },
+    Value = { Min = 1, Max = 10, Default = Ctl.FlyState.VertSpeed },
     Step = 1,
-    Callback = function(v) FlyState.VertSpeed = tonumber(v) or 1 end
+    Callback = function(v) Ctl.FlyState.VertSpeed = tonumber(v) or 1 end
 })
 bindLang(function() pcall(function() Ctl.flyVertSlider:SetTitle(T("FLY_VERTSPD")) end) end)
 
 Ctl.flyNoclipToggle = safeCreate(TabHandles.Fly, "Toggle", {
     Title = T("FLY_NOCLIP"),
     Desc = T("FLY_NOCLIP_DESC"),
-    Value = FlyState.Noclip,
+    Value = Ctl.FlyState.Noclip,
     Callback = function(v)
-        FlyState.Noclip = v
-        if FlyState.Enabled then
+        Ctl.FlyState.Noclip = v
+        if Ctl.FlyState.Enabled then
             if v then startNoclip() else stopNoclip() end
         end
     end
@@ -5491,10 +6070,10 @@ Ctl.flyNoclipMode = safeCreate(TabHandles.Fly, "Dropdown", {
     Title = T("FLY_NOCLIP_MODE"),
     Desc = T("FLY_NOCLIP_MODE_DESC"),
     Values = { "关闭碰撞", "位移式" },
-    Value = FlyState.NoclipMode,
+    Value = Ctl.FlyState.NoclipMode,
     Callback = function(v)
-        FlyState.NoclipMode = v
-        if FlyState.Enabled and FlyState.Noclip then
+        Ctl.FlyState.NoclipMode = v
+        if Ctl.FlyState.Enabled and Ctl.FlyState.Noclip then
             stopNoclip()
             startNoclip()
         end
@@ -5505,8 +6084,8 @@ bindLang(function() pcall(function() Ctl.flyNoclipMode:SetTitle(T("FLY_NOCLIP_MO
 Ctl.flyUnstickToggle = safeCreate(TabHandles.Fly, "Toggle", {
     Title = T("FLY_UNSTICK"),
     Desc = T("FLY_UNSTICK_DESC"),
-    Value = FlyState.AutoUnstick,
-    Callback = function(v) FlyState.AutoUnstick = v end
+    Value = Ctl.FlyState.AutoUnstick,
+    Callback = function(v) Ctl.FlyState.AutoUnstick = v end
 })
 bindLang(function()
     pcall(function() Ctl.flyUnstickToggle:SetTitle(T("FLY_UNSTICK")) end)
@@ -5540,7 +6119,7 @@ safeCreate(TabHandles.Fly, "Button", {
     Desc = T("FLY_UP_DESC"),
     Icon = "arrow-up",
     Callback = function()
-        if not FlyState.Enabled then
+        if not Ctl.FlyState.Enabled then
             WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_NOCHAR"), Icon = "x", Duration = 2 })
             return
         end
@@ -5554,7 +6133,7 @@ safeCreate(TabHandles.Fly, "Button", {
     Desc = T("FLY_DOWN_DESC"),
     Icon = "arrow-down",
     Callback = function()
-        if not FlyState.Enabled then
+        if not Ctl.FlyState.Enabled then
             WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_NOCHAR"), Icon = "x", Duration = 2 })
             return
         end
@@ -5614,6 +6193,624 @@ safeCreate(TabHandles.Profile, "Button", {
         })
     end
 })
+
+
+-- ========================= 通用模块 =========================
+Ctl.Lighting = game:GetService("Ctl.Lighting")
+
+Ctl.MiscState = {
+    Speed = false,  SpeedValue = 16,
+    Jump = false,   JumpValue = 50,
+    Health = false, HealthValue = 100,
+    InfJump = false,
+    Gravity = false, GravityValue = 196,
+    Noclip = false,
+    FOV = false,    FOVValue = 70,
+    Bright = false,
+}
+
+Ctl.MiscOrig = {}
+Ctl.NoclipSaved = {}
+Ctl.LightingSaved = nil
+Ctl.InfJumpConn = nil
+
+local function miscChar() return LocalPlayer.Character end
+local function miscHum()
+    local c = miscChar()
+    return c and c:FindFirstChildOfClass("Humanoid") or nil
+end
+
+local function saveMiscOrig()
+    local h = miscHum()
+    if h and not Ctl.MiscOrig.walk then
+        Ctl.MiscOrig.walk = h.WalkSpeed
+        Ctl.MiscOrig.jump = h.JumpPower
+        Ctl.MiscOrig.maxhp = h.MaxHealth
+    end
+    if not Ctl.MiscOrig.gravity then Ctl.MiscOrig.gravity = workspace.Gravity end
+    if not Ctl.MiscOrig.fov then Ctl.MiscOrig.fov = (Camera and Camera.FieldOfView) or 70 end
+end
+
+local function restoreNoclipAll()
+    for part in pairs(Ctl.NoclipSaved) do
+        pcall(function() part.CanCollide = true end)
+        Ctl.NoclipSaved[part] = nil
+    end
+end
+
+local function applyNoclipOn()
+    local c = miscChar()
+    if not c then return end
+    for _, part in ipairs(c:GetDescendants()) do
+        if part:IsA("BasePart") and part.CanCollide then
+            Ctl.NoclipSaved[part] = true
+            pcall(function() part.CanCollide = false end)
+        end
+    end
+end
+
+local function restoreLighting()
+    if not Ctl.LightingSaved then return end
+    pcall(function()
+        Ctl.Lighting.Ambient = Ctl.LightingSaved.Ambient
+        Ctl.Lighting.Brightness = Ctl.LightingSaved.Brightness
+        Ctl.Lighting.FogEnd = Ctl.LightingSaved.FogEnd
+        Ctl.Lighting.GlobalShadows = Ctl.LightingSaved.GlobalShadows
+    end)
+    LightingSaved = nil
+end
+
+local function applyLightingOn()
+    if not Ctl.LightingSaved then
+        LightingSaved = {
+            Ambient = Ctl.Lighting.Ambient,
+            Brightness = Ctl.Lighting.Brightness,
+            FogEnd = Ctl.Lighting.FogEnd,
+            GlobalShadows = Ctl.Lighting.GlobalShadows,
+        }
+    end
+    pcall(function()
+        Ctl.Lighting.Ambient = Color3.new(1, 1, 1)
+        Ctl.Lighting.Brightness = 3
+        Ctl.Lighting.FogEnd = 1e6
+        Ctl.Lighting.GlobalShadows = false
+    end)
+end
+
+local function applyMisc()
+    saveMiscOrig()
+    local h = miscHum()
+    if h then
+        if Ctl.MiscState.Speed then
+            pcall(function() h.WalkSpeed = Ctl.MiscState.SpeedValue end)
+        end
+        if Ctl.MiscState.Jump then
+            pcall(function() h.JumpPower = Ctl.MiscState.JumpValue end)
+        end
+        if Ctl.MiscState.Health then
+            pcall(function()
+                h.MaxHealth = Ctl.MiscState.HealthValue
+                if h.Health > h.MaxHealth then h.Health = h.MaxHealth end
+            end)
+        end
+    end
+    if Ctl.MiscState.Gravity then
+        pcall(function() workspace.Gravity = Ctl.MiscState.GravityValue end)
+    end
+    if Ctl.MiscState.Noclip then applyNoclipOn() end
+    if Ctl.MiscState.FOV then
+        pcall(function() Camera.FieldOfView = Ctl.MiscState.FOVValue end)
+    end
+    if Ctl.MiscState.Bright then applyLightingOn() end
+end
+
+local function restoreMiscAll()
+    local h = miscHum()
+    if h then
+        pcall(function()
+            if Ctl.MiscOrig.walk then h.WalkSpeed = Ctl.MiscOrig.walk end
+            if Ctl.MiscOrig.jump then h.JumpPower = Ctl.MiscOrig.jump end
+            if Ctl.MiscOrig.maxhp then h.MaxHealth = Ctl.MiscOrig.maxhp end
+        end)
+    end
+    if Ctl.MiscOrig.gravity then pcall(function() workspace.Gravity = Ctl.MiscOrig.gravity end) end
+    if Ctl.MiscOrig.fov then pcall(function() Camera.FieldOfView = Ctl.MiscOrig.fov end) end
+    restoreNoclipAll()
+    restoreLighting()
+end
+
+RunService.RenderStepped:Connect(function()
+    if not (Ctl.MiscState.Speed or Ctl.MiscState.Jump or Ctl.MiscState.Health or Ctl.MiscState.Gravity
+        or Ctl.MiscState.Noclip or Ctl.MiscState.FOV or Ctl.MiscState.Bright) then return end
+    pcall(applyMisc)
+end)
+
+-- 关闭功能时恢复对应项
+RunService.RenderStepped:Connect(function()
+    if not Ctl.MiscState.Noclip then restoreNoclipAll() end
+    if not Ctl.MiscState.Bright then restoreLighting() end
+    if not Ctl.MiscState.Gravity and Ctl.MiscOrig.gravity then
+        pcall(function() workspace.Gravity = Ctl.MiscOrig.gravity end)
+    end
+    if not Ctl.MiscState.FOV and Ctl.MiscOrig.fov then
+        pcall(function() Camera.FieldOfView = Ctl.MiscOrig.fov end)
+    end
+end)
+
+pcall(function()
+    InfJumpConn = UserInputService.JumpRequest:Connect(function()
+        if not Ctl.MiscState.InfJump then return end
+        local h = miscHum()
+        if h then
+            pcall(function() h:ChangeState(Enum.HumanoidStateType.Jumping) end)
+        end
+    end)
+end)
+
+LocalPlayer.CharacterAdded:Connect(function()
+    task.wait(0.5)
+    Ctl.MiscOrig.walk = nil; Ctl.MiscOrig.jump = nil; Ctl.MiscOrig.maxhp = nil
+    restoreNoclipAll()
+    saveMiscOrig()
+end)
+
+-- ---------- 通用界面 ----------
+safeCreate(TabHandles.Misc, "Paragraph", {
+    Title = T("MISC_TAB"),
+    Desc = T("MISC_DESC"),
+    Image = "type",
+    ImageSize = 20,
+    Color = "White",
+}, "miscHeader")
+safeCreate(TabHandles.Misc, "Divider", {}, "miscDiv")
+
+Ctl.miscSectionChar = safeCreate(TabHandles.Misc, "Section", { Title = T("MISC_SEC_CHAR"), Icon = "user" }, "miscSecChar")
+
+Ctl.miscSpeedToggle = safeCreate(Ctl.miscSectionChar, "Toggle", {
+    Title = T("MISC_SPEED"),
+    Desc = T("MISC_SPEED_DESC"),
+    Value = Ctl.MiscState.Speed,
+    Callback = function(v) Ctl.MiscState.Speed = v; if not v and Ctl.MiscOrig.walk then pcall(function() miscHum().WalkSpeed = Ctl.MiscOrig.walk end) end end
+}, "miscSpeedToggle")
+bindLang(function()
+    pcall(function() Ctl.miscSpeedToggle:SetTitle(T("MISC_SPEED")) end)
+    pcall(function() Ctl.miscSpeedToggle:SetDesc(T("MISC_SPEED_DESC")) end)
+end)
+
+Ctl.miscSpeedSlider = safeCreate(Ctl.miscSectionChar, "Slider", {
+    Title = T("MISC_SPEED"),
+    Value = { Min = 16, Max = 500, Default = Ctl.MiscState.SpeedValue },
+    Step = 1,
+    Callback = function(v) Ctl.MiscState.SpeedValue = tonumber(v) or 16 end
+}, "miscSpeedSlider")
+bindLang(function() pcall(function() Ctl.miscSpeedSlider:SetTitle(T("MISC_SPEED")) end) end)
+
+Ctl.miscJumpToggle = safeCreate(Ctl.miscSectionChar, "Toggle", {
+    Title = T("MISC_JUMP"),
+    Desc = T("MISC_JUMP_DESC"),
+    Value = Ctl.MiscState.Jump,
+    Callback = function(v) Ctl.MiscState.Jump = v end
+}, "miscJumpToggle")
+bindLang(function()
+    pcall(function() Ctl.miscJumpToggle:SetTitle(T("MISC_JUMP")) end)
+    pcall(function() Ctl.miscJumpToggle:SetDesc(T("MISC_JUMP_DESC")) end)
+end)
+
+Ctl.miscJumpSlider = safeCreate(Ctl.miscSectionChar, "Slider", {
+    Title = T("MISC_JUMP"),
+    Value = { Min = 50, Max = 500, Default = Ctl.MiscState.JumpValue },
+    Step = 1,
+    Callback = function(v) Ctl.MiscState.JumpValue = tonumber(v) or 50 end
+}, "miscJumpSlider")
+bindLang(function() pcall(function() Ctl.miscJumpSlider:SetTitle(T("MISC_JUMP")) end) end)
+
+Ctl.miscHealthToggle = safeCreate(Ctl.miscSectionChar, "Toggle", {
+    Title = T("MISC_HEALTH"),
+    Desc = T("MISC_HEALTH_DESC"),
+    Value = Ctl.MiscState.Health,
+    Callback = function(v) Ctl.MiscState.Health = v end
+}, "miscHealthToggle")
+bindLang(function()
+    pcall(function() Ctl.miscHealthToggle:SetTitle(T("MISC_HEALTH")) end)
+    pcall(function() Ctl.miscHealthToggle:SetDesc(T("MISC_HEALTH_DESC")) end)
+end)
+
+Ctl.miscHealthSlider = safeCreate(Ctl.miscSectionChar, "Slider", {
+    Title = T("MISC_HEALTH"),
+    Value = { Min = 100, Max = 10000, Default = Ctl.MiscState.HealthValue },
+    Step = 100,
+    Callback = function(v) Ctl.MiscState.HealthValue = tonumber(v) or 100 end
+}, "miscHealthSlider")
+bindLang(function() pcall(function() Ctl.miscHealthSlider:SetTitle(T("MISC_HEALTH")) end) end)
+
+Ctl.miscInfJumpToggle = safeCreate(Ctl.miscSectionChar, "Toggle", {
+    Title = T("MISC_INFJUMP"),
+    Desc = T("MISC_INFJUMP_DESC"),
+    Value = Ctl.MiscState.InfJump,
+    Callback = function(v) Ctl.MiscState.InfJump = v end
+}, "miscInfJumpToggle")
+bindLang(function()
+    pcall(function() Ctl.miscInfJumpToggle:SetTitle(T("MISC_INFJUMP")) end)
+    pcall(function() Ctl.miscInfJumpToggle:SetDesc(T("MISC_INFJUMP_DESC")) end)
+end)
+
+Ctl.miscSectionWorld = safeCreate(TabHandles.Misc, "Section", { Title = T("MISC_SEC_WORLD"), Icon = "globe" }, "miscSecWorld")
+
+Ctl.miscGravityToggle = safeCreate(Ctl.miscSectionWorld, "Toggle", {
+    Title = T("MISC_GRAVITY"),
+    Desc = T("MISC_GRAVITY_DESC"),
+    Value = Ctl.MiscState.Gravity,
+    Callback = function(v) Ctl.MiscState.Gravity = v end
+}, "miscGravityToggle")
+bindLang(function()
+    pcall(function() Ctl.miscGravityToggle:SetTitle(T("MISC_GRAVITY")) end)
+    pcall(function() Ctl.miscGravityToggle:SetDesc(T("MISC_GRAVITY_DESC")) end)
+end)
+
+Ctl.miscGravitySlider = safeCreate(Ctl.miscSectionWorld, "Slider", {
+    Title = T("MISC_GRAVITY"),
+    Value = { Min = 0, Max = 400, Default = Ctl.MiscState.GravityValue },
+    Step = 1,
+    Callback = function(v) Ctl.MiscState.GravityValue = tonumber(v) or 196 end
+}, "miscGravitySlider")
+bindLang(function() pcall(function() Ctl.miscGravitySlider:SetTitle(T("MISC_GRAVITY")) end) end)
+
+Ctl.miscNoclipToggle = safeCreate(Ctl.miscSectionWorld, "Toggle", {
+    Title = T("MISC_NOCLIP"),
+    Desc = T("MISC_NOCLIP_DESC"),
+    Value = Ctl.MiscState.Noclip,
+    Callback = function(v) Ctl.MiscState.Noclip = v end
+}, "miscNoclipToggle")
+bindLang(function()
+    pcall(function() Ctl.miscNoclipToggle:SetTitle(T("MISC_NOCLIP")) end)
+    pcall(function() Ctl.miscNoclipToggle:SetDesc(T("MISC_NOCLIP_DESC")) end)
+end)
+
+Ctl.miscFovToggle = safeCreate(Ctl.miscSectionWorld, "Toggle", {
+    Title = T("MISC_FOV"),
+    Desc = T("MISC_FOV_DESC"),
+    Value = Ctl.MiscState.FOV,
+    Callback = function(v) Ctl.MiscState.FOV = v end
+}, "miscFovToggle")
+bindLang(function()
+    pcall(function() Ctl.miscFovToggle:SetTitle(T("MISC_FOV")) end)
+    pcall(function() Ctl.miscFovToggle:SetDesc(T("MISC_FOV_DESC")) end)
+end)
+
+Ctl.miscFovSlider = safeCreate(Ctl.miscSectionWorld, "Slider", {
+    Title = T("MISC_FOV"),
+    Value = { Min = 70, Max = 120, Default = Ctl.MiscState.FOVValue },
+    Step = 1,
+    Callback = function(v) Ctl.MiscState.FOVValue = tonumber(v) or 70 end
+}, "miscFovSlider")
+bindLang(function() pcall(function() Ctl.miscFovSlider:SetTitle(T("MISC_FOV")) end) end)
+
+Ctl.miscBrightToggle = safeCreate(Ctl.miscSectionWorld, "Toggle", {
+    Title = T("MISC_BRIGHT"),
+    Desc = T("MISC_BRIGHT_DESC"),
+    Value = Ctl.MiscState.Bright,
+    Callback = function(v) Ctl.MiscState.Bright = v end
+}, "miscBrightToggle")
+bindLang(function()
+    pcall(function() Ctl.miscBrightToggle:SetTitle(T("MISC_BRIGHT")) end)
+    pcall(function() Ctl.miscBrightToggle:SetDesc(T("MISC_BRIGHT_DESC")) end)
+end)
+
+safeCreate(TabHandles.Misc, "Button", {
+    Title = T("MISC_RESET"),
+    Desc = T("MISC_RESET_DESC"),
+    Icon = "refresh-cw",
+    Callback = function()
+        Ctl.MiscState.Speed = false; Ctl.MiscState.Jump = false; Ctl.MiscState.Health = false
+        Ctl.MiscState.InfJump = false; Ctl.MiscState.Gravity = false; Ctl.MiscState.Noclip = false
+        Ctl.MiscState.FOV = false; Ctl.MiscState.Bright = false
+        Ctl.MiscState.SpeedValue = 16; Ctl.MiscState.JumpValue = 50; Ctl.MiscState.HealthValue = 100
+        Ctl.MiscState.GravityValue = 196; Ctl.MiscState.FOVValue = 70
+        restoreMiscAll()
+        stopAntiAFK()
+        Ctl.XrayState.Enabled = false
+        applyXray(true)
+        pcall(function() Ctl.miscAfkToggle:Set(false) end)
+        pcall(function() Ctl.miscXrayToggle:Set(false) end)
+        pcall(function() Ctl.miscXraySlider:Set(70) end)
+        pcall(function()
+            Ctl.miscSpeedToggle:Set(false); Ctl.miscJumpToggle:Set(false)
+            Ctl.miscHealthToggle:Set(false); Ctl.miscInfJumpToggle:Set(false)
+            Ctl.miscGravityToggle:Set(false); Ctl.miscNoclipToggle:Set(false)
+            Ctl.miscFovToggle:Set(false); Ctl.miscBrightToggle:Set(false)
+            Ctl.miscSpeedSlider:Set(16); Ctl.miscJumpSlider:Set(50)
+            Ctl.miscHealthSlider:Set(100); Ctl.miscGravitySlider:Set(196)
+            Ctl.miscFovSlider:Set(70)
+        end)
+        WindUI:Notify({ Title = T("MISC_TAB"), Content = T("MISC_RESET_DONE"), Icon = "check", Duration = 2 })
+    end
+}, "miscResetBtn")
+
+bindLang(function() setTitleSafe(TabHandles.Misc, T("MISC_TAB")) end)
+
+
+-- ========================= 防AFK / 透视 / 传送 =========================
+Ctl.VirtualUser = nil
+pcall(function() VirtualUser = game:GetService("Ctl.VirtualUser") end)
+
+Ctl.AntiAFKConn = nil
+Ctl.XrayState = { Enabled = false, Amount = 0.7 }
+Ctl.XrayConn = nil
+Ctl.XrayTouched = {}
+Ctl.TPList = {}
+Ctl.TPSelected = nil
+
+-- ---------- 防 AFK ----------
+local function startAntiAFK()
+    if Ctl.AntiAFKConn then return true end
+    if Ctl.VirtualUser and LocalPlayer.Idled then
+        AntiAFKConn = LocalPlayer.Idled:Connect(function()
+            pcall(function()
+                Ctl.VirtualUser:CaptureController()
+                Ctl.VirtualUser:ClickButton2(Vector2.new())
+            end)
+        end)
+        return true
+    end
+    -- 无 Ctl.VirtualUser 时：定期极微移动，避免被判静止
+    AntiAFKConn = RunService.Heartbeat:Connect(function()
+        -- 每 60 帧动一次
+        if not Ctl._afkTick then Ctl._afkTick = 0 end
+        Ctl._afkTick = Ctl._afkTick + 1
+        if Ctl._afkTick < 60 then return end
+        Ctl._afkTick = 0
+        local c = LocalPlayer.Character
+        local root = c and c:FindFirstChild("HumanoidRootPart")
+        if root then
+            pcall(function()
+                root.CFrame = root.CFrame * CFrame.new(0, 0, 0.001)
+            end)
+        end
+    end)
+    return true
+end
+
+local function stopAntiAFK()
+    if Ctl.AntiAFKConn then Ctl.AntiAFKConn:Disconnect(); AntiAFKConn = nil end
+end
+
+-- ---------- 透视 ----------
+local function isCharPart(part)
+    local m = part.Parent
+    if not m then return false end
+    if m:FindFirstChildOfClass("Humanoid") then return true end
+    local gp = m.Parent
+    if gp and gp:FindFirstChildOfClass("Humanoid") then return true end
+    return false
+end
+
+local function applyXray(clear)
+    for part in pairs(Ctl.XrayTouched) do
+        pcall(function()
+            part.LocalTransparencyModifier = clear and 0 or Ctl.XrayState.Amount
+        end)
+        if clear then Ctl.XrayTouched[part] = nil end
+    end
+end
+
+local function scanXray()
+    if not Ctl.XrayState.Enabled then
+        applyXray(true)
+        return
+    end
+    local myChar = LocalPlayer.Character
+    for _, part in ipairs(workspace:GetDescendants()) do
+        if part:IsA("BasePart") and not isCharPart(part) and part ~= workspace.Terrain then
+            local skip = false
+            if myChar and part:IsDescendantOf(myChar) then skip = true end
+            if not skip then
+                Ctl.XrayTouched[part] = true
+                pcall(function() part.LocalTransparencyModifier = Ctl.XrayState.Amount end)
+            end
+        end
+    end
+end
+
+-- ---------- 传送 ----------
+local function refreshTPList()
+    TPList = {}
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer then
+            table.insert(Ctl.TPList, plr.DisplayName .. " (@" .. plr.Name .. ")")
+        end
+    end
+    table.sort(Ctl.TPList)
+    if #TPList == 0 then table.insert(Ctl.TPList, "（暂无其他玩家）") end
+    return Ctl.TPList
+end
+
+local function findPlayerByLabel(label)
+    local name = label:match("@([^)]+)")
+    if name then
+        return Players:FindFirstChild(name)
+    end
+    return nil
+end
+
+local function teleportTo(plr, behind, keepVeh)
+    local myChar = LocalPlayer.Character
+    local target = plr and plr.Character
+    if not (myChar and target) then
+        WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NOCHAR"), Icon = "x", Duration = 2 })
+        return
+    end
+    local myRoot = myChar:FindFirstChild("HumanoidRootPart")
+    local tRoot = target:FindFirstChild("HumanoidRootPart")
+    if not (myRoot and tRoot) then
+        WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NOCHAR"), Icon = "x", Duration = 2 })
+        return
+    end
+
+    local cf = tRoot.CFrame
+    if behind then
+        cf = cf * CFrame.new(0, 0, 4)
+    else
+        cf = cf * CFrame.new(0, 3, 0)
+    end
+
+    local seat = myChar:FindFirstChildOfClass("Seat") or (myRoot:FindFirstChildOfClass("Weld") and nil)
+    local hum = myChar:FindFirstChildOfClass("Humanoid")
+
+    if keepVeh and hum and hum.SeatPart then
+        local veh = hum.SeatPart
+        pcall(function()
+            if veh:IsA("BasePart") and veh.Parent and veh.Parent:IsA("Model") then
+                veh.Parent:PivotTo(cf)
+            else
+                veh.CFrame = cf
+            end
+        end)
+    else
+        pcall(function() hum.Sit = false end)
+        pcall(function() myRoot.CFrame = cf end)
+        if myChar.PrimaryPart then
+            pcall(function() myChar:PivotTo(cf) end)
+        end
+    end
+    WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_OK"), Icon = "check", Duration = 2 })
+end
+
+-- ---------- 界面 ----------
+Ctl.miscSectionAFK = safeCreate(TabHandles.Misc, "Section", { Title = T("MISC_SEC_AFK"), Icon = "shield" }, "miscSecAFK")
+
+Ctl.miscAfkToggle = safeCreate(Ctl.miscSectionAFK, "Toggle", {
+    Title = T("MISC_ANTIAFK"),
+    Desc = T("MISC_ANTIAFK_DESC"),
+    Value = false,
+    Callback = function(v)
+        if v then startAntiAFK() else stopAntiAFK() end
+    end
+}, "miscAfkToggle")
+bindLang(function()
+    pcall(function() Ctl.miscAfkToggle:SetTitle(T("MISC_ANTIAFK")) end)
+    pcall(function() Ctl.miscAfkToggle:SetDesc(T("MISC_ANTIAFK_DESC")) end)
+end)
+
+Ctl.miscXrayToggle = safeCreate(Ctl.miscSectionAFK, "Toggle", {
+    Title = T("MISC_XRAY"),
+    Desc = T("MISC_XRAY_DESC"),
+    Value = false,
+    Callback = function(v)
+        Ctl.XrayState.Enabled = v
+        if v then
+            scanXray()
+            if not Ctl.XrayConn then
+                XrayConn = RunService.Heartbeat:Connect(function()
+                    if not Ctl.XrayState.Enabled then
+                        applyXray(true)
+                        if Ctl.XrayConn then Ctl.XrayConn:Disconnect(); XrayConn = nil end
+                        return
+                    end
+                    if not Ctl._xrayTick then Ctl._xrayTick = 0 end
+                    Ctl._xrayTick = Ctl._xrayTick + 1
+                    if Ctl._xrayTick >= 120 then
+                        Ctl._xrayTick = 0
+                        scanXray()
+                    end
+                end)
+            end
+        else
+            applyXray(true)
+        end
+    end
+}, "miscXrayToggle")
+bindLang(function()
+    pcall(function() Ctl.miscXrayToggle:SetTitle(T("MISC_XRAY")) end)
+    pcall(function() Ctl.miscXrayToggle:SetDesc(T("MISC_XRAY_DESC")) end)
+end)
+
+Ctl.miscXraySlider = safeCreate(Ctl.miscSectionAFK, "Slider", {
+    Title = T("MISC_XRAY_AMT"),
+    Desc = T("MISC_XRAY_AMT_DESC"),
+    Value = { Min = 10, Max = 100, Default = math.floor(Ctl.XrayState.Amount * 100) },
+    Step = 5,
+    Callback = function(v)
+        Ctl.XrayState.Amount = (tonumber(v) or 70) / 100
+        if Ctl.XrayState.Enabled then scanXray() end
+    end
+}, "miscXraySlider")
+bindLang(function() pcall(function() Ctl.miscXraySlider:SetTitle(T("MISC_XRAY_AMT")) end) end)
+
+Ctl.miscSectionTP = safeCreate(TabHandles.Misc, "Section", { Title = T("MISC_SEC_TP"), Icon = "map-pin" }, "miscSecTP")
+
+Ctl.miscTpDropdown = safeCreate(Ctl.miscSectionTP, "Dropdown", {
+    Title = T("MISC_TP_SELECT"),
+    Desc = T("MISC_TP_SELECT_DESC"),
+    Values = refreshTPList(),
+    Value = Ctl.TPList[1],
+    Callback = function(v) TPSelected = v end
+}, "miscTpDropdown")
+bindLang(function() pcall(function() Ctl.miscTpDropdown:SetTitle(T("MISC_TP_SELECT")) end) end)
+
+safeCreate(Ctl.miscSectionTP, "Button", {
+    Title = T("MISC_TP_REFRESH"),
+    Icon = "refresh-cw",
+    Callback = function()
+        local list = refreshTPList()
+        pcall(function() Ctl.miscTpDropdown:Refresh(list) end)
+        WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_REFRESHED"), Icon = "check", Duration = 2 })
+    end
+}, "miscTpRefreshBtn")
+
+Ctl.miscTpVehToggle = safeCreate(Ctl.miscSectionTP, "Toggle", {
+    Title = T("MISC_TP_VEH"),
+    Desc = T("MISC_TP_VEH_DESC"),
+    Value = false,
+    Callback = function(v) Ctl.MiscState.TPKeepVeh = v end
+}, "miscTpVehToggle")
+bindLang(function()
+    pcall(function() Ctl.miscTpVehToggle:SetTitle(T("MISC_TP_VEH")) end)
+    pcall(function() Ctl.miscTpVehToggle:SetDesc(T("MISC_TP_VEH_DESC")) end)
+end)
+
+safeCreate(Ctl.miscSectionTP, "Button", {
+    Title = T("MISC_TP_GO"),
+    Icon = "navigation",
+    Variant = "Primary",
+    Callback = function()
+        if not Ctl.TPSelected or Ctl.TPSelected:find("暂无") then
+            WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NONE"), Icon = "x", Duration = 2 })
+            return
+        end
+        local plr = findPlayerByLabel(Ctl.TPSelected)
+        if not plr then
+            WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NONE"), Icon = "x", Duration = 2 })
+            return
+        end
+        teleportTo(plr, false, Ctl.MiscState.TPKeepVeh)
+    end
+}, "miscTpGoBtn")
+
+safeCreate(Ctl.miscSectionTP, "Button", {
+    Title = T("MISC_TP_BEHIND"),
+    Desc = T("MISC_TP_BEHIND_DESC"),
+    Icon = "arrow-right",
+    Callback = function()
+        if not Ctl.TPSelected or Ctl.TPSelected:find("暂无") then
+            WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NONE"), Icon = "x", Duration = 2 })
+            return
+        end
+        local plr = findPlayerByLabel(Ctl.TPSelected)
+        if not plr then
+            WindUI:Notify({ Title = T("MISC_SEC_TP"), Content = T("MISC_TP_NONE"), Icon = "x", Duration = 2 })
+            return
+        end
+        teleportTo(plr, true, Ctl.MiscState.TPKeepVeh)
+    end
+}, "miscTpBehindBtn")
+
+-- 图标保守化
+s = s.replace('Icon = "shield"', 'Icon = "shield"')
+
+-- ======================= 防AFK / 透视 / 传送 结束 =======================
+
+
+-- ======================= 通用模块结束 =======================
 
 -- ========================= 个人档案页 =========================
 local FPSMeter = { value = 0, frames = 0, last = tick() }
@@ -5676,8 +6873,8 @@ safeCreate(TabHandles.Profile, "Paragraph", {
 })
 safeCreate(TabHandles.Profile, "Divider", {})
 
-local profileSectionBasic = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_BASIC"), Icon = "user", Opened = true })
-local profileAgeText = safeCreate(profileSectionBasic, "Paragraph", {
+Ctl.profileSectionBasic = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_BASIC"), Icon = "user", Opened = true })
+local profileAgeText = safeCreate(Ctl.profileSectionBasic, "Paragraph", {
     Title = T("PROFILE_ACCOUNTAGE"),
     Desc = accountAgeText(),
     Image = "calendar",
@@ -5689,7 +6886,7 @@ bindLang(function()
     pcall(function() profileAgeText:SetDesc(accountAgeText()) end)
 end)
 
-safeCreate(profileSectionBasic, "Button", {
+safeCreate(Ctl.profileSectionBasic, "Button", {
     Title = T("PROFILE_COPYUID"),
     Icon = "copy",
     Callback = function()
@@ -5698,13 +6895,13 @@ safeCreate(profileSectionBasic, "Button", {
     end
 })
 bindLang(function()
-    setTitleSafe(profileSectionBasic, T("PROFILE_BASIC"))
+    setTitleSafe(Ctl.profileSectionBasic, T("PROFILE_BASIC"))
 end)
 
-local profileSectionServer = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_SERVER"), Icon = "database", Opened = true })
-bindLang(function() setTitleSafe(profileSectionServer, T("PROFILE_SERVER")) end)
+Ctl.profileSectionServer = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_SERVER"), Icon = "database", Opened = true })
+bindLang(function() setTitleSafe(Ctl.profileSectionServer, T("PROFILE_SERVER")) end)
 
-safeCreate(profileSectionServer, "Button", {
+safeCreate(Ctl.profileSectionServer, "Button", {
     Title = T("PROFILE_REFRESH"),
     Icon = "refresh-cw",
     Callback = function()
@@ -5715,7 +6912,7 @@ safeCreate(profileSectionServer, "Button", {
         })
     end
 })
-safeCreate(profileSectionServer, "Button", {
+safeCreate(Ctl.profileSectionServer, "Button", {
     Title = T("PROFILE_COPYJOBID"),
     Icon = "copy",
     Callback = function()
@@ -5738,7 +6935,7 @@ safeCreate(profileSectionServer, "Button", {
         end
     end
 })
-safeCreate(profileSectionServer, "Button", {
+safeCreate(Ctl.profileSectionServer, "Button", {
     Title = T("PROFILE_VIEW"),
     Icon = "user",
     Variant = "Tertiary",
@@ -5775,10 +6972,10 @@ local langParagraph = safeCreate(TabHandles.Language, "Paragraph", {
 })
 bindLang(function() setTitleSafe(langParagraph, T("LANG_CURRENT")) end)
 
-local langSection = safeCreate(TabHandles.Language, "Section", { Title = T("LANG_SELECT"), Icon = "globe" })
-bindLang(function() setTitleSafe(langSection, T("LANG_SELECT")) end)
+Ctl.langSection = safeCreate(TabHandles.Language, "Section", { Title = T("LANG_SELECT"), Icon = "globe" })
+bindLang(function() setTitleSafe(Ctl.langSection, T("LANG_SELECT")) end)
 
-local langDropdown = langSection:Dropdown({
+local langDropdown = Ctl.langSection:Dropdown({
     Title = T("LANG_SELECT"),
     Values = langNames,
     Value = currentLangName,
@@ -5815,10 +7012,10 @@ safeCreate(TabHandles.Language, "Button", {
 
 
 
-Ctl.espColor = safeCreate(espSectionFilter, "Colorpicker", {
+Ctl.espColor = safeCreate(Ctl.espSectionFilter, "Colorpicker", {
     Title = T("ESP_COLOR"),
-    Default = ESPState.Color,
-    Callback = function(color) ESPState.Color = color end
+    Default = Ctl.ESPState.Color,
+    Callback = function(color) Ctl.ESPState.Color = color end
 })
 bindLang(function() pcall(function() Ctl.espColor:SetTitle(T("ESP_COLOR")) end) end)
 
@@ -5835,10 +7032,10 @@ safeCreate(TabHandles.ESP, "Button", {
             if tmp then tmp:Remove() end
         end)
         table.insert(lines, (drawOk and "[OK] " or "[X] ") .. (drawOk and T("ESP_DRAWING_OK") or T("ESP_DRAWING_NO")))
-        table.insert(lines, T("ESP_STATE") .. ": " .. (ESPState.Enabled and "ON" or "OFF"))
+        table.insert(lines, T("ESP_STATE") .. ": " .. (Ctl.ESPState.Enabled and "ON" or "OFF"))
         table.insert(lines, T("ESP_DRAWN") .. ": " .. tostring(ESPDrawnCount))
-        table.insert(lines, T("ESP_UNIT") .. ": " .. tostring(ESPState.DistanceUnit))
-        table.insert(lines, "最小模式: " .. tostring(ESPState.Minimal))
+        table.insert(lines, T("ESP_UNIT") .. ": " .. tostring(Ctl.ESPState.DistanceUnit))
+        table.insert(lines, "最小模式: " .. tostring(Ctl.ESPState.Minimal))
         table.insert(lines, "")
         if #UIErrorLog > 0 then
             table.insert(lines, "构建错误 (" .. tostring(#UIErrorLog) .. "):")
@@ -5873,9 +7070,9 @@ safeCreate(TabHandles.ESP, "Button", {
     Icon = "trash",
     Callback = function()
         for plr in pairs(ESPDrawings) do removeESPObject(plr) end
-        for plr, dot in pairs(RadarDots) do
+        for plr, dot in pairs(Ctl.RadarDots) do
             pcall(function() dot:Remove() end)
-            RadarDots[plr] = nil
+            Ctl.RadarDots[plr] = nil
         end
         WindUI:Notify({ Title = "ESP", Content = T("ESP_CLEARED"), Icon = "check", Duration = 2 })
     end
@@ -6082,10 +7279,10 @@ local ConfigManager = Window.ConfigManager
 local configName = "default"
 local configFile = nil
 
-local configSection = safeCreate(TabHandles.Appearance, "Section", { Title = T("CONFIG_SEC"), Icon = "download", Opened = true })
-bindLang(function() setTitleSafe(configSection, T("CONFIG_SEC")) end)
+Ctl.configSection = safeCreate(TabHandles.Appearance, "Section", { Title = T("CONFIG_SEC"), Icon = "download", Opened = true })
+bindLang(function() setTitleSafe(Ctl.configSection, T("CONFIG_SEC")) end)
 
-local configHeader = safeCreate(configSection, "Paragraph", {
+local configHeader = safeCreate(Ctl.configSection, "Paragraph", {
     Title = T("CONFIG_TITLE"),
     Desc = T("CONFIG_NAME") .. ": " .. configName,
     Image = "save",
@@ -6097,7 +7294,7 @@ bindLang(function()
     pcall(function() configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
 end)
 
-safeCreate(configSection, "Input", {
+safeCreate(Ctl.configSection, "Input", {
     Title = T("CONFIG_NAME"),
     Desc = T("CONFIG_NAME_PLACEHOLDER"),
     Value = configName,
@@ -6162,6 +7359,17 @@ if ConfigManager then
             { "flyToggle", flyToggle }, { "Ctl.flySpeedSlider", Ctl.flySpeedSlider },
             { "Ctl.flyVertSlider", Ctl.flyVertSlider }, { "Ctl.flyNoclipToggle", Ctl.flyNoclipToggle },
             { "Ctl.flyNoclipMode", Ctl.flyNoclipMode }, { "Ctl.flyUnstickToggle", Ctl.flyUnstickToggle },
+            { "Ctl.miscSpeedToggle", Ctl.miscSpeedToggle }, { "Ctl.miscSpeedSlider", Ctl.miscSpeedSlider },
+            { "Ctl.miscJumpToggle", Ctl.miscJumpToggle }, { "Ctl.miscJumpSlider", Ctl.miscJumpSlider },
+            { "Ctl.miscHealthToggle", Ctl.miscHealthToggle }, { "Ctl.miscHealthSlider", Ctl.miscHealthSlider },
+            { "Ctl.miscInfJumpToggle", Ctl.miscInfJumpToggle },
+            { "Ctl.miscGravityToggle", Ctl.miscGravityToggle }, { "Ctl.miscGravitySlider", Ctl.miscGravitySlider },
+            { "Ctl.miscNoclipToggle", Ctl.miscNoclipToggle },
+            { "Ctl.miscFovToggle", Ctl.miscFovToggle }, { "Ctl.miscFovSlider", Ctl.miscFovSlider },
+            { "Ctl.miscBrightToggle", Ctl.miscBrightToggle },
+            { "Ctl.miscAfkToggle", Ctl.miscAfkToggle },
+            { "Ctl.miscXrayToggle", Ctl.miscXrayToggle }, { "Ctl.miscXraySlider", Ctl.miscXraySlider },
+            { "Ctl.miscTpDropdown", Ctl.miscTpDropdown }, { "Ctl.miscTpVehToggle", Ctl.miscTpVehToggle },
             { "bulletImpl", bulletImpl }, { "bulletFireKey", bulletFireKey },
             { "bulletHbToggle", bulletHbToggle }, { "Ctl.bulletHbPart", Ctl.bulletHbPart },
             { "Ctl.bulletHbMult", Ctl.bulletHbMult }, { "Ctl.bulletProjSpeed", Ctl.bulletProjSpeed },
@@ -6171,7 +7379,7 @@ if ConfigManager then
         return Controls
     end
 
-    safeCreate(configSection, "Button", {
+    safeCreate(Ctl.configSection, "Button", {
         Title = T("CONFIG_SAVE"),
         Icon = "download",
         Variant = "Primary",
@@ -6190,7 +7398,7 @@ if ConfigManager then
         end
     })
 
-    safeCreate(configSection, "Button", {
+    safeCreate(Ctl.configSection, "Button", {
         Title = T("CONFIG_LOAD"),
         Icon = "folder",
         Callback = function()
@@ -6213,7 +7421,7 @@ if ConfigManager then
         end
     })
 else
-    safeCreate(configSection, "Paragraph", {
+    safeCreate(Ctl.configSection, "Paragraph", {
         Title = T("CONFIG_NOTSUP"),
         Desc = "ConfigManager = nil",
         Image = "alert-triangle",
@@ -6223,6 +7431,271 @@ else
 end
 
 -- ======================= 配置管理结束 =======================
+
+
+-- ========================= 脚本库 =========================
+--[[
+    添加脚本的方法（重要）：
+    往下面的 SCRIPT_LIB 数组里加一项即可，格式如下：
+
+        {
+            Name   = "脚本名称",              -- 显示名，必填
+            Author = "作者名",                -- 可留空
+            Game   = "适用服务器/游戏",       -- 分类用，同名的会归到一组
+            Desc   = "一句话说明",            -- 可留空
+            Url    = "https://...",           -- 脚本直链，必填（raw / gist 直链）
+            Confirm = true,                   -- 加载前是否弹确认框，默认 true
+        },
+
+    注意事项：
+    1. Url 必须是能直接返回 Lua 文本的直链（raw.githubusercontent.com、gist 的 /raw/ 等）
+       不是 GitHub 网页地址，网页地址加载出来是 HTML 会报错
+    2. Game 字段相同的脚本会自动归到同一个分类
+    3. 加完保存即可，界面会自动出现新分类和新条目，无需改其他代码
+]]
+
+local SCRIPT_LIB = {
+    -- ===== 示例条目（Url 为空，加载时会提示未配置）=====
+    {
+        Name = "ROB脚本中心 V4",
+        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/idrobsc/rob_script/refs/heads/main/rob.v4"))()",
+    },
+    {
+        Name = "YirdeX(YX-Hub)脚本中心",
+        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/YirdeX-Dev/scripts/refs/heads/main/YX-HubLoader.lua"))()",
+    },
+    {
+        Name = "黑洞(BS)脚本中心轻量版",
+        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/vbxfhcd/BS/refs/heads/main/BS-loves_you.txt"))()"
+    -- ===== 在这里继续往下加 =====
+    -- {
+    --     Name = "xxx Hub",
+    --     Author = "某人",
+    --     Game = "某个服务器",
+    --     Desc = "功能说明",
+    --     Url = "https://raw.githubusercontent.com/xxx/yyy/main/xxx.lua",
+    --     Confirm = true,
+    -- },
+}
+
+local function infoTextOf(item)
+    if not item then return T("SCRIPT_INFO_EMPTY") end
+    local lines = {}
+    lines[#lines + 1] = "名称: " .. tostring(item.Name or "-")
+    lines[#lines + 1] = "作者: " .. tostring(item.Author or "-")
+    lines[#lines + 1] = "适用: " .. tostring(item.Game or "-")
+    lines[#lines + 1] = "说明: " .. tostring(item.Desc or "-")
+    lines[#lines + 1] = "链接: " .. (((item.Url and item.Url ~= "") and item.Url) or T("SCRIPT_NO_URL"))
+    return table.concat(lines, "\n")
+end
+
+Ctl.CustomScriptUrl = ""
+
+Ctl.ScriptCats = {}
+Ctl.ScriptCatNames = {}
+do
+    local seen = {}
+    for _, item in ipairs(SCRIPT_LIB) do
+        local g = item.Game or "未分类"
+        if not seen[g] then
+            seen[g] = true
+            table.insert(Ctl.ScriptCatNames, g)
+            Ctl.ScriptCats[g] = {}
+        end
+        table.insert(Ctl.ScriptCats[g], item)
+    end
+    table.sort(Ctl.ScriptCatNames)
+end
+
+Ctl.CurCat = Ctl.ScriptCatNames[1]
+Ctl.CurScript = nil
+
+local function scriptsOfCat(cat)
+    local out = {}
+    local list = Ctl.ScriptCats[cat] or {}
+    for _, item in ipairs(list) do
+        table.insert(out, item.Name)
+    end
+    table.sort(out)
+    return out
+end
+
+local function findScript(cat, name)
+    local list = Ctl.ScriptCats[cat] or {}
+    for _, item in ipairs(list) do
+        if item.Name == name then return item end
+    end
+    return nil
+end
+
+local function runScriptUrl(url, label)
+    if not url or url == "" then
+        WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_NO_URL"), Icon = "x", Duration = 3 })
+        return
+    end
+    WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_LOADING"), Icon = "loader", Duration = 2 })
+    task.spawn(function()
+        local ok, src = pcall(function() return game:HttpGet(url) end)
+        if not ok or not src or #src < 10 then
+            WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_FAILED"), Icon = "x", Duration = 4 })
+            return
+        end
+        local fn, cerr = loadstring(src)
+        if not fn then
+            warn("[LaevatainSky] 脚本解析失败: " .. tostring(cerr))
+            WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_FAILED"), Icon = "x", Duration = 4 })
+            return
+        end
+        local rok, rerr = pcall(fn)
+        if not rok then
+            warn("[LaevatainSky] 脚本运行出错: " .. tostring(rerr))
+        end
+        WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_LOADED"), Icon = "check", Duration = 3 })
+    end)
+end
+
+-- ---------- 界面 ----------
+safeCreate(TabHandles.ScriptHub, "Paragraph", {
+    Title = T("SCRIPT_TAB"),
+    Desc = T("SCRIPT_DESC"),
+    Image = "list",
+    ImageSize = 20,
+    Color = "White",
+}, "scriptHeader")
+safeCreate(TabHandles.ScriptHub, "Divider", {}, "scriptDiv")
+
+Ctl.scriptSectionPick = safeCreate(TabHandles.ScriptHub, "Section", { Title = T("SCRIPT_SELECT"), Icon = "list" }, "scriptSecPick")
+
+Ctl.scriptCatDropdown = safeCreate(Ctl.scriptSectionPick, "Dropdown", {
+    Title = T("SCRIPT_CATEGORY"),
+    Desc = T("SCRIPT_CATEGORY_DESC"),
+    Values = Ctl.ScriptCatNames,
+    Value = Ctl.CurCat,
+    Callback = function(v)
+        CurCat = v
+        CurScript = nil
+        local list = scriptsOfCat(v)
+        pcall(function() Ctl.scriptNameDropdown:Refresh(list) end)
+        if #list > 0 then
+            pcall(function() Ctl.scriptNameDropdown:Select(list[1]) end)
+            CurScript = list[1]
+            pcall(function() Ctl.scriptInfoPara:SetDesc(infoTextOf(findScript(v, list[1]))) end)
+        end
+    end
+}, "scriptCatDropdown")
+bindLang(function() pcall(function() Ctl.scriptCatDropdown:SetTitle(T("SCRIPT_CATEGORY")) end) end)
+
+Ctl.scriptNameDropdown = safeCreate(Ctl.scriptSectionPick, "Dropdown", {
+    Title = T("SCRIPT_SELECT"),
+    Desc = T("SCRIPT_SELECT_DESC"),
+    Values = scriptsOfCat(Ctl.CurCat),
+    Value = (scriptsOfCat(Ctl.CurCat))[1],
+    Callback = function(v)
+        CurScript = v
+        pcall(function() Ctl.scriptInfoPara:SetDesc(infoTextOf(findScript(Ctl.CurCat, v))) end)
+    end
+}, "scriptNameDropdown")
+bindLang(function() pcall(function() Ctl.scriptNameDropdown:SetTitle(T("SCRIPT_SELECT")) end) end)
+
+Ctl.scriptSectionInfo = safeCreate(TabHandles.ScriptHub, "Section", { Title = T("SCRIPT_INFO"), Icon = "info" }, "scriptSecInfo")
+
+Ctl.scriptInfoPara = safeCreate(Ctl.scriptSectionInfo, "Paragraph", {
+    Title = T("SCRIPT_INFO"),
+    Desc = T("SCRIPT_INFO_EMPTY"),
+    Image = "info",
+    ImageSize = 20,
+    Color = "White",
+}, "scriptInfoPara")
+bindLang(function() pcall(function() Ctl.scriptInfoPara:SetTitle(T("SCRIPT_INFO")) end) end)
+
+safeCreate(Ctl.scriptSectionInfo, "Button", {
+    Title = T("SCRIPT_LOAD"),
+    Desc = T("SCRIPT_LOAD_DESC"),
+    Icon = "play",
+    Variant = "Primary",
+    Callback = function()
+        local item = findScript(Ctl.CurCat, Ctl.CurScript)
+        if not item then return end
+        if not item.Url or item.Url == "" then
+            WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_NO_URL"), Icon = "x", Duration = 3 })
+            return
+        end
+        if item.Confirm ~= false then
+            Window:Dialog({
+                Title = T("SCRIPT_CONFIRM_TITLE"),
+                Content = item.Name .. "\n" .. T("SCRIPT_CONFIRM_BODY"),
+                Buttons = {
+                    { Title = T("SCRIPT_LOAD"), Variant = "Primary", Callback = function()
+                        runScriptUrl(item.Url, item.Name)
+                    end },
+                    { Title = T("CANCEL") or "取消", Variant = "Secondary" },
+                }
+            })
+        else
+            runScriptUrl(item.Url, item.Name)
+        end
+    end
+}, "scriptLoadBtn")
+
+safeCreate(Ctl.scriptSectionInfo, "Button", {
+    Title = T("SCRIPT_COPY"),
+    Desc = T("SCRIPT_COPY_DESC"),
+    Icon = "copy",
+    Callback = function()
+        local item = findScript(Ctl.CurCat, Ctl.CurScript)
+        if not item or not item.Url or item.Url == "" then
+            WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_NO_URL"), Icon = "x", Duration = 3 })
+            return
+        end
+        pcall(function()
+            if setclipboard then setclipboard(item.Url) end
+        end)
+        WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_COPIED"), Icon = "check", Duration = 2 })
+    end
+}, "scriptCopyBtn")
+
+Ctl.scriptSectionCustom = safeCreate(TabHandles.ScriptHub, "Section", { Title = T("SCRIPT_CUSTOM_SEC"), Icon = "plus" }, "scriptSecCustom")
+
+Ctl.scriptUrlInput = safeCreate(Ctl.scriptSectionCustom, "Input", {
+    Title = T("SCRIPT_CUSTOM_URL"),
+    Desc = T("SCRIPT_CUSTOM_URL_DESC"),
+    Placeholder = "https://raw.githubusercontent.com/...",
+    Value = "",
+    Callback = function(v) CustomScriptUrl = v end
+}, "scriptUrlInput")
+bindLang(function() pcall(function() Ctl.scriptUrlInput:SetTitle(T("SCRIPT_CUSTOM_URL")) end) end)
+
+safeCreate(Ctl.scriptSectionCustom, "Button", {
+    Title = T("SCRIPT_CUSTOM_LOAD"),
+    Icon = "play",
+    Variant = "Primary",
+    Callback = function()
+        local url = Ctl.CustomScriptUrl
+        if not url or url == "" then
+            WindUI:Notify({ Title = T("SCRIPT_TAB"), Content = T("SCRIPT_CUSTOM_EMPTY"), Icon = "x", Duration = 3 })
+            return
+        end
+        runScriptUrl(url, "自定义脚本")
+    end
+}, "scriptCustomLoadBtn")
+
+Ctl.scriptSectionGuide = safeCreate(TabHandles.ScriptHub, "Section", { Title = T("SCRIPT_GUIDE"), Icon = "info" }, "scriptSecGuide")
+
+safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
+    Title = T("SCRIPT_GUIDE"),
+    Desc = T("SCRIPT_GUIDE_DESC") .. "\n\n" ..
+        "1. 打开脚本文件，找到 SCRIPT_LIB 数组\n" ..
+        "2. 照着示例条目加一项：Name / Author / Game / Desc / Url\n" ..
+        "3. Url 必须是 raw 或 gist 直链，不能是 GitHub 网页地址\n" ..
+        "4. Game 相同的会自动归到同一分类\n" ..
+        "5. 保存后重新执行脚本即可看到新条目",
+    Image = "info",
+    ImageSize = 20,
+    Color = "White",
+}, "scriptGuidePara")
+
+-- ======================= 脚本库结束 =======================
+
 
 -- ========================= 构建自检 =========================
 -- 任何 Tab 空白时，这里会在控制台输出并弹窗告知具体失败控件
@@ -6284,8 +7757,8 @@ safeCreate(TabHandles.Profile, "Paragraph", {
     }
 })
 
-local footerSection = Window:Section({ Title = "WindUI " .. WindUI.Version })
-footerSection:Paragraph({
+Ctl.footerSection = Window:Section({ Title = "WindUI " .. WindUI.Version })
+Ctl.footerSection:Paragraph({
     Title = "LaevatainSky v1",
     Desc = "LaevatainSky — 内部测试私服专用",
     Image = "sparkles",
@@ -6305,7 +7778,8 @@ Window:OnClose(function()
     end
     pcall(function()
         if HitboxState and HitboxState.Enabled then restoreAllHitbox() end
-        if FlyState and FlyState.Enabled then stopFly() end
+        if Ctl.FlyState and Ctl.FlyState.Enabled then stopFly() end
+        if Ctl.MiscState and Ctl.MiscState.Noclip then restoreNoclipAll() end
     end)
     print("LaevatainSky closed")
 end)
@@ -6340,10 +7814,11 @@ return {
     Window  = Window,
     Tabs    = TabHandles,
     State   = {
-        ESP    = ESPState,
-        Aimbot = AimState,
-        Bullet = BulletState,
-        Fly    = FlyState,
+        ESP    = Ctl.ESPState,
+        Aimbot = Ctl.AimState,
+        Bullet = Ctl.BulletState,
+        Fly    = Ctl.FlyState,
     },
     SetLanguage = applyLanguage,
+    Teleport = teleportTo,
 }
