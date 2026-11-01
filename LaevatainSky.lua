@@ -4,14 +4,22 @@
     仓库: https://github.com/Leiwanting/Laevatain
     许可: 自由使用、修改、分发
 
-    一行加载:
+    一行加载（三选一，哪个能通就用哪个）:
+
+    -- 1. jsDelivr（国内推荐）
+    loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/LaevatainSky.lua"))()
+
+    -- 2. GitHub raw
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Leiwanting/Laevatain/main/LaevatainSky.lua"))()
+
+    -- 3. Gitee 镜像（需先在 Gitee 导入本仓库）
+    loadstring(game:HttpGet("https://gitee.com/Leiwanting/Laevatain/raw/main/LaevatainSky.lua"))()
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.3.0"
+local LIB_VERSION = "1.4.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
-local VER_URL     = "https://raw.githubusercontent.com/Leiwanting/Laevatain/main/version.txt"
+local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
 -- ============ 依赖源配置 ============
 -- 加速域名（部署 AT13xe/gh 后填写，留空则直连 GitHub）
@@ -19,7 +27,12 @@ local VER_URL     = "https://raw.githubusercontent.com/Leiwanting/Laevatain/main
 local PROXY = ""
 
 local WINDUI_PATHS = {
+    -- jsDelivr（国内可达性最好）
+    "https://cdn.jsdelivr.net/gh/KingScriptAE/No-sirve-nada.@main/main.lua",
+    -- GitHub raw
     "https://raw.githubusercontent.com/KingScriptAE/No-sirve-nada./refs/heads/main/main.lua",
+    -- 备用镜像
+    "https://raw.gitmirror.com/KingScriptAE/No-sirve-nada./main/main.lua",
 }
 
 local function buildSources(path)
@@ -33,26 +46,53 @@ local function buildSources(path)
     return list
 end
 
+-- 屏幕可见提示（不依赖 WindUI，加载失败时也能看到原因）
+local function showMsg(title, text, sec)
+    sec = sec or 8
+    print("[LaevatainSky] " .. tostring(title) .. ": " .. tostring(text))
+    warn("[LaevatainSky] " .. tostring(title) .. ": " .. tostring(text))
+    pcall(function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = tostring(title),
+            Text = tostring(text),
+            Duration = sec,
+        })
+    end)
+end
+
 local function tryLoad(urls)
+    local lastErr = ""
     for _, u in ipairs(urls) do
         local ok, res = pcall(function() return game:HttpGet(u) end)
         if ok and res and #res > 500 then
             local fn, err = loadstring(res)
-            if fn then return fn() end
-            warn("[LaevatainSky] 依赖解析失败: " .. tostring(err) .. " <- " .. u)
+            if fn then
+                local rok, robj = pcall(fn)
+                if rok and robj then return robj end
+                lastErr = "解析失败 " .. tostring(robj or err)
+            else
+                lastErr = "解析失败 " .. tostring(err)
+            end
+            warn("[LaevatainSky] " .. lastErr .. " <- " .. u)
         end
     end
-    return nil
+    return nil, lastErr
 end
 
+showMsg(LIB_NAME, "脚本已开始加载，正在获取界面库…", 3)
+
 local WindUI = nil
+local windErr = ""
 for _, base in ipairs(WINDUI_PATHS) do
-    WindUI = tryLoad(buildSources(base))
-    if WindUI then break end
+    local obj, err = tryLoad(buildSources(base))
+    if obj then WindUI = obj; break end
+    if err and err ~= "" then windErr = err end
 end
 
 if not WindUI then
-    warn("[LaevatainSky] WindUI 加载失败，请检查网络或加速域名")
+    showMsg(LIB_NAME .. " 加载失败",
+        "无法获取界面库 WindUI（" .. (windErr ~= "" and windErr or "网络不通") ..
+        "）。\n请检查网络，或改用 jsDelivr 链接加载本脚本。", 12)
     return
 end
 
@@ -3058,6 +3098,7 @@ end
 
 WindUI.TransparencyValue = 0.2
 WindUI:SetTheme("Dark")
+showMsg(LIB_NAME, "v" .. LIB_VERSION .. " 加载成功", 3)
 
 function gradient(text, startColor, endColor)
     local result = ""
@@ -7457,16 +7498,13 @@ end
 local SCRIPT_LIB = {
     -- ===== 示例条目（Url 为空，加载时会提示未配置）=====
     {
-        Name = "ROB脚本中心 V4",
-        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/idrobsc/rob_script/refs/heads/main/rob.v4"))()",
+        Name = "示例脚本",
+        Author = "Laevatain",
+        Game = "示例分类",
+        Desc = "这是一个占位示例，把 Url 换成真实直链即可使用",
+        Url = "",
+        Confirm = true,
     },
-    {
-        Name = "YirdeX(YX-Hub)脚本中心",
-        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/YirdeX-Dev/scripts/refs/heads/main/YX-HubLoader.lua"))()",
-    },
-    {
-        Name = "黑洞(BS)脚本中心轻量版",
-        Url = "loadstring(game:HttpGet("https://raw.githubusercontent.com/vbxfhcd/BS/refs/heads/main/BS-loves_you.txt"))()"
     -- ===== 在这里继续往下加 =====
     -- {
     --     Name = "xxx Hub",

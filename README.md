@@ -8,19 +8,26 @@ Roblox 脚本中心 / 功能库。ESP、自瞄、子追、飞行，8 国语言�
 
 ## 加载
 
-主链接（GitHub raw）：
+三个源，哪个能通就用哪个：
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Leiwanting/Laevatain/main/LaevatainSky.lua"))()
-```
-
-国内访问慢用 jsDelivr 加速：
-
-```lua
+-- 1. jsDelivr（国内推荐，一般都能通）
 loadstring(game:HttpGet("https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/LaevatainSky.lua"))()
+
+-- 2. GitHub raw
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Leiwanting/Laevatain/main/LaevatainSky.lua"))()
+
+-- 3. Gitee 镜像（需先在 Gitee 导入本仓库）
+loadstring(game:HttpGet("https://gitee.com/Leiwanting/Laevatain/raw/main/LaevatainSky.lua"))()
 ```
 
 无任何卡密、无白名单，谁都能用。
+
+**注意**：`raw.githubusercontent.com` 在部分地区会被拦截（表现为连接被重置 / 超时）。
+如果执行后没有任何反应，优先换 jsDelivr 链接。
+
+脚本内置可见提示：开始加载会弹「脚本已开始加载…」，界面库获取失败会弹「加载失败」并说明原因，
+方便判断是网络问题还是脚本问题。
 
 ---
 
