@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.8.0"
+local LIB_VERSION = "1.9.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4921,6 +4921,8 @@ safeCreate(TabHandles.Aimbot, "Button", {
 })
 -- ======================= 自瞄模块结束 =======================
 
+markBuild("Aimbot-OK")
+
 -- ========================= 子弹追踪（子追）模块 =========================
 Ctl.BulletState = {
     Enabled = false,          -- 总开关
@@ -5027,11 +5029,8 @@ end
 pcall(function()
     projConn = workspace.DescendantAdded:Connect(trackProjectile)
 end)
-pcall(function()
-    for _, d in ipairs(workspace:GetDescendants()) do
-        if d:IsA("BasePart") and (d.Velocity.Magnitude >= 50) then trackProjectile(d) end
-    end
-end)
+-- 启动时不再全量遍历 workspace（大地图会卡死脚本）
+-- 已在飞行中的弹丸由 DescendantAdded 捕获即可
 
 local function redirectProjectile(p, v)
     local t = findBulletTarget()
@@ -5200,6 +5199,8 @@ UserInputService.InputBegan:Connect(function(input, gpe)
     end
 end)
 
+
+markBuild("BulletCore")
 
 -- ========================= 相机诊断与强制写入 =========================
 local CamHookInstalled = false
@@ -6733,7 +6734,10 @@ local function scanXray()
         return
     end
     local myChar = LocalPlayer.Character
+    local scanned = 0
     for _, part in ipairs(workspace:GetDescendants()) do
+        scanned = scanned + 1
+        if scanned > 4000 then break end   -- 大地图保护，防止超时卡死
         if part:IsA("BasePart") and not isCharPart(part) and part ~= workspace.Terrain then
             local skip = false
             if myChar and part:IsDescendantOf(myChar) then skip = true end
