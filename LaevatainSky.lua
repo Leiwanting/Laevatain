@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.6.1"
+local LIB_VERSION = "1.6.2"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3284,6 +3284,22 @@ local function markBuild(name)
     pcall(function() task.wait(0) end)
 end
 
+-- 安全读取全局函数：某些执行器没有 getfenv/getgenv，直接调用会让整段脚本中断
+local function safeGlobal(name)
+    local places = {}
+    pcall(function() places[#places + 1] = _G end)
+    pcall(function() if type(getgenv) == "function" then places[#places + 1] = getgenv() end end)
+    pcall(function() if type(getfenv) == "function" then places[#places + 1] = getfenv(0) end end)
+    pcall(function() if type(getfenv) == "function" then places[#places + 1] = getfenv(1) end end)
+    for _, t in ipairs(places) do
+        if type(t) == "table" then
+            local v = rawget(t, name)
+            if v ~= nil then return v end
+        end
+    end
+    return nil
+end
+
 local CurrentBulletTarget = nil
 local ESPLastError = nil
 local ESPDrawnCount = 0
@@ -4885,10 +4901,10 @@ local RemoteLog = {}          -- [RemoteName] = { count = n, remote = instance }
 
 -- 底层 hook 能力检测
 local HookEnv = {
-    getrawmetatable = rawget(_G, "getrawmetatable") or rawget(getfenv(0), "getrawmetatable"),
-    setreadonly = rawget(_G, "setreadonly") or rawget(getfenv(0), "setreadonly"),
-    newcclosure = rawget(_G, "newcclosure") or rawget(getfenv(0), "newcclosure"),
-    getnamecallmethod = rawget(_G, "getnamecallmethod") or rawget(getfenv(0), "getnamecallmethod"),
+    getrawmetatable = safeGlobal("getrawmetatable"),
+    setreadonly = safeGlobal("setreadonly"),
+    newcclosure = safeGlobal("newcclosure"),
+    getnamecallmethod = safeGlobal("getnamecallmethod"),
 }
 local hookReady = false
 local hookInstalled = false
@@ -5086,7 +5102,7 @@ RunService.RenderStepped:Connect(function()
 end)
 
 -- Mouse 模式：开火瞬间把准星挪到目标身上（不依赖底层 hook）
-local mousemoveFn = rawget(_G, "mousemoverel") or rawget(getfenv(0), "mousemoverel")
+local mousemoveFn = safeGlobal("mousemoverel")
 local mouseWarned = false
 
 local function bulletMouseSnap()
@@ -5185,9 +5201,9 @@ local FireFnName = nil
 local function lookupGlobal(name)
     local places = {}
     pcall(function() places[#places + 1] = _G end)
-    pcall(function() if getgenv then places[#places + 1] = getgenv() end end)
-    pcall(function() places[#places + 1] = getfenv(0) end)
-    pcall(function() places[#places + 1] = getfenv(1) end)
+    pcall(function() if type(getgenv) == "function" then places[#places + 1] = getgenv() end end)
+    pcall(function() if type(getfenv) == "function" then places[#places + 1] = getfenv(0) end end)
+    pcall(function() if type(getfenv) == "function" then places[#places + 1] = getfenv(1) end end)
     for _, t in ipairs(places) do
         if type(t) == "table" then
             local v = rawget(t, name)
