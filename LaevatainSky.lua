@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.6.2"
+local LIB_VERSION = "1.7.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4747,7 +4747,7 @@ local function refreshFireRemoteList()
     return names
 end
 
-fireRemoteDropdown = safeCreate(Ctl.tbSection, "Dropdown", {
+Ctl.fireRemoteDropdown = safeCreate(Ctl.tbSection, "Dropdown", {
     Title = "开火 Remote",
     Desc = "先开子追的 Remote 模式开几枪捕获，再在这里选",
     Values = refreshFireRemoteList(),
@@ -5456,9 +5456,7 @@ local function installBulletHook()
 end
 
 markBuild("Bullet")
-task.spawn(function()
-    task.wait(0.08 * 1)
-    local ok, err = pcall(function()
+
 
 -- 子追界面
 safeCreate(TabHandles.Bullet, "Paragraph", {
@@ -5820,18 +5818,10 @@ safeCreate(TabHandles.Bullet, "Button", {
 
 
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] Bullet 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "Bullet: " .. tostring(err))
-    end
-    markBuild("Bullet-OK")
-end)
+markBuild("Bullet-OK")
 
 markBuild("Fly")
-task.spawn(function()
-    task.wait(0.08 * 2)
-    local ok, err = pcall(function()
+
 
 -- ========================= 飞行模块 =========================
 Ctl.FlyState = {
@@ -6277,21 +6267,13 @@ safeCreate(TabHandles.Profile, "Button", {
 })
 
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] Fly 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "Fly: " .. tostring(err))
-    end
-    markBuild("Fly-OK")
-end)
+markBuild("Fly-OK")
 
 markBuild("Misc")
-task.spawn(function()
-    task.wait(0.08 * 3)
-    local ok, err = pcall(function()
+
 
 -- ========================= 通用模块 =========================
-Ctl.Lighting = game:GetService("Ctl.Lighting")
+Ctl.Lighting = game:GetService("Lighting")
 
 Ctl.MiscState = {
     Speed = false,  SpeedValue = 16,
@@ -6624,22 +6606,14 @@ safeCreate(TabHandles.Misc, "Button", {
 bindLang(function() setTitleSafe(TabHandles.Misc, T("MISC_TAB")) end)
 
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] Misc 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "Misc: " .. tostring(err))
-    end
-    markBuild("Misc-OK")
-end)
+markBuild("Misc-OK")
 
 markBuild("AFK/Xray/TP")
-task.spawn(function()
-    task.wait(0.08 * 4)
-    local ok, err = pcall(function()
+
 
 -- ========================= 防AFK / 透视 / 传送 =========================
 Ctl.VirtualUser = nil
-pcall(function() VirtualUser = game:GetService("Ctl.VirtualUser") end)
+pcall(function() Ctl.VirtualUser = game:GetService("VirtualUser") end)
 
 Ctl.AntiAFKConn = nil
 Ctl.XrayState = { Enabled = false, Amount = 0.7 }
@@ -6913,25 +6887,15 @@ safeCreate(Ctl.miscSectionTP, "Button", {
 }, "miscTpBehindBtn")
 
 -- 图标保守化
-s = s.replace('Icon = "shield"', 'Icon = "shield"')
-
 -- ======================= 防AFK / 透视 / 传送 结束 =======================
 
 
 -- ======================= 通用模块结束 =======================
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] AFK/Xray/TP 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "AFK/Xray/TP: " .. tostring(err))
-    end
-    markBuild("AFK/Xray/TP-OK")
-end)
+markBuild("AFK/Xray/TP-OK")
 
 markBuild("Profile")
-task.spawn(function()
-    task.wait(0.08 * 5)
-    local ok, err = pcall(function()
+
 
 -- ========================= 个人档案页 =========================
 local FPSMeter = { value = 0, frames = 0, last = tick() }
@@ -7070,18 +7034,10 @@ safeCreate(Ctl.profileSectionServer, "Button", {
     end
 })
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] Profile 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "Profile: " .. tostring(err))
-    end
-    markBuild("Profile-OK")
-end)
+markBuild("Profile-OK")
 
 markBuild("Language")
-task.spawn(function()
-    task.wait(0.08 * 6)
-    local ok, err = pcall(function()
+
 
 -- ========================= 切换语言页 =========================
 safeCreate(TabHandles.Language, "Paragraph", {
@@ -7567,18 +7523,10 @@ end
 -- ======================= 配置管理结束 =======================
 
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] Language 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "Language: " .. tostring(err))
-    end
-    markBuild("Language-OK")
-end)
+markBuild("Language-OK")
 
 markBuild("ScriptHub")
-task.spawn(function()
-    task.wait(0.08 * 7)
-    local ok, err = pcall(function()
+
 
 -- ========================= 脚本库 =========================
 --[[
@@ -7841,13 +7789,7 @@ safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
 -- ======================= 脚本库结束 =======================
 
 
-    end)
-    if not ok then
-        warn("[LaevatainSky] ScriptHub 构建失败: " .. tostring(err))
-        table.insert(UIErrorLog, "ScriptHub: " .. tostring(err))
-    end
-    markBuild("ScriptHub-OK")
-end)
+markBuild("ScriptHub-OK")
 
 -- ========================= 构建自检 =========================
 -- 任何 Tab 空白时，这里会在控制台输出并弹窗告知具体失败控件
