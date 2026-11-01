@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.7.0"
+local LIB_VERSION = "1.8.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3275,11 +3275,63 @@ local TabHandles = {
 
 -- ========================= ESP 功能模块 =========================
 local Ctl = {}   -- 控件注册表（避免 main chunk 局部变量超限）
+Ctl.buildProgress = {}
+
+-- ===== 原生进度浮窗：不依赖 WindUI，即使界面库坏了也能看到构建停在哪一步 =====
+Ctl.diagLabel = nil
+pcall(function()
+    local pg = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "LaevatainSkyDiag"
+    gui.ResetOnSpawn = false
+    gui.DisplayOrder = 999999
+    gui.Parent = pg
+
+    local f = Instance.new("Frame")
+    f.Size = UDim2.new(0, 300, 0, 100)
+    f.Position = UDim2.new(0, 10, 0, 120)
+    f.BackgroundColor3 = Color3.new(0, 0, 0)
+    f.BackgroundTransparency = 0.35
+    f.BorderSizePixel = 0
+    f.Parent = gui
+    pcall(function()
+        local c = Instance.new("UICorner")
+        c.CornerRadius = UDim.new(0, 8)
+        c.Parent = f
+    end)
+
+    local lb = Instance.new("TextLabel")
+    lb.Size = UDim2.new(1, -16, 1, -16)
+    lb.Position = UDim2.new(0, 8, 0, 8)
+    lb.BackgroundTransparency = 1
+    lb.TextColor3 = Color3.new(1, 1, 1)
+    lb.TextSize = 13
+    lb.Font = Enum.Font.Code
+    lb.TextXAlignment = Enum.TextXAlignment.Left
+    lb.TextYAlignment = Enum.TextYAlignment.Top
+    lb.TextWrapped = true
+    lb.Text = "LaevatainSky 构建中..."
+    lb.Parent = f
+
+    Ctl.diagLabel = lb
+end)
+
+local function diagSet(text)
+    print("[LaevatainSky] " .. tostring(text))
+    warn("[LaevatainSky] " .. tostring(text))
+    pcall(function()
+        if Ctl.diagLabel then Ctl.diagLabel.Text = tostring(text) end
+    end)
+end
+
+local function diagMark(name)
+    table.insert(Ctl.buildProgress, name)
+    diagSet("构建阶段: " .. name .. "\n已完成: " .. table.concat(Ctl.buildProgress, " > "))
+end
 
 -- 构建进度：记录执行到了哪个界面块，用于定位空白 Tab
-Ctl.buildProgress = {}
 local function markBuild(name)
-    table.insert(Ctl.buildProgress, name)
+    diagMark(name)
     -- 让出一帧，避免长时间连续构建被脚本执行超时中断
     pcall(function() task.wait(0) end)
 end
@@ -7792,6 +7844,8 @@ safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
 markBuild("ScriptHub-OK")
 
 -- ========================= 构建自检 =========================
+-- 注意：以下自检依赖本行被执行到；若脚本中途中断，请以左上角浮窗显示为准
+
 -- 任何 Tab 空白时，这里会在控制台输出并弹窗告知具体失败控件
 task.spawn(function()
     task.wait(1.2)
@@ -7907,6 +7961,14 @@ task.spawn(function()
         end
     end)
 end)
+
+-- 构建完成标记（浮窗显示，用于确认脚本跑到了最后）
+diagSet("构建完成\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
+    .. "\n错误数: " .. tostring(#UIErrorLog))
+if #UIErrorLog > 0 then
+    diagSet("构建完成（有错误）\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
+        .. "\n错误: " .. table.concat(UIErrorLog, " | "))
+end
 
 -- 返回模块表，供二次开发
 return {
