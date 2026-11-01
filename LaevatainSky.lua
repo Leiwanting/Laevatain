@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.4.0"
+local LIB_VERSION = "1.5.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3284,6 +3284,14 @@ local TabHandles = {
 -- ========================= ESP 功能模块 =========================
 local Ctl = {}   -- 控件注册表（避免 main chunk 局部变量超限）
 
+-- 构建进度：记录执行到了哪个界面块，用于定位空白 Tab
+Ctl.buildProgress = {}
+local function markBuild(name)
+    table.insert(Ctl.buildProgress, name)
+    -- 让出一帧，避免长时间连续构建被脚本执行超时中断
+    pcall(function() task.wait(0) end)
+end
+
 local CurrentBulletTarget = nil
 local ESPLastError = nil
 local ESPDrawnCount = 0
@@ -4077,6 +4085,8 @@ RunService.RenderStepped:Connect(function()
 end)
 Players.PlayerRemoving:Connect(removeESPObject)
 
+markBuild("ESP")
+
 -- ESP 界面
 -- 容错创建：单个控件出错不会中断整页构建，错误记入 UIErrorLog 供诊断查看
 local UIErrorLog = {}
@@ -4147,6 +4157,8 @@ safeCreate(TabHandles.ESPPlus, "Paragraph", {
     Color = "White",
 }, "espPlusHeader")
 safeCreate(TabHandles.ESPPlus, "Divider", {}, "espPlusDivider")
+
+markBuild("ESPPlus")
 
 Ctl.espMinimalToggle = safeCreate(TabHandles.ESPPlus, "Toggle", {
     Title = "最小模式",
@@ -4529,6 +4541,8 @@ RunService.RenderStepped:Connect(function()
         end
     end
 end)
+
+markBuild("Aimbot")
 
 -- 自瞄界面
 safeCreate(TabHandles.Aimbot, "Paragraph", {
@@ -5433,6 +5447,8 @@ local function installBulletHook()
     return hookReady
 end
 
+markBuild("Bullet")
+
 -- 子追界面
 safeCreate(TabHandles.Bullet, "Paragraph", {
     Title = T("BULLET_TITLE"),
@@ -5792,6 +5808,8 @@ safeCreate(TabHandles.Bullet, "Button", {
 -- ======================= 子追模块结束 =======================
 
 
+
+markBuild("Fly")
 
 -- ========================= 飞行模块 =========================
 Ctl.FlyState = {
@@ -6209,6 +6227,7 @@ safeCreate(TabHandles.Profile, "Button", {
     Icon = "activity",
     Callback = function()
         local lines = {}
+        table.insert(lines, "构建进度: " .. table.concat(Ctl.buildProgress, " > "))
         table.insert(lines, "ESP 已绘制: " .. tostring(ESPDrawnCount))
         table.insert(lines, "Drawing 可用: " .. tostring(ESPSupported))
         table.insert(lines, "")
@@ -6235,6 +6254,8 @@ safeCreate(TabHandles.Profile, "Button", {
     end
 })
 
+
+markBuild("Misc")
 
 -- ========================= 通用模块 =========================
 Ctl.Lighting = game:GetService("Ctl.Lighting")
@@ -6570,6 +6591,8 @@ safeCreate(TabHandles.Misc, "Button", {
 bindLang(function() setTitleSafe(TabHandles.Misc, T("MISC_TAB")) end)
 
 
+markBuild("AFK/Xray/TP")
+
 -- ========================= 防AFK / 透视 / 传送 =========================
 Ctl.VirtualUser = nil
 pcall(function() VirtualUser = game:GetService("Ctl.VirtualUser") end)
@@ -6853,6 +6876,8 @@ s = s.replace('Icon = "shield"', 'Icon = "shield"')
 
 -- ======================= 通用模块结束 =======================
 
+markBuild("Profile")
+
 -- ========================= 个人档案页 =========================
 local FPSMeter = { value = 0, frames = 0, last = tick() }
 RunService.RenderStepped:Connect(function()
@@ -6989,6 +7014,8 @@ safeCreate(Ctl.profileSectionServer, "Button", {
         })
     end
 })
+
+markBuild("Language")
 
 -- ========================= 切换语言页 =========================
 safeCreate(TabHandles.Language, "Paragraph", {
@@ -7474,6 +7501,8 @@ end
 -- ======================= 配置管理结束 =======================
 
 
+markBuild("ScriptHub")
+
 -- ========================= 脚本库 =========================
 --[[
     添加脚本的方法（重要）：
@@ -7747,6 +7776,9 @@ task.spawn(function()
             table.insert(okTabs, name)
         end
     end
+    local prog = (#Ctl.buildProgress > 0)
+        and ("进度: " .. table.concat(Ctl.buildProgress, " > "))
+        or "进度: 无"
     local msg
     if #UIErrorLog == 0 then
         msg = "界面构建完成，无错误"
@@ -7757,7 +7789,13 @@ task.spawn(function()
     end
     print("===== LaevatainSky 构建自检 =====")
     print("Tab 数量: " .. tostring(#okTabs))
+    print(prog)
     print(msg)
+    showMsg(LIB_NAME .. " 诊断", prog, 10)
+    if #UIErrorLog > 0 then
+        showMsg(LIB_NAME .. " 错误 " .. tostring(#UIErrorLog),
+            string.sub(table.concat(UIErrorLog, " | "), 1, 250), 12)
+    end
     if #UIErrorLog > 0 then
         warn("[LaevatainSky] " .. msg)
         pcall(function()
