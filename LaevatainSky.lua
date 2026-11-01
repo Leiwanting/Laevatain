@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.5.0"
+local LIB_VERSION = "1.6.1"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3181,7 +3181,7 @@ WindUI.Services.mysuperservicetogetkey = {
 local Window = WindUI:CreateWindow({
     Title = "LaevatainSky",
     Icon = "monitor",
-    Author = "LaevatainSky v1",
+    Author = "v" .. LIB_VERSION,
     Folder = "LaevatainSky",
     Size = UDim2.fromOffset(580, 490),
     Theme = "Dark",
@@ -3211,14 +3211,6 @@ local Window = WindUI:CreateWindow({
 
 -- OPTIONAL   >:(
 
-Window:Tag({
-    Title = "v1.6.4",
-    Color = Color3.fromHex("#30ff6a")
-})
-Window:Tag({
-    Title = "Alpha",
-    Color = Color3.fromHex("#315dff")
-})
 local TimeTag = Window:Tag({
     Title = "--:--",
     Radius = 0,
@@ -4405,9 +4397,9 @@ pcall(function()
     TabHandles.ESPPlus:SetTitle("ESP 扩展")
 end)
 bindLang(function()
-    pcall(function() ThemeToggle:SetTitle(T("DARKMODE")) end)
-    pcall(function() ThemeToggle:SetDesc(T("DARKMODE_DESC")) end)
-    pcall(function() themeDropdown:SetTitle(T("THEME_SELECT")) end)
+    pcall(function() Ctl.ThemeToggle:SetTitle(T("DARKMODE")) end)
+    pcall(function() Ctl.ThemeToggle:SetDesc(T("DARKMODE_DESC")) end)
+    pcall(function() Ctl.themeDropdown:SetTitle(T("THEME_SELECT")) end)
 end)
 
 -- ========================= 自瞄模块 =========================
@@ -5448,6 +5440,9 @@ local function installBulletHook()
 end
 
 markBuild("Bullet")
+task.spawn(function()
+    task.wait(0.08 * 1)
+    local ok, err = pcall(function()
 
 -- 子追界面
 safeCreate(TabHandles.Bullet, "Paragraph", {
@@ -5459,16 +5454,16 @@ safeCreate(TabHandles.Bullet, "Paragraph", {
 })
 safeCreate(TabHandles.Bullet, "Divider", {})
 
-local bulletStatus = safeCreate(TabHandles.Bullet, "Paragraph", {
+Ctl.bulletStatus = safeCreate(TabHandles.Bullet, "Paragraph", {
     Title = T("BULLET_STATUS"),
     Desc = T("BULLET_STATUS_DESC"),
     Image = "activity",
     ImageSize = 20,
     Color = "Grey",
 })
-bindLang(function() pcall(function() bulletStatus:SetTitle(T("BULLET_STATUS")) end) end)
+bindLang(function() pcall(function() Ctl.bulletStatus:SetTitle(T("BULLET_STATUS")) end) end)
 
-local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
+Ctl.bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
     Title = T("BULLET_ENABLE"),
     Desc = T("BULLET_ENABLE_DESC"),
     Value = false,
@@ -5477,12 +5472,12 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
         local needHook = (Ctl.BulletState.Impl ~= "Mouse") and (Ctl.BulletState.Mode ~= "抛射物重定向")
         if state and Ctl.BulletState.Impl == "Mouse" then
             Ctl.BulletState.Enabled = true
-            pcall(function() bulletStatus:SetDesc(T("BULLET_MOUSE_READY")) end)
+            pcall(function() Ctl.bulletStatus:SetDesc(T("BULLET_MOUSE_READY")) end)
             return
         end
         if state and not needHook then
             Ctl.BulletState.Enabled = true
-            pcall(function() bulletStatus:SetDesc(T("BULLET_PROJ_NOTE")) end)
+            pcall(function() Ctl.bulletStatus:SetDesc(T("BULLET_PROJ_NOTE")) end)
             return
         end
         if state then
@@ -5495,8 +5490,8 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
                     Duration = 4
                 })
                 Ctl.BulletState.Enabled = false
-                pcall(function() bulletToggle:Set(false) end)
-                pcall(function() bulletStatus:SetDesc(T("BULLET_NOTSUP_MSG")) end)
+                pcall(function() Ctl.bulletToggle:Set(false) end)
+                pcall(function() Ctl.bulletStatus:SetDesc(T("BULLET_NOTSUP_MSG")) end)
                 return
             end
             WindUI:Notify({
@@ -5505,20 +5500,20 @@ local bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
                 Icon = "check",
                 Duration = 3
             })
-            pcall(function() bulletStatus:SetDesc(T("BULLET_READY_MSG")) end)
+            pcall(function() Ctl.bulletStatus:SetDesc(T("BULLET_READY_MSG")) end)
         end
         Ctl.BulletState.Enabled = state
     end
 })
 bindLang(function()
-    pcall(function() bulletToggle:SetTitle(T("BULLET_ENABLE")) end)
-    pcall(function() bulletToggle:SetDesc(T("BULLET_ENABLE_DESC")) end)
+    pcall(function() Ctl.bulletToggle:SetTitle(T("BULLET_ENABLE")) end)
+    pcall(function() Ctl.bulletToggle:SetDesc(T("BULLET_ENABLE_DESC")) end)
 end)
 
 Ctl.bulletSectionBasic = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_BASIC"), Icon = "target" })
 bindLang(function() setTitleSafe(Ctl.bulletSectionBasic, T("BULLET_BASIC")) end)
 
-local bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
+Ctl.bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_IMPL"),
     Desc = T("BULLET_IMPL_DESC"),
     Values = { "Hook", "Mouse" },
@@ -5527,19 +5522,19 @@ local bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
         Ctl.BulletState.Impl = v
         pcall(function()
             if v == "Mouse" then
-                bulletStatus:SetDesc(T("BULLET_MOUSE_READY"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_MOUSE_READY"))
             else
-                bulletStatus:SetDesc(T("BULLET_STATUS_DESC"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_STATUS_DESC"))
             end
         end)
     end
 })
 bindLang(function()
-    pcall(function() bulletImpl:SetTitle(T("BULLET_IMPL")) end)
-    pcall(function() bulletImpl:SetDesc(T("BULLET_IMPL_DESC")) end)
+    pcall(function() Ctl.bulletImpl:SetTitle(T("BULLET_IMPL")) end)
+    pcall(function() Ctl.bulletImpl:SetDesc(T("BULLET_IMPL_DESC")) end)
 end)
 
-local bulletFireKey = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
+Ctl.bulletFireKey = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_FIREKEY"),
     Desc = T("BULLET_FIREKEY_DESC"),
     Values = { "左键", "右键" },
@@ -5547,11 +5542,11 @@ local bulletFireKey = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Callback = function(v) Ctl.BulletState.FireKey = v end
 })
 bindLang(function()
-    pcall(function() bulletFireKey:SetTitle(T("BULLET_FIREKEY")) end)
-    pcall(function() bulletFireKey:SetDesc(T("BULLET_FIREKEY_DESC")) end)
+    pcall(function() Ctl.bulletFireKey:SetTitle(T("BULLET_FIREKEY")) end)
+    pcall(function() Ctl.bulletFireKey:SetDesc(T("BULLET_FIREKEY_DESC")) end)
 end)
 
-local bulletMethod = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
+Ctl.bulletMethod = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_METHOD"),
     Desc = T("BULLET_METHOD_DESC") .. "（" .. T("BULLET_HOOK_ONLY") .. "）",
     Values = { "射线重定向", "命中点覆盖", "抛射物重定向", "Remote 包改写" },
@@ -5560,66 +5555,66 @@ local bulletMethod = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
         Ctl.BulletState.Mode = v
         pcall(function()
             if v == "抛射物重定向" then
-                bulletStatus:SetDesc(T("BULLET_PROJ_NOTE"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_PROJ_NOTE"))
             elseif v == "Remote 包改写" then
-                bulletStatus:SetDesc(T("BULLET_RM_NOTE"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_RM_NOTE"))
             else
-                bulletStatus:SetDesc(T("BULLET_STATUS_DESC"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_STATUS_DESC"))
             end
         end)
     end
 })
-bindLang(function() pcall(function() bulletMethod:SetTitle(T("BULLET_METHOD")) end) end)
+bindLang(function() pcall(function() Ctl.bulletMethod:SetTitle(T("BULLET_METHOD")) end) end)
 
-local bulletPart = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
+Ctl.bulletPart = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Title = T("BULLET_PART"),
     Values = { "头部", "躯干" },
     Value = Ctl.BulletState.Part,
     Callback = function(v) Ctl.BulletState.Part = v end
 })
-bindLang(function() pcall(function() bulletPart:SetTitle(T("BULLET_PART")) end) end)
+bindLang(function() pcall(function() Ctl.bulletPart:SetTitle(T("BULLET_PART")) end) end)
 
-local bulletHitChance = safeCreate(Ctl.bulletSectionBasic, "Slider", {
+Ctl.bulletHitChance = safeCreate(Ctl.bulletSectionBasic, "Slider", {
     Title = T("BULLET_HITCHANCE"),
     Desc = T("BULLET_HITCHANCE_DESC"),
     Value = { Min = 0, Max = 100, Default = Ctl.BulletState.HitChance },
     Step = 5,
     Callback = function(v) Ctl.BulletState.HitChance = tonumber(v) or 100 end
 })
-bindLang(function() pcall(function() bulletHitChance:SetTitle(T("BULLET_HITCHANCE")) end) end)
+bindLang(function() pcall(function() Ctl.bulletHitChance:SetTitle(T("BULLET_HITCHANCE")) end) end)
 
-local bulletFollow = safeCreate(Ctl.bulletSectionBasic, "Toggle", {
+Ctl.bulletFollow = safeCreate(Ctl.bulletSectionBasic, "Toggle", {
     Title = T("BULLET_FOLLOW"),
     Desc = T("BULLET_FOLLOW_DESC"),
     Value = Ctl.BulletState.FollowAimbot,
     Callback = function(v) Ctl.BulletState.FollowAimbot = v end
 })
 bindLang(function()
-    pcall(function() bulletFollow:SetTitle(T("BULLET_FOLLOW")) end)
-    pcall(function() bulletFollow:SetDesc(T("BULLET_FOLLOW_DESC")) end)
+    pcall(function() Ctl.bulletFollow:SetTitle(T("BULLET_FOLLOW")) end)
+    pcall(function() Ctl.bulletFollow:SetDesc(T("BULLET_FOLLOW_DESC")) end)
 end)
 
 Ctl.bulletSectionFilter = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_FILTER"), Icon = "filter" })
 bindLang(function() setTitleSafe(Ctl.bulletSectionFilter, T("BULLET_FILTER")) end)
 
-local bulletFov = safeCreate(Ctl.bulletSectionFilter, "Slider", {
+Ctl.bulletFov = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_FOV"),
     Desc = T("BULLET_FOV_DESC"),
     Value = { Min = 30, Max = 600, Default = Ctl.BulletState.FOV },
     Step = 10,
     Callback = function(v) Ctl.BulletState.FOV = tonumber(v) or 200 end
 })
-bindLang(function() pcall(function() bulletFov:SetTitle(T("BULLET_FOV")) end) end)
+bindLang(function() pcall(function() Ctl.bulletFov:SetTitle(T("BULLET_FOV")) end) end)
 
-local bulletDist = safeCreate(Ctl.bulletSectionFilter, "Slider", {
+Ctl.bulletDist = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Title = T("BULLET_MAXDIST"),
     Value = { Min = 50, Max = 2000, Default = Ctl.BulletState.MaxDistance },
     Step = 50,
     Callback = function(v) Ctl.BulletState.MaxDistance = tonumber(v) or 500 end
 })
-bindLang(function() pcall(function() bulletDist:SetTitle(T("BULLET_MAXDIST")) end) end)
+bindLang(function() pcall(function() Ctl.bulletDist:SetTitle(T("BULLET_MAXDIST")) end) end)
 
-local bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
+Ctl.bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_WALLBANG"),
     Desc = T("BULLET_WALLBANG_DESC"),
     Value = Ctl.BulletState.Wallbang,
@@ -5627,41 +5622,41 @@ local bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
         Ctl.BulletState.Wallbang = v
         pcall(function()
             if v then
-                bulletStatus:SetDesc(T("BULLET_WALLBANG_NOTE") .. "\n" .. T("BULLET_SERVER_WARN"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_WALLBANG_NOTE") .. "\n" .. T("BULLET_SERVER_WARN"))
             else
-                bulletStatus:SetDesc(T("BULLET_WALLBANG_OFF"))
+                Ctl.bulletStatus:SetDesc(T("BULLET_WALLBANG_OFF"))
             end
         end)
     end
 })
 bindLang(function()
-    pcall(function() bulletWallbang:SetTitle(T("BULLET_WALLBANG")) end)
-    pcall(function() bulletWallbang:SetDesc(T("BULLET_WALLBANG_DESC")) end)
+    pcall(function() Ctl.bulletWallbang:SetTitle(T("BULLET_WALLBANG")) end)
+    pcall(function() Ctl.bulletWallbang:SetDesc(T("BULLET_WALLBANG_DESC")) end)
 end)
 
-local bulletTeam = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
+Ctl.bulletTeam = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_TEAM"),
     Value = Ctl.BulletState.TeamCheck,
     Callback = function(v) Ctl.BulletState.TeamCheck = v end
 })
-bindLang(function() pcall(function() bulletTeam:SetTitle(T("BULLET_TEAM")) end) end)
+bindLang(function() pcall(function() Ctl.bulletTeam:SetTitle(T("BULLET_TEAM")) end) end)
 
-local bulletVisible = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
+Ctl.bulletVisible = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_VIS"),
     Desc = T("BULLET_VIS_DESC"),
     Value = Ctl.BulletState.VisibleCheck,
     Callback = function(v) Ctl.BulletState.VisibleCheck = v end
 })
 bindLang(function()
-    pcall(function() bulletVisible:SetTitle(T("BULLET_VIS")) end)
-    pcall(function() bulletVisible:SetDesc(T("BULLET_VIS_DESC")) end)
+    pcall(function() Ctl.bulletVisible:SetTitle(T("BULLET_VIS")) end)
+    pcall(function() Ctl.bulletVisible:SetDesc(T("BULLET_VIS_DESC")) end)
 end)
 
 -- Hitbox 分区
 Ctl.bulletSectionHitbox = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_HITBOX"), Icon = "maximize", Opened = true })
 bindLang(function() setTitleSafe(Ctl.bulletSectionHitbox, T("BULLET_HITBOX")) end)
 
-local bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
+Ctl.bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
     Title = T("BULLET_HITBOX"),
     Desc = T("BULLET_HITBOX_DESC"),
     Value = HitboxState.Enabled,
@@ -5669,13 +5664,13 @@ local bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
         HitboxState.Enabled = v
         if not v then restoreAllHitbox() end
         pcall(function()
-            bulletStatus:SetDesc(v and T("BULLET_HB_NOTE") or T("BULLET_STATUS_DESC"))
+            Ctl.bulletStatus:SetDesc(v and T("BULLET_HB_NOTE") or T("BULLET_STATUS_DESC"))
         end)
     end
 })
 bindLang(function()
-    pcall(function() bulletHbToggle:SetTitle(T("BULLET_HITBOX")) end)
-    pcall(function() bulletHbToggle:SetDesc(T("BULLET_HITBOX_DESC")) end)
+    pcall(function() Ctl.bulletHbToggle:SetTitle(T("BULLET_HITBOX")) end)
+    pcall(function() Ctl.bulletHbToggle:SetDesc(T("BULLET_HITBOX_DESC")) end)
 end)
 
 Ctl.bulletHbPart = safeCreate(Ctl.bulletSectionHitbox, "Dropdown", {
@@ -5785,23 +5780,23 @@ safeCreate(TabHandles.Bullet, "Button", {
         Ctl.BulletState.VisibleCheck = true; Ctl.BulletState.FollowAimbot = true
         Ctl.BulletState.Wallbang = false
         Ctl.BulletState.Impl = "Hook"; Ctl.BulletState.FireKey = "左键"
-        pcall(function() bulletWallbang:Set(false) end)
+        pcall(function() Ctl.bulletWallbang:Set(false) end)
         Ctl.BulletState.ProjMinSpeed = 50; Ctl.BulletState.ProjRange = 25
         Ctl.BulletState.RemoteKeyword = ""; Ctl.BulletState.RemoteArgIndex = 1
         Ctl.BulletState.RemoteArgType = "目标部位"
         HitboxState.Enabled = false; HitboxState.Multiplier = 1.5; HitboxState.Part = "躯干"
         restoreAllHitbox()
-        pcall(function() bulletImpl:Select("Hook") end)
-        pcall(function() bulletFireKey:Select("左键") end)
-        pcall(function() bulletHbToggle:Set(false) end)
+        pcall(function() Ctl.bulletImpl:Select("Hook") end)
+        pcall(function() Ctl.bulletFireKey:Select("左键") end)
+        pcall(function() Ctl.bulletHbToggle:Set(false) end)
         pcall(function() Ctl.bulletHbMult:Set(1.5) end)
         pcall(function() Ctl.bulletHbPart:Select("躯干") end)
         pcall(function() Ctl.bulletProjSpeed:Set(50) end)
         pcall(function() Ctl.bulletProjRange:Set(25) end)
         pcall(function() Ctl.bulletRmIdx:Set(1) end)
         pcall(function() Ctl.bulletRmType:Select("目标部位") end)
-        bulletMethod:Select("射线重定向"); bulletPart:Select("头部")
-        bulletHitChance:Set(100); bulletFov:Set(200); bulletDist:Set(500)
+        Ctl.bulletMethod:Select("射线重定向"); Ctl.bulletPart:Select("头部")
+        Ctl.bulletHitChance:Set(100); Ctl.bulletFov:Set(200); Ctl.bulletDist:Set(500)
         WindUI:Notify({ Title = T("BULLET_TITLE"), Content = T("AIM_RESET_MSG"), Icon = "check", Duration = 2 })
     end
 })
@@ -5809,7 +5804,18 @@ safeCreate(TabHandles.Bullet, "Button", {
 
 
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] Bullet 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "Bullet: " .. tostring(err))
+    end
+    markBuild("Bullet-OK")
+end)
+
 markBuild("Fly")
+task.spawn(function()
+    task.wait(0.08 * 2)
+    local ok, err = pcall(function()
 
 -- ========================= 飞行模块 =========================
 Ctl.FlyState = {
@@ -6063,7 +6069,7 @@ local function stopVertical(dir)
     end
 end
 
-local flyToggle = safeCreate(TabHandles.Fly, "Toggle", {
+Ctl.flyToggle = safeCreate(TabHandles.Fly, "Toggle", {
     Title = T("FLY_ENABLE"),
     Desc = T("FLY_ENABLE_DESC"),
     Value = false,
@@ -6071,7 +6077,7 @@ local flyToggle = safeCreate(TabHandles.Fly, "Toggle", {
         if v then
             local ok = startFly()
             if not ok then
-                pcall(function() flyToggle:Set(false) end)
+                pcall(function() Ctl.flyToggle:Set(false) end)
                 return
             end
             WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_STARTED"), Icon = "check", Duration = 2 })
@@ -6082,8 +6088,8 @@ local flyToggle = safeCreate(TabHandles.Fly, "Toggle", {
     end
 })
 bindLang(function()
-    pcall(function() flyToggle:SetTitle(T("FLY_ENABLE")) end)
-    pcall(function() flyToggle:SetDesc(T("FLY_ENABLE_DESC")) end)
+    pcall(function() Ctl.flyToggle:SetTitle(T("FLY_ENABLE")) end)
+    pcall(function() Ctl.flyToggle:SetDesc(T("FLY_ENABLE_DESC")) end)
 end)
 
 safeCreate(TabHandles.Fly, "Divider", {})
@@ -6160,7 +6166,7 @@ safeCreate(TabHandles.Fly, "Button", {
     Variant = "Primary",
     Callback = function()
         stopFly()
-        pcall(function() flyToggle:Set(false) end)
+        pcall(function() Ctl.flyToggle:Set(false) end)
         task.wait(0.2)
         local c = flyChar()
         local root = flyRoot(c)
@@ -6207,7 +6213,7 @@ safeCreate(TabHandles.Fly, "Button", {
     Variant = "Tertiary",
     Callback = function()
         stopFly()
-        pcall(function() flyToggle:Set(false) end)
+        pcall(function() Ctl.flyToggle:Set(false) end)
         WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_STOPPED"), Icon = "check", Duration = 2 })
     end
 })
@@ -6215,7 +6221,7 @@ safeCreate(TabHandles.Fly, "Button", {
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(0.7)
     stopFly()
-    pcall(function() flyToggle:Set(false) end)
+    pcall(function() Ctl.flyToggle:Set(false) end)
 end)
 
 -- ======================= 飞行模块结束 =======================
@@ -6255,7 +6261,18 @@ safeCreate(TabHandles.Profile, "Button", {
 })
 
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] Fly 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "Fly: " .. tostring(err))
+    end
+    markBuild("Fly-OK")
+end)
+
 markBuild("Misc")
+task.spawn(function()
+    task.wait(0.08 * 3)
+    local ok, err = pcall(function()
 
 -- ========================= 通用模块 =========================
 Ctl.Lighting = game:GetService("Ctl.Lighting")
@@ -6591,7 +6608,18 @@ safeCreate(TabHandles.Misc, "Button", {
 bindLang(function() setTitleSafe(TabHandles.Misc, T("MISC_TAB")) end)
 
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] Misc 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "Misc: " .. tostring(err))
+    end
+    markBuild("Misc-OK")
+end)
+
 markBuild("AFK/Xray/TP")
+task.spawn(function()
+    task.wait(0.08 * 4)
+    local ok, err = pcall(function()
 
 -- ========================= 防AFK / 透视 / 传送 =========================
 Ctl.VirtualUser = nil
@@ -6876,7 +6904,18 @@ s = s.replace('Icon = "shield"', 'Icon = "shield"')
 
 -- ======================= 通用模块结束 =======================
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] AFK/Xray/TP 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "AFK/Xray/TP: " .. tostring(err))
+    end
+    markBuild("AFK/Xray/TP-OK")
+end)
+
 markBuild("Profile")
+task.spawn(function()
+    task.wait(0.08 * 5)
+    local ok, err = pcall(function()
 
 -- ========================= 个人档案页 =========================
 local FPSMeter = { value = 0, frames = 0, last = tick() }
@@ -6940,7 +6979,7 @@ safeCreate(TabHandles.Profile, "Paragraph", {
 safeCreate(TabHandles.Profile, "Divider", {})
 
 Ctl.profileSectionBasic = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_BASIC"), Icon = "user", Opened = true })
-local profileAgeText = safeCreate(Ctl.profileSectionBasic, "Paragraph", {
+Ctl.profileAgeText = safeCreate(Ctl.profileSectionBasic, "Paragraph", {
     Title = T("PROFILE_ACCOUNTAGE"),
     Desc = accountAgeText(),
     Image = "calendar",
@@ -6948,8 +6987,8 @@ local profileAgeText = safeCreate(Ctl.profileSectionBasic, "Paragraph", {
     Color = "White",
 })
 bindLang(function()
-    setTitleSafe(profileAgeText, T("PROFILE_ACCOUNTAGE"))
-    pcall(function() profileAgeText:SetDesc(accountAgeText()) end)
+    setTitleSafe(Ctl.profileAgeText, T("PROFILE_ACCOUNTAGE"))
+    pcall(function() Ctl.profileAgeText:SetDesc(accountAgeText()) end)
 end)
 
 safeCreate(Ctl.profileSectionBasic, "Button", {
@@ -7015,7 +7054,18 @@ safeCreate(Ctl.profileSectionServer, "Button", {
     end
 })
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] Profile 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "Profile: " .. tostring(err))
+    end
+    markBuild("Profile-OK")
+end)
+
 markBuild("Language")
+task.spawn(function()
+    task.wait(0.08 * 6)
+    local ok, err = pcall(function()
 
 -- ========================= 切换语言页 =========================
 safeCreate(TabHandles.Language, "Paragraph", {
@@ -7031,14 +7081,14 @@ local langNames = {}
 for _, item in ipairs(LANG_ORDER) do table.insert(langNames, item.Name) end
 
 local currentLangName = "简体中文"
-local langParagraph = safeCreate(TabHandles.Language, "Paragraph", {
+Ctl.langParagraph = safeCreate(TabHandles.Language, "Paragraph", {
     Title = T("LANG_CURRENT"),
     Desc = currentLangName,
     Image = "info",
     ImageSize = 20,
     Color = "White",
 })
-bindLang(function() setTitleSafe(langParagraph, T("LANG_CURRENT")) end)
+bindLang(function() setTitleSafe(Ctl.langParagraph, T("LANG_CURRENT")) end)
 
 Ctl.langSection = safeCreate(TabHandles.Language, "Section", { Title = T("LANG_SELECT"), Icon = "globe" })
 bindLang(function() setTitleSafe(Ctl.langSection, T("LANG_SELECT")) end)
@@ -7052,7 +7102,7 @@ local langDropdown = Ctl.langSection:Dropdown({
         if not code then return end
         currentLangName = choice
         applyLanguage(code)
-        pcall(function() langParagraph:SetDesc(choice) end)
+        pcall(function() Ctl.langParagraph:SetDesc(choice) end)
         WindUI:Notify({
             Title = T("LANG_APPLIED"),
             Content = choice .. "\n" .. T("LANG_TIP"),
@@ -7169,13 +7219,13 @@ safeCreate(TabHandles.Elements, "Paragraph", {
 
 safeCreate(TabHandles.Elements, "Divider", {})
 
-local ElementsSection = safeCreate(TabHandles.Elements, "Section", {
+Ctl.ElementsSection = safeCreate(TabHandles.Elements, "Section", {
     Title = "Section Example",
     Icon = "feather",
 })
 
 local toggleState = false
-local featureToggle = ElementsSection:Toggle({
+local featureToggle = Ctl.ElementsSection:Toggle({
     Title = "Enable Features",
     --Desc = "Unlocks additional functionality",
     Value = false,
@@ -7190,7 +7240,7 @@ local featureToggle = ElementsSection:Toggle({
     end
 })
 
-local intensitySlider = ElementsSection:Slider({
+local intensitySlider = Ctl.ElementsSection:Slider({
     Title = "Effect Intensity",
     Desc = "Adjust the effect strength",
     Value = { Min = 0, Max = 100, Default = 50 },
@@ -7199,7 +7249,7 @@ local intensitySlider = ElementsSection:Slider({
     end
 })
 
-local modeDropdown = ElementsSection:Dropdown({
+local modeDropdown = Ctl.ElementsSection:Dropdown({
     Title = "Select Mode",
     Values = { "Standard", "Advanced", "Expert" },
     Value = "Standard",
@@ -7212,9 +7262,9 @@ local modeDropdown = ElementsSection:Dropdown({
     end
 })
 
-ElementsSection:Divider()
+Ctl.ElementsSection:Divider()
 
-ElementsSection:Button({
+Ctl.ElementsSection:Button({
     Title = "Show Notification",
     Icon = "bell",
     Callback = function()
@@ -7227,7 +7277,7 @@ ElementsSection:Button({
     end
 })
 
-ElementsSection:Colorpicker({
+Ctl.ElementsSection:Colorpicker({
     Title = "Select Color",
     --Desc = "Select coloe",
     Default = Color3.fromHex("#30ff6a"),
@@ -7241,7 +7291,7 @@ ElementsSection:Colorpicker({
     end
 })
 
-ElementsSection:Code({
+Ctl.ElementsSection:Code({
     Title = "my_code.luau",
     Code = [[print("Hello world!")]],
     OnCopy = function()
@@ -7249,7 +7299,7 @@ ElementsSection:Code({
     end
 })
 
-local appearanceHeader = safeCreate(TabHandles.Appearance, "Paragraph", {
+Ctl.appearanceHeader = safeCreate(TabHandles.Appearance, "Paragraph", {
     Title = T("APPEARANCE_TITLE"),
     Desc = T("APPEARANCE_DESC"),
     Image = "palette",
@@ -7257,8 +7307,8 @@ local appearanceHeader = safeCreate(TabHandles.Appearance, "Paragraph", {
     Color = "White"
 })
 bindLang(function()
-    pcall(function() appearanceHeader:SetTitle(T("APPEARANCE_TITLE")) end)
-    pcall(function() appearanceHeader:SetDesc(T("APPEARANCE_DESC")) end)
+    pcall(function() Ctl.appearanceHeader:SetTitle(T("APPEARANCE_TITLE")) end)
+    pcall(function() Ctl.appearanceHeader:SetDesc(T("APPEARANCE_DESC")) end)
 end)
 
 local themes = {}
@@ -7272,7 +7322,7 @@ local canchangedropdown = true
 
 
 
-local themeDropdown = safeCreate(TabHandles.Appearance, "Dropdown", {
+Ctl.themeDropdown = safeCreate(TabHandles.Appearance, "Dropdown", {
     Title = "loc:THEME_SELECT",
     Values = themes,
     Value = "Dark",
@@ -7289,7 +7339,7 @@ local themeDropdown = safeCreate(TabHandles.Appearance, "Dropdown", {
     end
 })
 
-local transparencySlider = safeCreate(TabHandles.Appearance, "Slider", {
+Ctl.transparencySlider = safeCreate(TabHandles.Appearance, "Slider", {
     Title = "loc:TRANSPARENCY",
     Value = { 
         Min = 0,
@@ -7303,7 +7353,7 @@ local transparencySlider = safeCreate(TabHandles.Appearance, "Slider", {
     end
 })
 
-local ThemeToggle = safeCreate(TabHandles.Appearance, "Toggle", {
+Ctl.ThemeToggle = safeCreate(TabHandles.Appearance, "Toggle", {
     Title = T("DARKMODE"),
     Desc = T("DARKMODE_DESC"),
     Value = true,
@@ -7312,19 +7362,19 @@ local ThemeToggle = safeCreate(TabHandles.Appearance, "Toggle", {
             WindUI:SetTheme(state and "Dark" or "Light")
         end
         if canchangedropdown then
-            themeDropdown:Select(state and "Dark" or "Light")
+            Ctl.themeDropdown:Select(state and "Dark" or "Light")
         end
     end
 })
 
 WindUI:OnThemeChange(function(theme)
     canchangetheme = false
-    ThemeToggle:Set(theme == "Dark")
+    Ctl.ThemeToggle:Set(theme == "Dark")
     canchangetheme = true
 end)
 
 
-local createThemeBtn = safeCreate(TabHandles.Appearance, "Button", {
+Ctl.createThemeBtn = safeCreate(TabHandles.Appearance, "Button", {
     Title = T("CREATE_THEME"),
     Icon = "plus",
     Callback = function()
@@ -7340,7 +7390,7 @@ local createThemeBtn = safeCreate(TabHandles.Appearance, "Button", {
         })
     end
 })
-bindLang(function() pcall(function() createThemeBtn:SetTitle(T("CREATE_THEME")) end) end)
+bindLang(function() pcall(function() Ctl.createThemeBtn:SetTitle(T("CREATE_THEME")) end) end)
 
 -- ========================= 配置管理（挂在外观页） =========================
 local ConfigManager = Window.ConfigManager
@@ -7350,7 +7400,7 @@ local configFile = nil
 Ctl.configSection = safeCreate(TabHandles.Appearance, "Section", { Title = T("CONFIG_SEC"), Icon = "download", Opened = true })
 bindLang(function() setTitleSafe(Ctl.configSection, T("CONFIG_SEC")) end)
 
-local configHeader = safeCreate(Ctl.configSection, "Paragraph", {
+Ctl.configHeader = safeCreate(Ctl.configSection, "Paragraph", {
     Title = T("CONFIG_TITLE"),
     Desc = T("CONFIG_NAME") .. ": " .. configName,
     Image = "save",
@@ -7358,8 +7408,8 @@ local configHeader = safeCreate(Ctl.configSection, "Paragraph", {
     Color = "White",
 })
 bindLang(function()
-    pcall(function() configHeader:SetTitle(T("CONFIG_TITLE")) end)
-    pcall(function() configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
+    pcall(function() Ctl.configHeader:SetTitle(T("CONFIG_TITLE")) end)
+    pcall(function() Ctl.configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
 end)
 
 safeCreate(Ctl.configSection, "Input", {
@@ -7370,7 +7420,7 @@ safeCreate(Ctl.configSection, "Input", {
     Placeholder = "default",
     Callback = function(text)
         configName = tostring(text or "default")
-        pcall(function() configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
+        pcall(function() Ctl.configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
     end
 })
 
@@ -7380,8 +7430,8 @@ if ConfigManager then
     local function collectControls()
         local Controls = {
             { "featureToggle", featureToggle }, { "intensitySlider", intensitySlider },
-            { "modeDropdown", modeDropdown }, { "themeDropdown", themeDropdown },
-            { "transparencySlider", transparencySlider },
+            { "modeDropdown", modeDropdown }, { "Ctl.themeDropdown", Ctl.themeDropdown },
+            { "Ctl.transparencySlider", Ctl.transparencySlider },
             { "espToggle", espToggle }, { "Ctl.espBoxToggle", Ctl.espBoxToggle },
             { "Ctl.espNameToggle", Ctl.espNameToggle }, { "Ctl.espDistToggle", Ctl.espDistToggle },
             { "Ctl.espHealthToggle", Ctl.espHealthToggle }, { "Ctl.espTracerToggle", Ctl.espTracerToggle },
@@ -7418,13 +7468,13 @@ if ConfigManager then
             { "Ctl.tbDelay", Ctl.tbDelay }, { "Ctl.tbCooldown", Ctl.tbCooldown },
             { "Ctl.tbBurst", Ctl.tbBurst }, { "Ctl.tbOnlyVis", Ctl.tbOnlyVis },
             { "Ctl.tbUseBullet", Ctl.tbUseBullet },
-            { "ThemeToggle", ThemeToggle },
-            { "bulletToggle", bulletToggle }, { "bulletMethod", bulletMethod },
-            { "bulletPart", bulletPart }, { "bulletHitChance", bulletHitChance },
-            { "bulletFollow", bulletFollow }, { "bulletFov", bulletFov },
-            { "bulletDist", bulletDist }, { "bulletTeam", bulletTeam },
-            { "bulletWallbang", bulletWallbang },
-            { "flyToggle", flyToggle }, { "Ctl.flySpeedSlider", Ctl.flySpeedSlider },
+            { "Ctl.ThemeToggle", Ctl.ThemeToggle },
+            { "Ctl.bulletToggle", Ctl.bulletToggle }, { "Ctl.bulletMethod", Ctl.bulletMethod },
+            { "Ctl.bulletPart", Ctl.bulletPart }, { "Ctl.bulletHitChance", Ctl.bulletHitChance },
+            { "Ctl.bulletFollow", Ctl.bulletFollow }, { "Ctl.bulletFov", Ctl.bulletFov },
+            { "Ctl.bulletDist", Ctl.bulletDist }, { "Ctl.bulletTeam", Ctl.bulletTeam },
+            { "Ctl.bulletWallbang", Ctl.bulletWallbang },
+            { "Ctl.flyToggle", Ctl.flyToggle }, { "Ctl.flySpeedSlider", Ctl.flySpeedSlider },
             { "Ctl.flyVertSlider", Ctl.flyVertSlider }, { "Ctl.flyNoclipToggle", Ctl.flyNoclipToggle },
             { "Ctl.flyNoclipMode", Ctl.flyNoclipMode }, { "Ctl.flyUnstickToggle", Ctl.flyUnstickToggle },
             { "Ctl.miscSpeedToggle", Ctl.miscSpeedToggle }, { "Ctl.miscSpeedSlider", Ctl.miscSpeedSlider },
@@ -7438,8 +7488,8 @@ if ConfigManager then
             { "Ctl.miscAfkToggle", Ctl.miscAfkToggle },
             { "Ctl.miscXrayToggle", Ctl.miscXrayToggle }, { "Ctl.miscXraySlider", Ctl.miscXraySlider },
             { "Ctl.miscTpDropdown", Ctl.miscTpDropdown }, { "Ctl.miscTpVehToggle", Ctl.miscTpVehToggle },
-            { "bulletImpl", bulletImpl }, { "bulletFireKey", bulletFireKey },
-            { "bulletHbToggle", bulletHbToggle }, { "Ctl.bulletHbPart", Ctl.bulletHbPart },
+            { "Ctl.bulletImpl", Ctl.bulletImpl }, { "Ctl.bulletFireKey", Ctl.bulletFireKey },
+            { "Ctl.bulletHbToggle", Ctl.bulletHbToggle }, { "Ctl.bulletHbPart", Ctl.bulletHbPart },
             { "Ctl.bulletHbMult", Ctl.bulletHbMult }, { "Ctl.bulletProjSpeed", Ctl.bulletProjSpeed },
             { "Ctl.bulletProjRange", Ctl.bulletProjRange }, { "Ctl.bulletRmIdx", Ctl.bulletRmIdx },
             { "Ctl.bulletRmType", Ctl.bulletRmType },
@@ -7501,7 +7551,18 @@ end
 -- ======================= 配置管理结束 =======================
 
 
+    end)
+    if not ok then
+        warn("[LaevatainSky] Language 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "Language: " .. tostring(err))
+    end
+    markBuild("Language-OK")
+end)
+
 markBuild("ScriptHub")
+task.spawn(function()
+    task.wait(0.08 * 7)
+    local ok, err = pcall(function()
 
 -- ========================= 脚本库 =========================
 --[[
@@ -7763,6 +7824,14 @@ safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
 
 -- ======================= 脚本库结束 =======================
 
+
+    end)
+    if not ok then
+        warn("[LaevatainSky] ScriptHub 构建失败: " .. tostring(err))
+        table.insert(UIErrorLog, "ScriptHub: " .. tostring(err))
+    end
+    markBuild("ScriptHub-OK")
+end)
 
 -- ========================= 构建自检 =========================
 -- 任何 Tab 空白时，这里会在控制台输出并弹窗告知具体失败控件
