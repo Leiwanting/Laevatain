@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "1.9.0"
+local LIB_VERSION = "2.0.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4163,7 +4163,14 @@ local function makeDummy()
     return d
 end
 
+-- 控件创建计数：每 6 个让出一帧，避免连续构建触发脚本看门狗
+Ctl.createCount = 0
+
 local function safeCreate(creator, method, cfg, tag)
+    Ctl.createCount = (Ctl.createCount or 0) + 1
+    if Ctl.createCount % 6 == 0 then
+        pcall(function() task.wait(0) end)
+    end
     if creator == nil then
         table.insert(UIErrorLog, tostring(tag or method) .. ": parent nil")
         return makeDummy()
