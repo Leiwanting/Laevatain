@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.2.0"
+local LIB_VERSION = "2.3.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3276,6 +3276,18 @@ local TabHandles = {
 -- ========================= ESP 功能模块 =========================
 local Ctl = {}   -- 控件注册表（避免 main chunk 局部变量超限）
 Ctl.buildProgress = {}
+Ctl.building = true   -- 构建期间挂起所有渲染循环，避免帧被拖慢
+
+-- 保险：15 秒后无论如何恢复渲染循环，避免构建中断导致功能全部停摆
+pcall(function()
+    task.spawn(function()
+        task.wait(15)
+        if Ctl.building then
+            Ctl.building = false
+            diagSet("超时保护：已恢复渲染循环")
+        end
+    end)
+end)
 
 -- ===== 原生进度浮窗：不依赖 WindUI，即使界面库坏了也能看到构建停在哪一步 =====
 Ctl.diagLabel = nil
@@ -3330,6 +3342,25 @@ local function diagMark(name)
 end
 
 -- 构建进度：记录执行到了哪个界面块，用于定位空白 Tab
+local YieldFrame = function() end
+Ctl.yieldWorks = false
+pcall(function()
+    if type(task) == "table" and type(task.wait) == "function" then
+        YieldFrame = function() task.wait(0) end
+        Ctl.yieldWorks = true
+    elseif type(wait) == "function" then
+        YieldFrame = function() wait(0) end
+        Ctl.yieldWorks = true
+    elseif RunService and RunService.Heartbeat then
+        YieldFrame = function() RunService.Heartbeat:Wait() end
+        Ctl.yieldWorks = true
+    end
+end)
+
+local function doYield()
+    pcall(YieldFrame)
+end
+
 local function markBuild(name)
     diagMark(name)
     doYield()
@@ -3730,6 +3761,7 @@ end
 -- 记录当前锁定目标，供 ESP 高亮使用
 CurrentBulletTarget = nil
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     pcall(function()
         if Ctl.BulletState and Ctl.BulletState.Enabled then
             local ok2, t = pcall(findBulletTarget)
@@ -4133,6 +4165,7 @@ local function updateESP()
 end
 
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     local ok, err = pcall(updateESP)
     if not ok and err then
         local trace = ""
@@ -4165,24 +4198,6 @@ end
 -- ===== 稳健让帧：确保真的把控制权交还给引擎 =====
 -- 之前用 pcall(task.wait(0))，若执行器没有 task.* 会被 pcall 静默吞掉，
 -- 等于完全没让帧，脚本最终被看门狗掐死（表现为界面停在某处）
-local YieldFrame = function() end
-Ctl.yieldWorks = false
-pcall(function()
-    if type(task) == "table" and type(task.wait) == "function" then
-        YieldFrame = function() task.wait(0) end
-        Ctl.yieldWorks = true
-    elseif type(wait) == "function" then
-        YieldFrame = function() wait(0) end
-        Ctl.yieldWorks = true
-    elseif RunService and RunService.Heartbeat then
-        YieldFrame = function() RunService.Heartbeat:Wait() end
-        Ctl.yieldWorks = true
-    end
-end)
-
-local function doYield()
-    pcall(YieldFrame)
-end
 
 -- 计时：用于观察脚本是否在固定时限被掐断
 Ctl.startTime = tick()
@@ -4613,6 +4628,7 @@ UserInputService.InputEnded:Connect(function(input)
 end)
 
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     if AimbotFOVCircle then
         AimbotFOVCircle.Visible = Ctl.AimState.Enabled and Ctl.AimState.ShowFOV
         AimbotFOVCircle.Radius = Ctl.AimState.FOV
@@ -5191,6 +5207,7 @@ local function updateHitbox()
 end
 
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     pcall(updateProjectiles)
     pcall(updateHitbox)
 end)
@@ -5385,6 +5402,7 @@ local function crosshairOnEnemy()
 end
 
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     if not TBState.Enabled then return end
     if not crosshairOnEnemy() then return end
     local now = tick() * 1000
@@ -6056,11 +6074,13 @@ local function startNoclip()
     if Ctl.FlyState.NoclipMode == "关闭碰撞" then
         applyNoclipParts(true)
         Ctl.FlyState.noclipConn = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
             if not Ctl.FlyState.Enabled then return end
             applyNoclipParts(true)
         end)
     else
         Ctl.FlyState.noclipConn = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
             if not Ctl.FlyState.Enabled then return end
             local c = flyChar()
             local h = flyHum(c)
@@ -6129,6 +6149,7 @@ local function startFly()
     local maxSpd = 50 * Ctl.FlyState.Speed
 
     Ctl.FlyState.flyConn = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
         if not Ctl.FlyState.Enabled then return end
         local c2 = flyChar()
         local h2 = flyHum(c2)
@@ -6164,6 +6185,7 @@ local function startVertical(dir)
     local key = dir > 0 and "upConn" or "downConn"
     if Ctl.FlyState[key] then return end
     Ctl.FlyState[key] = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
         local root = flyRoot(flyChar())
         if root then
             pcall(function()
@@ -6504,6 +6526,7 @@ local function restoreMiscAll()
 end
 
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     if not (Ctl.MiscState.Speed or Ctl.MiscState.Jump or Ctl.MiscState.Health or Ctl.MiscState.Gravity
         or Ctl.MiscState.Noclip or Ctl.MiscState.FOV or Ctl.MiscState.Bright) then return end
     pcall(applyMisc)
@@ -6511,6 +6534,7 @@ end)
 
 -- 关闭功能时恢复对应项
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     if not Ctl.MiscState.Noclip then restoreNoclipAll() end
     if not Ctl.MiscState.Bright then restoreLighting() end
     if not Ctl.MiscState.Gravity and Ctl.MiscOrig.gravity then
@@ -6743,6 +6767,7 @@ local function startAntiAFK()
     end
     -- 无 Ctl.VirtualUser 时：定期极微移动，避免被判静止
     AntiAFKConn = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
         -- 每 60 帧动一次
         if not Ctl._afkTick then Ctl._afkTick = 0 end
         Ctl._afkTick = Ctl._afkTick + 1
@@ -6893,6 +6918,7 @@ Ctl.miscXrayToggle = safeCreate(Ctl.miscSectionAFK, "Toggle", {
             scanXray()
             if not Ctl.XrayConn then
                 XrayConn = RunService.Heartbeat:Connect(function()
+    if Ctl.building then return end
                     if not Ctl.XrayState.Enabled then
                         applyXray(true)
                         if Ctl.XrayConn then Ctl.XrayConn:Disconnect(); XrayConn = nil end
@@ -7011,6 +7037,7 @@ doYield()
 -- ========================= 个人档案页 =========================
 local FPSMeter = { value = 0, frames = 0, last = tick() }
 RunService.RenderStepped:Connect(function()
+    if Ctl.building then return end
     FPSMeter.frames = FPSMeter.frames + 1
     if tick() - FPSMeter.last >= 1 then
         FPSMeter.value = FPSMeter.frames
@@ -7901,6 +7928,10 @@ safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
 
 
 markBuild("ScriptHub-OK")
+
+-- 构建完成：恢复所有渲染循环
+Ctl.building = false
+diagSet("界面构建完成，功能已启用")
 
 -- ========================= 构建自检 =========================
 -- 注意：以下自检依赖本行被执行到；若脚本中途中断，请以左上角浮窗显示为准
