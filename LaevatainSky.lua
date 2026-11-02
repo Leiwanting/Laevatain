@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.1.0"
+local LIB_VERSION = "2.2.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3332,8 +3332,7 @@ end
 -- 构建进度：记录执行到了哪个界面块，用于定位空白 Tab
 local function markBuild(name)
     diagMark(name)
-    -- 让出一帧，避免长时间连续构建被脚本执行超时中断
-    pcall(function() task.wait(0) end)
+    doYield()
 end
 
 -- 安全读取全局函数：某些执行器没有 getfenv/getgenv，直接调用会让整段脚本中断
@@ -4163,20 +4162,46 @@ local function makeDummy()
     return d
 end
 
--- 控件创建计数：每 6 个让出一帧，避免连续构建触发脚本看门狗
+-- ===== 稳健让帧：确保真的把控制权交还给引擎 =====
+-- 之前用 pcall(task.wait(0))，若执行器没有 task.* 会被 pcall 静默吞掉，
+-- 等于完全没让帧，脚本最终被看门狗掐死（表现为界面停在某处）
+local YieldFrame = function() end
+Ctl.yieldWorks = false
+pcall(function()
+    if type(task) == "table" and type(task.wait) == "function" then
+        YieldFrame = function() task.wait(0) end
+        Ctl.yieldWorks = true
+    elseif type(wait) == "function" then
+        YieldFrame = function() wait(0) end
+        Ctl.yieldWorks = true
+    elseif RunService and RunService.Heartbeat then
+        YieldFrame = function() RunService.Heartbeat:Wait() end
+        Ctl.yieldWorks = true
+    end
+end)
+
+local function doYield()
+    pcall(YieldFrame)
+end
+
+-- 计时：用于观察脚本是否在固定时限被掐断
+Ctl.startTime = tick()
 Ctl.createCount = 0
 
 local function safeCreate(creator, method, cfg, tag)
     Ctl.createCount = (Ctl.createCount or 0) + 1
-    -- 元素级探针：浮窗实时显示"正在创建哪个控件"，卡住即定位到该控件
     Ctl.lastTag = tostring(tag or method)
-    if Ctl.createCount % 6 == 0 then
-        pcall(function() task.wait(0) end)
+    -- 每 2 个控件让出一帧（原来是 6 个，间隔太长仍会被看门狗掐断）
+    if Ctl.createCount % 2 == 0 then
+        doYield()
     end
     pcall(function()
         if Ctl.diagLabel then
-            Ctl.diagLabel.Text = "创建中 [" .. tostring(Ctl.createCount) .. "] "
+            local el = math.floor((tick() - Ctl.startTime) * 10) / 10
+            Ctl.diagLabel.Text = "[" .. tostring(Ctl.createCount) .. "] "
                 .. Ctl.lastTag .. "\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
+                .. "\n耗时 " .. tostring(el) .. "s | 让帧"
+                .. (Ctl.yieldWorks and "可用" or "不可用")
         end
     end)
     if creator == nil then
@@ -5219,6 +5244,7 @@ end)
 
 
 markBuild("BulletCore")
+doYield()
 
 markBuild("BulletCore")
 diagSet("子追核心逻辑完成")
@@ -5268,6 +5294,7 @@ local function installCameraHook()
 end
 
 markBuild("CamDiag")
+doYield()
 diagSet("相机诊断段完成")
 
 -- ========================= TriggerBot 自动开火 =========================
@@ -5899,6 +5926,7 @@ safeCreate(TabHandles.Bullet, "Button", {
 markBuild("Bullet-OK")
 
 markBuild("Fly")
+doYield()
 
 
 -- ========================= 飞行模块 =========================
@@ -6348,6 +6376,7 @@ safeCreate(TabHandles.Profile, "Button", {
 markBuild("Fly-OK")
 
 markBuild("Misc")
+doYield()
 
 
 -- ========================= 通用模块 =========================
@@ -6976,6 +7005,7 @@ safeCreate(Ctl.miscSectionTP, "Button", {
 markBuild("AFK/Xray/TP-OK")
 
 markBuild("Profile")
+doYield()
 
 
 -- ========================= 个人档案页 =========================
