@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.3.0"
+local LIB_VERSION = "2.4.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4203,22 +4203,15 @@ end
 Ctl.startTime = tick()
 Ctl.createCount = 0
 
-local function safeCreate(creator, method, cfg, tag)
-    Ctl.createCount = (Ctl.createCount or 0) + 1
-    Ctl.lastTag = tostring(tag or method)
-    -- 每 2 个控件让出一帧（原来是 6 个，间隔太长仍会被看门狗掐断）
-    if Ctl.createCount % 2 == 0 then
-        doYield()
-    end
-    pcall(function()
-        if Ctl.diagLabel then
-            local el = math.floor((tick() - Ctl.startTime) * 10) / 10
-            Ctl.diagLabel.Text = "[" .. tostring(Ctl.createCount) .. "] "
-                .. Ctl.lastTag .. "\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
-                .. "\n耗时 " .. tostring(el) .. "s | 让帧"
-                .. (Ctl.yieldWorks and "可用" or "不可用")
-        end
-    end)
+-- ===== 延迟构建队列 =====
+-- 主 chunk 同步创建前 DEFER_LIMIT 个控件，其余交给后台线程慢慢补。
+-- 这样 main chunk 能提前跑完（不会撞上脚本执行时限），界面随后补全。
+local DEFER_LIMIT = 50
+local deferredQueue = {}
+local deferredRunning = false
+local deferredDone = 0
+
+local function createNow(creator, method, cfg, tag)
     if creator == nil then
         table.insert(UIErrorLog, tostring(tag or method) .. ": parent nil")
         return makeDummy()
@@ -4229,6 +4222,54 @@ local function safeCreate(creator, method, cfg, tag)
         return makeDummy()
     end
     return res or makeDummy()
+end
+
+local function pumpQueue()
+    if deferredRunning then return end
+    deferredRunning = true
+    pcall(function()
+        task.spawn(function()
+            while #deferredQueue > 0 do
+                local it = table.remove(deferredQueue, 1)
+                Ctl.createCount = (Ctl.createCount or 0) + 1
+                Ctl.lastTag = tostring(it[4] or it[2])
+                pcall(function() createNow(it[1], it[2], it[3], it[4]) end)
+                deferredDone = deferredDone + 1
+                pcall(function()
+                    if Ctl.diagLabel then
+                        Ctl.diagLabel.Text = "补全中 " .. tostring(deferredDone)
+                            .. "/" .. tostring(deferredDone + #deferredQueue)
+                            .. "\n当前: " .. Ctl.lastTag
+                    end
+                end)
+                doYield()
+            end
+            deferredRunning = false
+            Ctl.building = false
+            diagSet("界面补全完成，共 " .. tostring(Ctl.createCount) .. " 个控件\n错误数: " .. tostring(#UIErrorLog))
+        end)
+    end)
+end
+
+local function safeCreate(creator, method, cfg, tag)
+    Ctl.createCount = (Ctl.createCount or 0) + 1
+    Ctl.lastTag = tostring(tag or method)
+
+    -- 超出阈值：入队，交给后台线程，主 chunk 立即继续
+    if Ctl.createCount > DEFER_LIMIT then
+        table.insert(deferredQueue, { creator, method, cfg, tag })
+        pumpQueue()
+        return makeDummy()
+    end
+
+    if Ctl.createCount % 2 == 0 then doYield() end
+    pcall(function()
+        if Ctl.diagLabel then
+            Ctl.diagLabel.Text = "[" .. tostring(Ctl.createCount) .. "] " .. Ctl.lastTag
+                .. "\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
+        end
+    end)
+    return createNow(creator, method, cfg, tag)
 end
 
 safeCreate(TabHandles.ESP, "Paragraph", {
@@ -7929,9 +7970,17 @@ safeCreate(Ctl.scriptSectionGuide, "Paragraph", {
 
 markBuild("ScriptHub-OK")
 
--- 构建完成：恢复所有渲染循环
-Ctl.building = false
-diagSet("界面构建完成，功能已启用")
+-- 主 chunk 结束：功能逻辑已全部就绪，剩余界面由后台线程补全
+diagSet("主体就绪，界面补全中 " .. tostring(#deferredQueue) .. " 项\n已建 " .. tostring(Ctl.createCount) .. " 个控件")
+pcall(function()
+    task.spawn(function()
+        task.wait(12)
+        if Ctl.building then
+            Ctl.building = false
+            diagSet("已启用功能（界面可能仍在补全）")
+        end
+    end)
+end)
 
 -- ========================= 构建自检 =========================
 -- 注意：以下自检依赖本行被执行到；若脚本中途中断，请以左上角浮窗显示为准
