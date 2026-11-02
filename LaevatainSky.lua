@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.4.0"
+local LIB_VERSION = "2.5.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4203,25 +4203,59 @@ end
 Ctl.startTime = tick()
 Ctl.createCount = 0
 
--- ===== 延迟构建队列 =====
--- 主 chunk 同步创建前 DEFER_LIMIT 个控件，其余交给后台线程慢慢补。
--- 这样 main chunk 能提前跑完（不会撞上脚本执行时限），界面随后补全。
-local DEFER_LIMIT = 50
+-- ===== 全量延迟构建 =====
+-- main chunk 只把建控件的请求入队（耗时近乎为零），真正创建交给后台线程。
+-- 这样 main chunk 能在执行时限内跑完，界面随后由后台逐个补全。
 local deferredQueue = {}
 local deferredRunning = false
 local deferredDone = 0
 
+-- 代理对象：入队期间占位；后台建好后自动把调用转发给真实控件
+local function makeProxy(tag)
+    local proxy = { __tag = tag, __real = nil }
+    return setmetatable(proxy, {
+        __index = function(t, k)
+            local r = rawget(t, "__real")
+            if r ~= nil then
+                local ok, v = pcall(function() return r[k] end)
+                if ok then return v end
+            end
+            return function() return t end
+        end,
+        __newindex = function(t, k, v)
+            local r = rawget(t, "__real")
+            if r ~= nil then
+                pcall(function() r[k] = v end)
+            else
+                rawset(t, k, v)
+            end
+        end,
+        __call = function(t, a1, a2, a3, a4)
+            local r = rawget(t, "__real")
+            if r ~= nil then
+                local f = nil
+                pcall(function() f = r[a1] end)
+                if type(f) == "function" then
+                    local ok, res = pcall(function() return f(r, a2, a3, a4) end)
+                    if ok then return res end
+                end
+            end
+            return t
+        end,
+    })
+end
+
 local function createNow(creator, method, cfg, tag)
     if creator == nil then
         table.insert(UIErrorLog, tostring(tag or method) .. ": parent nil")
-        return makeDummy()
+        return nil
     end
     local ok, res = pcall(function() return creator[method](creator, cfg) end)
     if not ok then
         table.insert(UIErrorLog, tostring(tag or method) .. ": " .. tostring(res))
-        return makeDummy()
+        return nil
     end
-    return res or makeDummy()
+    return res
 end
 
 local function pumpQueue()
@@ -4231,45 +4265,38 @@ local function pumpQueue()
         task.spawn(function()
             while #deferredQueue > 0 do
                 local it = table.remove(deferredQueue, 1)
+                local proxy, creator, method, cfg, tag = it[1], it[2], it[3], it[4], it[5]
                 Ctl.createCount = (Ctl.createCount or 0) + 1
-                Ctl.lastTag = tostring(it[4] or it[2])
-                pcall(function() createNow(it[1], it[2], it[3], it[4]) end)
+                Ctl.lastTag = tostring(tag or method)
+                local real = createNow(creator, method, cfg, tag)
+                if real ~= nil then rawset(proxy, "__real", real) end
                 deferredDone = deferredDone + 1
-                pcall(function()
-                    if Ctl.diagLabel then
-                        Ctl.diagLabel.Text = "补全中 " .. tostring(deferredDone)
-                            .. "/" .. tostring(deferredDone + #deferredQueue)
-                            .. "\n当前: " .. Ctl.lastTag
-                    end
-                end)
-                doYield()
+                if deferredDone % 2 == 0 then
+                    pcall(function()
+                        if Ctl.diagLabel then
+                            Ctl.diagLabel.Text = "补全 " .. tostring(deferredDone)
+                                .. "/" .. tostring(deferredDone + #deferredQueue)
+                                .. "\n" .. tostring(method) .. " " .. tostring(tag)
+                        end
+                    end)
+                    doYield()
+                end
             end
             deferredRunning = false
             Ctl.building = false
-            diagSet("界面补全完成，共 " .. tostring(Ctl.createCount) .. " 个控件\n错误数: " .. tostring(#UIErrorLog))
+            diagSet("界面补全完成 " .. tostring(deferredDone)
+                .. " 个\n错误数 " .. tostring(#UIErrorLog))
         end)
     end)
 end
 
+-- main chunk 只入队，不创建
 local function safeCreate(creator, method, cfg, tag)
     Ctl.createCount = (Ctl.createCount or 0) + 1
-    Ctl.lastTag = tostring(tag or method)
-
-    -- 超出阈值：入队，交给后台线程，主 chunk 立即继续
-    if Ctl.createCount > DEFER_LIMIT then
-        table.insert(deferredQueue, { creator, method, cfg, tag })
-        pumpQueue()
-        return makeDummy()
-    end
-
-    if Ctl.createCount % 2 == 0 then doYield() end
-    pcall(function()
-        if Ctl.diagLabel then
-            Ctl.diagLabel.Text = "[" .. tostring(Ctl.createCount) .. "] " .. Ctl.lastTag
-                .. "\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
-        end
-    end)
-    return createNow(creator, method, cfg, tag)
+    local proxy = makeProxy(tag)
+    table.insert(deferredQueue, { proxy, creator, method, cfg, tag })
+    pumpQueue()
+    return proxy
 end
 
 safeCreate(TabHandles.ESP, "Paragraph", {
