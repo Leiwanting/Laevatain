@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.5.0"
+local LIB_VERSION = "2.6.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -3363,7 +3363,6 @@ end
 
 local function markBuild(name)
     diagMark(name)
-    doYield()
 end
 
 -- 安全读取全局函数：某些执行器没有 getfenv/getgenv，直接调用会让整段脚本中断
@@ -4284,8 +4283,9 @@ local function pumpQueue()
             end
             deferredRunning = false
             Ctl.building = false
-            diagSet("界面补全完成 " .. tostring(deferredDone)
-                .. " 个\n错误数 " .. tostring(#UIErrorLog))
+            pcall(function() applyLanguage() end)
+            diagSet("界面补全完成 " .. tostring(deferredDone) .. "/"
+                .. tostring(Ctl.enqueued or 0) .. " 个\n错误数 " .. tostring(#UIErrorLog))
         end)
     end)
 end
@@ -4295,7 +4295,6 @@ local function safeCreate(creator, method, cfg, tag)
     Ctl.createCount = (Ctl.createCount or 0) + 1
     local proxy = makeProxy(tag)
     table.insert(deferredQueue, { proxy, creator, method, cfg, tag })
-    pumpQueue()
     return proxy
 end
 
@@ -5329,7 +5328,6 @@ end)
 
 
 markBuild("BulletCore")
-doYield()
 
 markBuild("BulletCore")
 diagSet("子追核心逻辑完成")
@@ -5379,7 +5377,6 @@ local function installCameraHook()
 end
 
 markBuild("CamDiag")
-doYield()
 diagSet("相机诊断段完成")
 
 -- ========================= TriggerBot 自动开火 =========================
@@ -6012,7 +6009,6 @@ safeCreate(TabHandles.Bullet, "Button", {
 markBuild("Bullet-OK")
 
 markBuild("Fly")
-doYield()
 
 
 -- ========================= 飞行模块 =========================
@@ -6466,7 +6462,6 @@ safeCreate(TabHandles.Profile, "Button", {
 markBuild("Fly-OK")
 
 markBuild("Misc")
-doYield()
 
 
 -- ========================= 通用模块 =========================
@@ -7099,7 +7094,6 @@ safeCreate(Ctl.miscSectionTP, "Button", {
 markBuild("AFK/Xray/TP-OK")
 
 markBuild("Profile")
-doYield()
 
 
 -- ========================= 个人档案页 =========================
@@ -8135,6 +8129,11 @@ if #UIErrorLog > 0 then
     diagSet("构建完成（有错误）\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
         .. "\n错误: " .. table.concat(UIErrorLog, " | "))
 end
+
+-- main chunk 全程零 yield，已把所有控件请求入队；现在才启动后台补全
+Ctl.enqueued = #deferredQueue
+diagSet("主体完成，入队 " .. tostring(Ctl.enqueued) .. " 个控件，开始补全")
+pumpQueue()
 
 -- 返回模块表，供二次开发
 return {
