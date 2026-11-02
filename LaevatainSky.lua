@@ -17,7 +17,7 @@
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.0.0"
+local LIB_VERSION = "2.1.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -4168,9 +4168,17 @@ Ctl.createCount = 0
 
 local function safeCreate(creator, method, cfg, tag)
     Ctl.createCount = (Ctl.createCount or 0) + 1
+    -- 元素级探针：浮窗实时显示"正在创建哪个控件"，卡住即定位到该控件
+    Ctl.lastTag = tostring(tag or method)
     if Ctl.createCount % 6 == 0 then
         pcall(function() task.wait(0) end)
     end
+    pcall(function()
+        if Ctl.diagLabel then
+            Ctl.diagLabel.Text = "创建中 [" .. tostring(Ctl.createCount) .. "] "
+                .. Ctl.lastTag .. "\n阶段: " .. table.concat(Ctl.buildProgress, " > ")
+        end
+    end)
     if creator == nil then
         table.insert(UIErrorLog, tostring(tag or method) .. ": parent nil")
         return makeDummy()
@@ -4189,8 +4197,8 @@ safeCreate(TabHandles.ESP, "Paragraph", {
     Image = "eye",
     ImageSize = 20,
     Color = Color3.fromHex("#30ff6a"),
-})
-safeCreate(TabHandles.ESP, "Divider", {})
+}, "ESP_TITLE")
+safeCreate(TabHandles.ESP, "Divider", {}, "Divider")
 
 local espToggle = safeCreate(TabHandles.ESP, "Toggle", {
     Title = T("ESP_ENABLE"),
@@ -4207,14 +4215,14 @@ local espToggle = safeCreate(TabHandles.ESP, "Toggle", {
             for plr in pairs(ESPDrawings) do hideAll(ESPDrawings[plr]) end
         end
     end
-})
+}, "ESP_ENABLE")
 
-Ctl.espSectionDraw = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_DRAW"), Icon = "shapes" })
-Ctl.espBoxToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_BOX"), Value = Ctl.ESPState.Box, Callback = function(s) Ctl.ESPState.Box = s end })
-Ctl.espNameToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_NAME"), Value = Ctl.ESPState.Name, Callback = function(s) Ctl.ESPState.Name = s end })
-Ctl.espDistToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_DISTANCE"), Value = Ctl.ESPState.Distance, Callback = function(s) Ctl.ESPState.Distance = s end })
-Ctl.espHealthToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_HEALTH"), Value = Ctl.ESPState.Health, Callback = function(s) Ctl.ESPState.Health = s end })
-Ctl.espTracerToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_TRACER"), Value = Ctl.ESPState.Tracer, Callback = function(s) Ctl.ESPState.Tracer = s end })
+Ctl.espSectionDraw = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_DRAW"), Icon = "shapes" }, "ESP_DRAW")
+Ctl.espBoxToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_BOX"), Value = Ctl.ESPState.Box, Callback = function(s) Ctl.ESPState.Box = s end }, "ESP_BOX")
+Ctl.espNameToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_NAME"), Value = Ctl.ESPState.Name, Callback = function(s) Ctl.ESPState.Name = s end }, "ESP_NAME")
+Ctl.espDistToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_DISTANCE"), Value = Ctl.ESPState.Distance, Callback = function(s) Ctl.ESPState.Distance = s end }, "ESP_DISTANCE")
+Ctl.espHealthToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_HEALTH"), Value = Ctl.ESPState.Health, Callback = function(s) Ctl.ESPState.Health = s end }, "ESP_HEALTH")
+Ctl.espTracerToggle = safeCreate(Ctl.espSectionDraw, "Toggle", { Title = T("ESP_TRACER"), Value = Ctl.ESPState.Tracer, Callback = function(s) Ctl.ESPState.Tracer = s end }, "ESP_TRACER")
 
 safeCreate(TabHandles.ESPPlus, "Paragraph", {
     Title = "ESP 扩展绘制",
@@ -4234,7 +4242,7 @@ Ctl.espMinimalToggle = safeCreate(TabHandles.ESPPlus, "Toggle", {
     Callback = function(v) Ctl.ESPState.Minimal = v end
 }, "espMinimalToggle")
 
-Ctl.espSectionExt = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_DRAW_EXT"), Icon = "shapes" })
+Ctl.espSectionExt = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_DRAW_EXT"), Icon = "shapes" }, "ESP_DRAW_EXT")
 bindLang(function() setTitleSafe(Ctl.espSectionExt, T("ESP_DRAW_EXT")) end)
 
 Ctl.espSkeletonToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
@@ -4242,7 +4250,7 @@ Ctl.espSkeletonToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Desc = T("ESP_SKELETON_DESC"),
     Value = Ctl.ESPState.Skeleton,
     Callback = function(v) Ctl.ESPState.Skeleton = v end
-})
+}, "ESP_SKELETON")
 bindLang(function()
     pcall(function() Ctl.espSkeletonToggle:SetTitle(T("ESP_SKELETON")) end)
     pcall(function() Ctl.espSkeletonToggle:SetDesc(T("ESP_SKELETON_DESC")) end)
@@ -4253,7 +4261,7 @@ Ctl.espBox3dToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Desc = T("ESP_BOX3D_DESC"),
     Value = Ctl.ESPState.Box3D,
     Callback = function(v) Ctl.ESPState.Box3D = v end
-})
+}, "ESP_BOX3D")
 bindLang(function()
     pcall(function() Ctl.espBox3dToggle:SetTitle(T("ESP_BOX3D")) end)
     pcall(function() Ctl.espBox3dToggle:SetDesc(T("ESP_BOX3D_DESC")) end)
@@ -4264,7 +4272,7 @@ Ctl.espHighlightToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Desc = T("ESP_HIGHLIGHT_DESC"),
     Value = Ctl.ESPState.Highlight,
     Callback = function(v) Ctl.ESPState.Highlight = v end
-})
+}, "ESP_HIGHLIGHT")
 bindLang(function()
     pcall(function() Ctl.espHighlightToggle:SetTitle(T("ESP_HIGHLIGHT")) end)
     pcall(function() Ctl.espHighlightToggle:SetDesc(T("ESP_HIGHLIGHT_DESC")) end)
@@ -4274,7 +4282,7 @@ Ctl.espHeadDotToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Title = T("ESP_HEADDOT"),
     Value = Ctl.ESPState.HeadDot,
     Callback = function(v) Ctl.ESPState.HeadDot = v end
-})
+}, "ESP_HEADDOT")
 bindLang(function() pcall(function() Ctl.espHeadDotToggle:SetTitle(T("ESP_HEADDOT")) end) end)
 
 Ctl.espViewLineToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
@@ -4282,7 +4290,7 @@ Ctl.espViewLineToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Desc = T("ESP_VIEWLINE_DESC"),
     Value = Ctl.ESPState.ViewLine,
     Callback = function(v) Ctl.ESPState.ViewLine = v end
-})
+}, "ESP_VIEWLINE")
 bindLang(function()
     pcall(function() Ctl.espViewLineToggle:SetTitle(T("ESP_VIEWLINE")) end)
     pcall(function() Ctl.espViewLineToggle:SetDesc(T("ESP_VIEWLINE_DESC")) end)
@@ -4293,35 +4301,35 @@ Ctl.espArrowToggle = safeCreate(Ctl.espSectionExt, "Toggle", {
     Desc = T("ESP_OFFSCREEN_DESC"),
     Value = Ctl.ESPState.OffScreenArrow,
     Callback = function(v) Ctl.ESPState.OffScreenArrow = v end
-})
+}, "ESP_OFFSCREEN")
 bindLang(function()
     pcall(function() Ctl.espArrowToggle:SetTitle(T("ESP_OFFSCREEN")) end)
     pcall(function() Ctl.espArrowToggle:SetDesc(T("ESP_OFFSCREEN_DESC")) end)
 end)
 
 -- 信息显示
-Ctl.espSectionInfo = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_INFO"), Icon = "info" })
+Ctl.espSectionInfo = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_INFO"), Icon = "info" }, "ESP_INFO")
 bindLang(function() setTitleSafe(Ctl.espSectionInfo, T("ESP_INFO")) end)
 
 Ctl.espWeaponToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_WEAPON"),
     Value = Ctl.ESPState.ShowWeapon,
     Callback = function(v) Ctl.ESPState.ShowWeapon = v end
-})
+}, "ESP_WEAPON")
 bindLang(function() pcall(function() Ctl.espWeaponToggle:SetTitle(T("ESP_WEAPON")) end) end)
 
 Ctl.espTeamInfoToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_TEAM"),
     Value = Ctl.ESPState.ShowTeam,
     Callback = function(v) Ctl.ESPState.ShowTeam = v end
-})
+}, "ESP_TEAM")
 bindLang(function() pcall(function() Ctl.espTeamInfoToggle:SetTitle(T("ESP_TEAM")) end) end)
 
 Ctl.espHpNumToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Title = T("ESP_HEALTHNUM"),
     Value = Ctl.ESPState.HealthNumber,
     Callback = function(v) Ctl.ESPState.HealthNumber = v end
-})
+}, "ESP_HEALTHNUM")
 bindLang(function() pcall(function() Ctl.espHpNumToggle:SetTitle(T("ESP_HEALTHNUM")) end) end)
 
 Ctl.espTargetHlToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
@@ -4329,7 +4337,7 @@ Ctl.espTargetHlToggle = safeCreate(Ctl.espSectionInfo, "Toggle", {
     Desc = T("ESP_TARGETHL_DESC"),
     Value = Ctl.ESPState.TargetHighlight,
     Callback = function(v) Ctl.ESPState.TargetHighlight = v end
-})
+}, "ESP_TARGETHL")
 bindLang(function()
     pcall(function() Ctl.espTargetHlToggle:SetTitle(T("ESP_TARGETHL")) end)
     pcall(function() Ctl.espTargetHlToggle:SetDesc(T("ESP_TARGETHL_DESC")) end)
@@ -4339,10 +4347,10 @@ Ctl.espTargetColor = safeCreate(Ctl.espSectionInfo, "Colorpicker", {
     Title = T("ESP_TARGETHL"),
     Default = Ctl.ESPState.TargetColor,
     Callback = function(c) Ctl.ESPState.TargetColor = c end
-})
+}, "ESP_TARGETHL2")
 
 -- 雷达分区
-Ctl.espSectionRadar = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_RADAR_SEC"), Icon = "crosshair" })
+Ctl.espSectionRadar = safeCreate(TabHandles.ESPPlus, "Section", { Title = T("ESP_RADAR_SEC"), Icon = "crosshair" }, "ESP_RADAR_SEC")
 bindLang(function() setTitleSafe(Ctl.espSectionRadar, T("ESP_RADAR_SEC")) end)
 
 Ctl.espRadarToggle = safeCreate(Ctl.espSectionRadar, "Toggle", {
@@ -4350,7 +4358,7 @@ Ctl.espRadarToggle = safeCreate(Ctl.espSectionRadar, "Toggle", {
     Desc = T("ESP_RADAR_DESC"),
     Value = Ctl.ESPState.Radar,
     Callback = function(v) Ctl.ESPState.Radar = v end
-})
+}, "ESP_RADAR")
 bindLang(function()
     pcall(function() Ctl.espRadarToggle:SetTitle(T("ESP_RADAR")) end)
     pcall(function() Ctl.espRadarToggle:SetDesc(T("ESP_RADAR_DESC")) end)
@@ -4361,7 +4369,7 @@ Ctl.espRadarSize = safeCreate(Ctl.espSectionRadar, "Slider", {
     Value = { Min = 80, Max = 300, Default = Ctl.ESPState.RadarSize },
     Step = 10,
     Callback = function(v) Ctl.ESPState.RadarSize = tonumber(v) or 150 end
-})
+}, "RADAR_SIZE")
 bindLang(function() pcall(function() Ctl.espRadarSize:SetTitle(T("RADAR_SIZE")) end) end)
 
 Ctl.espRadarRange = safeCreate(Ctl.espSectionRadar, "Slider", {
@@ -4370,7 +4378,7 @@ Ctl.espRadarRange = safeCreate(Ctl.espSectionRadar, "Slider", {
     Value = { Min = 50, Max = 1000, Default = Ctl.ESPState.RadarRange },
     Step = 50,
     Callback = function(v) Ctl.ESPState.RadarRange = tonumber(v) or 150 end
-})
+}, "RADAR_RANGE")
 bindLang(function()
     pcall(function() Ctl.espRadarRange:SetTitle(T("RADAR_RANGE")) end)
     pcall(function() Ctl.espRadarRange:SetDesc(T("RADAR_RANGE_DESC")) end)
@@ -4381,10 +4389,10 @@ Ctl.espRadarPos = safeCreate(Ctl.espSectionRadar, "Dropdown", {
     Values = { "右下", "右上", "左下", "左上" },
     Value = Ctl.ESPState.RadarPos,
     Callback = function(v) Ctl.ESPState.RadarPos = v end
-})
+}, "RADAR_POS")
 bindLang(function() pcall(function() Ctl.espRadarPos:SetTitle(T("RADAR_POS")) end) end)
 
-Ctl.espSectionUnit = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_UNIT"), Icon = "type" })
+Ctl.espSectionUnit = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_UNIT"), Icon = "type" }, "ESP_UNIT")
 bindLang(function() setTitleSafe(Ctl.espSectionUnit, T("ESP_UNIT")) end)
 
 Ctl.espUnitDropdown = safeCreate(Ctl.espSectionUnit, "Dropdown", {
@@ -4397,7 +4405,7 @@ Ctl.espUnitDropdown = safeCreate(Ctl.espSectionUnit, "Dropdown", {
             if v == T(key) then Ctl.ESPState.DistanceUnit = key; break end
         end
     end
-})
+}, "ESP_UNIT2")
 bindLang(function()
     pcall(function() Ctl.espUnitDropdown:SetTitle(T("ESP_UNIT")) end)
     pcall(function()
@@ -4411,17 +4419,17 @@ Ctl.espUnitScale = safeCreate(Ctl.espSectionUnit, "Slider", {
     Value = { Min = 5, Max = 100, Default = math.floor((Ctl.ESPState.UnitScale or 0.28) * 100 + 0.5) },
     Step = 1,
     Callback = function(v) Ctl.ESPState.UnitScale = (tonumber(v) or 28) / 100 end
-})
+}, "UNIT_SCALE")
 bindLang(function() pcall(function() Ctl.espUnitScale:SetTitle(T("UNIT_SCALE")) end) end)
 
-Ctl.espSectionName = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_NAMESEC"), Icon = "type" })
+Ctl.espSectionName = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_NAMESEC"), Icon = "type" }, "ESP_NAMESEC")
 Ctl.espNameMode = safeCreate(Ctl.espSectionName, "Dropdown", {
     Title = T("ESP_NAMESRC"),
     Desc = T("ESP_NAMESRC_DESC"),
     Values = { "用户名", "显示名", "两者" },
     Value = Ctl.ESPState.NameMode,
     Callback = function(v) Ctl.ESPState.NameMode = v end
-})
+}, "ESP_NAMESRC")
 Ctl.espFontDropdown = safeCreate(Ctl.espSectionName, "Dropdown", {
     Title = T("ESP_FONT"),
     Desc = T("ESP_FONT_DESC"),
@@ -4431,17 +4439,17 @@ Ctl.espFontDropdown = safeCreate(Ctl.espSectionName, "Dropdown", {
         Ctl.ESPState.FontName = v
         for _, o in pairs(ESPDrawings) do applyFont(o.Name); applyFont(o.Dist) end
     end
-})
+}, "ESP_FONT")
 Ctl.espAsciiToggle = safeCreate(Ctl.espSectionName, "Toggle", {
     Title = T("ESP_ASCII"),
     Desc = T("ESP_ASCII_DESC"),
     Value = Ctl.ESPState.AsciiFallback,
     Callback = function(v) Ctl.ESPState.AsciiFallback = v end
-})
+}, "ESP_ASCII")
 
-Ctl.espSectionFilter = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_FILTER"), Icon = "filter" })
-Ctl.espTeamToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_TEAM"), Desc = T("ESP_TEAM_DESC"), Value = Ctl.ESPState.TeamCheck, Callback = function(s) Ctl.ESPState.TeamCheck = s end })
-Ctl.espLosToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_LOS"), Desc = T("ESP_LOS_DESC"), Value = Ctl.ESPState.VisibleCheck, Callback = function(s) Ctl.ESPState.VisibleCheck = s end })
+Ctl.espSectionFilter = safeCreate(TabHandles.ESP, "Section", { Title = T("ESP_FILTER"), Icon = "filter" }, "ESP_FILTER")
+Ctl.espTeamToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_TEAM"), Desc = T("ESP_TEAM_DESC"), Value = Ctl.ESPState.TeamCheck, Callback = function(s) Ctl.ESPState.TeamCheck = s end }, "ESP_TEAM2")
+Ctl.espLosToggle = safeCreate(Ctl.espSectionFilter, "Toggle", { Title = T("ESP_LOS"), Desc = T("ESP_LOS_DESC"), Value = Ctl.ESPState.VisibleCheck, Callback = function(s) Ctl.ESPState.VisibleCheck = s end }, "ESP_LOS")
 
 Ctl.espDistSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_MAXDIST"),
@@ -4449,19 +4457,19 @@ Ctl.espDistSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Value = { Min = 50, Max = 3000, Default = Ctl.ESPState.MaxDistance },
     Step = 50,
     Callback = function(v) Ctl.ESPState.MaxDistance = tonumber(v) or Ctl.ESPState.MaxDistance end
-})
+}, "ESP_MAXDIST")
 Ctl.espThickSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_THICK"),
     Value = { Min = 1, Max = 5, Default = Ctl.ESPState.Thickness },
     Step = 1,
     Callback = function(v) Ctl.ESPState.Thickness = tonumber(v) or 1 end
-})
+}, "ESP_THICK")
 Ctl.espTextSlider = safeCreate(Ctl.espSectionFilter, "Slider", {
     Title = T("ESP_TEXTSIZE"),
     Value = { Min = 10, Max = 24, Default = Ctl.ESPState.TextSize },
     Step = 1,
     Callback = function(v) Ctl.ESPState.TextSize = tonumber(v) or 14 end
-})
+}, "ESP_TEXTSIZE")
 bindLang(function() setTitleSafe(TabHandles.Profile, T("PROFILE_TAB")) end)
 bindLang(function() setTitleSafe(TabHandles.ESP, T("ESP_TAB")) end)
 bindLang(function() setTitleSafe(TabHandles.Aimbot, T("AIM_TAB")) end)
@@ -4618,8 +4626,8 @@ safeCreate(TabHandles.Aimbot, "Paragraph", {
     Image = "crosshair",
     ImageSize = 20,
     Color = Color3.fromHex("#ff4d4d"),
-})
-safeCreate(TabHandles.Aimbot, "Divider", {})
+}, "AIM_TITLE")
+safeCreate(TabHandles.Aimbot, "Divider", {}, "Divider2")
 
 local aimToggle = safeCreate(TabHandles.Aimbot, "Toggle", {
     Title = T("AIM_ENABLE"),
@@ -4628,37 +4636,37 @@ local aimToggle = safeCreate(TabHandles.Aimbot, "Toggle", {
     Callback = function(state)
         Ctl.AimState.Enabled = state
     end
-})
+}, "AIM_ENABLE")
 
-Ctl.aimSectionBasic = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_BASIC"), Icon = "target" })
+Ctl.aimSectionBasic = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_BASIC"), Icon = "target" }, "AIM_BASIC")
 local aimModeDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_MODE"),
     Desc = T("AIM_MODE_DESC"),
     Values = { "CFrame", "Mouse" },
     Value = Ctl.AimState.Mode,
     Callback = function(v) Ctl.AimState.Mode = v end
-})
+}, "AIM_MODE")
 local aimTriggerDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_TRIGGER"),
     Values = { "右键", "左键", "常开" },
     Value = "常开",
     Callback = function(v) Ctl.AimState.Trigger = v; holdingTrigger = false end
-})
+}, "AIM_TRIGGER")
 local aimPartDropdown = safeCreate(Ctl.aimSectionBasic, "Dropdown", {
     Title = T("AIM_PART"),
     Values = { "头部", "躯干" },
     Value = Ctl.AimState.Part,
     Callback = function(v) Ctl.AimState.Part = v end
-})
+}, "AIM_PART")
 local aimSmoothSlider = safeCreate(Ctl.aimSectionBasic, "Slider", {
     Title = T("AIM_SMOOTH"),
     Desc = T("AIM_SMOOTH_DESC"),
     Value = { Min = 0.05, Max = 1, Default = Ctl.AimState.Smoothness },
     Step = 0.05,
     Callback = function(v) Ctl.AimState.Smoothness = tonumber(v) or 0.35 end
-})
+}, "AIM_SMOOTH")
 
-Ctl.aimSectionCam = safeCreate(TabHandles.Aimbot, "Section", { Title = T("CAM_SEC"), Icon = "video" })
+Ctl.aimSectionCam = safeCreate(TabHandles.Aimbot, "Section", { Title = T("CAM_SEC"), Icon = "video" }, "CAM_SEC")
 bindLang(function() setTitleSafe(Ctl.aimSectionCam, T("CAM_SEC")) end)
 
 safeCreate(Ctl.aimSectionCam, "Button", {
@@ -4683,7 +4691,7 @@ safeCreate(Ctl.aimSectionCam, "Button", {
             Buttons = { { Title = T("OK"), Variant = "Primary" } }
         })
     end
-})
+}, "CAM_CHECK")
 
 local aimCamMode = safeCreate(Ctl.aimSectionCam, "Dropdown", {
     Title = T("CAM_MODE"),
@@ -4702,47 +4710,47 @@ local aimCamMode = safeCreate(Ctl.aimSectionCam, "Dropdown", {
             })
         end
     end
-})
+}, "CAM_MODE")
 bindLang(function() pcall(function() aimCamMode:SetTitle(T("CAM_MODE")) end) end)
 
-Ctl.aimSectionFilter = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_FILTER"), Icon = "filter" })
+Ctl.aimSectionFilter = safeCreate(TabHandles.Aimbot, "Section", { Title = T("AIM_FILTER"), Icon = "filter" }, "AIM_FILTER")
 local aimFovSlider = safeCreate(Ctl.aimSectionFilter, "Slider", {
     Title = T("AIM_FOV"),
     Desc = T("AIM_FOV_DESC"),
     Value = { Min = 30, Max = 500, Default = Ctl.AimState.FOV },
     Step = 10,
     Callback = function(v) Ctl.AimState.FOV = tonumber(v) or 150 end
-})
+}, "AIM_FOV")
 local aimDistSlider = safeCreate(Ctl.aimSectionFilter, "Slider", {
     Title = T("AIM_MAXDIST"),
     Value = { Min = 50, Max = 2000, Default = Ctl.AimState.MaxDistance },
     Step = 50,
     Callback = function(v) Ctl.AimState.MaxDistance = tonumber(v) or 300 end
-})
+}, "AIM_MAXDIST")
 local aimTeamToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_TEAM"),
     Value = Ctl.AimState.TeamCheck,
     Callback = function(v) Ctl.AimState.TeamCheck = v end
-})
+}, "AIM_TEAM")
 local aimVisibleToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_VIS"),
     Desc = T("AIM_VIS_DESC"),
     Value = Ctl.AimState.VisibleCheck,
     Callback = function(v) Ctl.AimState.VisibleCheck = v end
-})
+}, "AIM_VIS")
 local aimShowFovToggle = safeCreate(Ctl.aimSectionFilter, "Toggle", {
     Title = T("AIM_SHOWFOV"),
     Value = Ctl.AimState.ShowFOV,
     Callback = function(v) Ctl.AimState.ShowFOV = v end
-})
+}, "AIM_SHOWFOV")
 local aimColor = safeCreate(Ctl.aimSectionFilter, "Colorpicker", {
     Title = T("AIM_FOVCOLOR"),
     Default = Ctl.AimState.Color,
     Callback = function(c) Ctl.AimState.Color = c end
-})
+}, "AIM_FOVCOLOR")
 
 -- TriggerBot
-Ctl.tbSection = safeCreate(TabHandles.Aimbot, "Section", { Title = T("TB_SEC"), Icon = "zap" })
+Ctl.tbSection = safeCreate(TabHandles.Aimbot, "Section", { Title = T("TB_SEC"), Icon = "zap" }, "TB_SEC")
 bindLang(function() setTitleSafe(Ctl.tbSection, T("TB_SEC")) end)
 
 local tbToggle = safeCreate(Ctl.tbSection, "Toggle", {
@@ -4758,7 +4766,7 @@ local tbToggle = safeCreate(Ctl.tbSection, "Toggle", {
         end
         TBState.Enabled = v
     end
-})
+}, "TB_ENABLE")
 bindLang(function()
     pcall(function() tbToggle:SetTitle(T("TB_ENABLE")) end)
     pcall(function() tbToggle:SetDesc(T("TB_ENABLE_DESC")) end)
@@ -4791,7 +4799,7 @@ local tbMethod = safeCreate(Ctl.tbSection, "Dropdown", {
             end)
         end
     end
-})
+}, "TB_METHOD")
 bindLang(function() pcall(function() tbMethod:SetTitle(T("TB_METHOD")) end) end)
 
 -- 开火 Remote 列表（从捕获到的 Remote 里选）
@@ -4815,7 +4823,7 @@ Ctl.fireRemoteDropdown = safeCreate(Ctl.tbSection, "Dropdown", {
         local e = RemoteLog[v]
         if e and e.remote then FireRemote = e.remote end
     end
-})
+}, "开火Remote")
 
 Ctl.tbRemoteFire = safeCreate(Ctl.tbSection, "Toggle", {
     Title = "用 Remote 开火",
@@ -4828,7 +4836,7 @@ Ctl.tbRemoteFire = safeCreate(Ctl.tbSection, "Toggle", {
             pcall(function() Ctl.tbRemoteFire:Set(false) end)
         end
     end
-})
+}, "用Remote开火")
 
 safeCreate(Ctl.tbSection, "Button", {
     Title = "测试 Remote 开火",
@@ -4846,7 +4854,7 @@ safeCreate(Ctl.tbSection, "Button", {
             Duration = 3
         })
     end
-})
+}, "测试Remote开火")
 
 Ctl.tbDelay = safeCreate(Ctl.tbSection, "Slider", {
     Title = T("TB_DELAY"),
@@ -4854,7 +4862,7 @@ Ctl.tbDelay = safeCreate(Ctl.tbSection, "Slider", {
     Value = { Min = 0, Max = 500, Default = TBState.Delay },
     Step = 10,
     Callback = function(v) TBState.Delay = tonumber(v) or 0 end
-})
+}, "TB_DELAY")
 bindLang(function() pcall(function() Ctl.tbDelay:SetTitle(T("TB_DELAY")) end) end)
 
 Ctl.tbCooldown = safeCreate(Ctl.tbSection, "Slider", {
@@ -4863,7 +4871,7 @@ Ctl.tbCooldown = safeCreate(Ctl.tbSection, "Slider", {
     Value = { Min = 50, Max = 1000, Default = TBState.Cooldown },
     Step = 50,
     Callback = function(v) TBState.Cooldown = tonumber(v) or 100 end
-})
+}, "TB_COOLDOWN")
 bindLang(function() pcall(function() Ctl.tbCooldown:SetTitle(T("TB_COOLDOWN")) end) end)
 
 Ctl.tbBurst = safeCreate(Ctl.tbSection, "Toggle", {
@@ -4871,7 +4879,7 @@ Ctl.tbBurst = safeCreate(Ctl.tbSection, "Toggle", {
     Desc = T("TB_BURST_DESC"),
     Value = TBState.Burst,
     Callback = function(v) TBState.Burst = v end
-})
+}, "TB_BURST")
 bindLang(function()
     pcall(function() Ctl.tbBurst:SetTitle(T("TB_BURST")) end)
     pcall(function() Ctl.tbBurst:SetDesc(T("TB_BURST_DESC")) end)
@@ -4881,7 +4889,7 @@ Ctl.tbOnlyVis = safeCreate(Ctl.tbSection, "Toggle", {
     Title = T("TB_ONLYVIS"),
     Value = TBState.OnlyVisible,
     Callback = function(v) TBState.OnlyVisible = v end
-})
+}, "TB_ONLYVIS")
 bindLang(function() pcall(function() Ctl.tbOnlyVis:SetTitle(T("TB_ONLYVIS")) end) end)
 
 Ctl.tbUseBullet = safeCreate(Ctl.tbSection, "Toggle", {
@@ -4889,7 +4897,7 @@ Ctl.tbUseBullet = safeCreate(Ctl.tbSection, "Toggle", {
     Desc = T("TB_HITCHK_DESC"),
     Value = TBState.UseBulletTarget,
     Callback = function(v) TBState.UseBulletTarget = v end
-})
+}, "TB_HITCHK")
 bindLang(function()
     pcall(function() Ctl.tbUseBullet:SetTitle(T("TB_HITCHK")) end)
     pcall(function() Ctl.tbUseBullet:SetDesc(T("TB_HITCHK_DESC")) end)
@@ -4910,7 +4918,7 @@ safeCreate(Ctl.tbSection, "Button", {
         pcall(function() doFire(false) end)
         WindUI:Notify({ Title = T("TB_SEC"), Content = T("TB_TESTED"), Icon = "check", Duration = 3 })
     end
-})
+}, "TB_TEST")
 
 safeCreate(TabHandles.Aimbot, "Button", {
     Title = T("AIM_RESET"),
@@ -4925,10 +4933,13 @@ safeCreate(TabHandles.Aimbot, "Button", {
         aimSmoothSlider:Set(0.35); aimFovSlider:Set(150); aimDistSlider:Set(300)
         WindUI:Notify({ Title = T("AIM_TAB"), Content = T("AIM_RESET_MSG"), Icon = "check", Duration = 2 })
     end
-})
+}, "AIM_RESET")
 -- ======================= 自瞄模块结束 =======================
 
 markBuild("Aimbot-OK")
+
+markBuild("Aimbot-OK")
+diagSet("自瞄界面完成，进入子追逻辑")
 
 -- ========================= 子弹追踪（子追）模块 =========================
 Ctl.BulletState = {
@@ -5209,6 +5220,9 @@ end)
 
 markBuild("BulletCore")
 
+markBuild("BulletCore")
+diagSet("子追核心逻辑完成")
+
 -- ========================= 相机诊断与强制写入 =========================
 local CamHookInstalled = false
 local CamDesiredCFrame = nil   -- Hook 模式下，游戏写完我们再覆盖
@@ -5252,6 +5266,9 @@ local function installCameraHook()
     CamHookInstalled = ok
     return ok
 end
+
+markBuild("CamDiag")
+diagSet("相机诊断段完成")
 
 -- ========================= TriggerBot 自动开火 =========================
 local FireFn = nil
@@ -5516,6 +5533,7 @@ local function installBulletHook()
 end
 
 markBuild("Bullet")
+diagSet("进入子追界面构建")
 
 
 -- 子追界面
@@ -5525,8 +5543,8 @@ safeCreate(TabHandles.Bullet, "Paragraph", {
     Image = "target",
     ImageSize = 20,
     Color = Color3.fromHex("#ff9f43"),
-})
-safeCreate(TabHandles.Bullet, "Divider", {})
+}, "BULLET_TITLE")
+safeCreate(TabHandles.Bullet, "Divider", {}, "Divider3")
 
 Ctl.bulletStatus = safeCreate(TabHandles.Bullet, "Paragraph", {
     Title = T("BULLET_STATUS"),
@@ -5534,7 +5552,7 @@ Ctl.bulletStatus = safeCreate(TabHandles.Bullet, "Paragraph", {
     Image = "activity",
     ImageSize = 20,
     Color = "Grey",
-})
+}, "BULLET_STATUS")
 bindLang(function() pcall(function() Ctl.bulletStatus:SetTitle(T("BULLET_STATUS")) end) end)
 
 Ctl.bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
@@ -5578,13 +5596,13 @@ Ctl.bulletToggle = safeCreate(TabHandles.Bullet, "Toggle", {
         end
         Ctl.BulletState.Enabled = state
     end
-})
+}, "BULLET_ENABLE")
 bindLang(function()
     pcall(function() Ctl.bulletToggle:SetTitle(T("BULLET_ENABLE")) end)
     pcall(function() Ctl.bulletToggle:SetDesc(T("BULLET_ENABLE_DESC")) end)
 end)
 
-Ctl.bulletSectionBasic = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_BASIC"), Icon = "target" })
+Ctl.bulletSectionBasic = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_BASIC"), Icon = "target" }, "BULLET_BASIC")
 bindLang(function() setTitleSafe(Ctl.bulletSectionBasic, T("BULLET_BASIC")) end)
 
 Ctl.bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
@@ -5602,7 +5620,7 @@ Ctl.bulletImpl = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
             end
         end)
     end
-})
+}, "BULLET_IMPL")
 bindLang(function()
     pcall(function() Ctl.bulletImpl:SetTitle(T("BULLET_IMPL")) end)
     pcall(function() Ctl.bulletImpl:SetDesc(T("BULLET_IMPL_DESC")) end)
@@ -5614,7 +5632,7 @@ Ctl.bulletFireKey = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Values = { "左键", "右键" },
     Value = Ctl.BulletState.FireKey,
     Callback = function(v) Ctl.BulletState.FireKey = v end
-})
+}, "BULLET_FIREKEY")
 bindLang(function()
     pcall(function() Ctl.bulletFireKey:SetTitle(T("BULLET_FIREKEY")) end)
     pcall(function() Ctl.bulletFireKey:SetDesc(T("BULLET_FIREKEY_DESC")) end)
@@ -5637,7 +5655,7 @@ Ctl.bulletMethod = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
             end
         end)
     end
-})
+}, "BULLET_METHOD")
 bindLang(function() pcall(function() Ctl.bulletMethod:SetTitle(T("BULLET_METHOD")) end) end)
 
 Ctl.bulletPart = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
@@ -5645,7 +5663,7 @@ Ctl.bulletPart = safeCreate(Ctl.bulletSectionBasic, "Dropdown", {
     Values = { "头部", "躯干" },
     Value = Ctl.BulletState.Part,
     Callback = function(v) Ctl.BulletState.Part = v end
-})
+}, "BULLET_PART")
 bindLang(function() pcall(function() Ctl.bulletPart:SetTitle(T("BULLET_PART")) end) end)
 
 Ctl.bulletHitChance = safeCreate(Ctl.bulletSectionBasic, "Slider", {
@@ -5654,7 +5672,7 @@ Ctl.bulletHitChance = safeCreate(Ctl.bulletSectionBasic, "Slider", {
     Value = { Min = 0, Max = 100, Default = Ctl.BulletState.HitChance },
     Step = 5,
     Callback = function(v) Ctl.BulletState.HitChance = tonumber(v) or 100 end
-})
+}, "BULLET_HITCHANCE")
 bindLang(function() pcall(function() Ctl.bulletHitChance:SetTitle(T("BULLET_HITCHANCE")) end) end)
 
 Ctl.bulletFollow = safeCreate(Ctl.bulletSectionBasic, "Toggle", {
@@ -5662,13 +5680,13 @@ Ctl.bulletFollow = safeCreate(Ctl.bulletSectionBasic, "Toggle", {
     Desc = T("BULLET_FOLLOW_DESC"),
     Value = Ctl.BulletState.FollowAimbot,
     Callback = function(v) Ctl.BulletState.FollowAimbot = v end
-})
+}, "BULLET_FOLLOW")
 bindLang(function()
     pcall(function() Ctl.bulletFollow:SetTitle(T("BULLET_FOLLOW")) end)
     pcall(function() Ctl.bulletFollow:SetDesc(T("BULLET_FOLLOW_DESC")) end)
 end)
 
-Ctl.bulletSectionFilter = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_FILTER"), Icon = "filter" })
+Ctl.bulletSectionFilter = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_FILTER"), Icon = "filter" }, "BULLET_FILTER")
 bindLang(function() setTitleSafe(Ctl.bulletSectionFilter, T("BULLET_FILTER")) end)
 
 Ctl.bulletFov = safeCreate(Ctl.bulletSectionFilter, "Slider", {
@@ -5677,7 +5695,7 @@ Ctl.bulletFov = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Value = { Min = 30, Max = 600, Default = Ctl.BulletState.FOV },
     Step = 10,
     Callback = function(v) Ctl.BulletState.FOV = tonumber(v) or 200 end
-})
+}, "BULLET_FOV")
 bindLang(function() pcall(function() Ctl.bulletFov:SetTitle(T("BULLET_FOV")) end) end)
 
 Ctl.bulletDist = safeCreate(Ctl.bulletSectionFilter, "Slider", {
@@ -5685,7 +5703,7 @@ Ctl.bulletDist = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Value = { Min = 50, Max = 2000, Default = Ctl.BulletState.MaxDistance },
     Step = 50,
     Callback = function(v) Ctl.BulletState.MaxDistance = tonumber(v) or 500 end
-})
+}, "BULLET_MAXDIST")
 bindLang(function() pcall(function() Ctl.bulletDist:SetTitle(T("BULLET_MAXDIST")) end) end)
 
 Ctl.bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
@@ -5702,7 +5720,7 @@ Ctl.bulletWallbang = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
             end
         end)
     end
-})
+}, "BULLET_WALLBANG")
 bindLang(function()
     pcall(function() Ctl.bulletWallbang:SetTitle(T("BULLET_WALLBANG")) end)
     pcall(function() Ctl.bulletWallbang:SetDesc(T("BULLET_WALLBANG_DESC")) end)
@@ -5712,7 +5730,7 @@ Ctl.bulletTeam = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Title = T("BULLET_TEAM"),
     Value = Ctl.BulletState.TeamCheck,
     Callback = function(v) Ctl.BulletState.TeamCheck = v end
-})
+}, "BULLET_TEAM")
 bindLang(function() pcall(function() Ctl.bulletTeam:SetTitle(T("BULLET_TEAM")) end) end)
 
 Ctl.bulletVisible = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
@@ -5720,14 +5738,14 @@ Ctl.bulletVisible = safeCreate(Ctl.bulletSectionFilter, "Toggle", {
     Desc = T("BULLET_VIS_DESC"),
     Value = Ctl.BulletState.VisibleCheck,
     Callback = function(v) Ctl.BulletState.VisibleCheck = v end
-})
+}, "BULLET_VIS")
 bindLang(function()
     pcall(function() Ctl.bulletVisible:SetTitle(T("BULLET_VIS")) end)
     pcall(function() Ctl.bulletVisible:SetDesc(T("BULLET_VIS_DESC")) end)
 end)
 
 -- Hitbox 分区
-Ctl.bulletSectionHitbox = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_HITBOX"), Icon = "maximize", Opened = true })
+Ctl.bulletSectionHitbox = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_HITBOX"), Icon = "maximize", Opened = true }, "BULLET_HITBOX")
 bindLang(function() setTitleSafe(Ctl.bulletSectionHitbox, T("BULLET_HITBOX")) end)
 
 Ctl.bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
@@ -5741,7 +5759,7 @@ Ctl.bulletHbToggle = safeCreate(Ctl.bulletSectionHitbox, "Toggle", {
             Ctl.bulletStatus:SetDesc(v and T("BULLET_HB_NOTE") or T("BULLET_STATUS_DESC"))
         end)
     end
-})
+}, "BULLET_HITBOX2")
 bindLang(function()
     pcall(function() Ctl.bulletHbToggle:SetTitle(T("BULLET_HITBOX")) end)
     pcall(function() Ctl.bulletHbToggle:SetDesc(T("BULLET_HITBOX_DESC")) end)
@@ -5752,7 +5770,7 @@ Ctl.bulletHbPart = safeCreate(Ctl.bulletSectionHitbox, "Dropdown", {
     Values = { "躯干", "头部" },
     Value = HitboxState.Part,
     Callback = function(v) HitboxState.Part = v; restoreAllHitbox() end
-})
+}, "BULLET_HB_PART")
 bindLang(function() pcall(function() Ctl.bulletHbPart:SetTitle(T("BULLET_HB_PART")) end) end)
 
 Ctl.bulletHbMult = safeCreate(Ctl.bulletSectionHitbox, "Slider", {
@@ -5761,7 +5779,7 @@ Ctl.bulletHbMult = safeCreate(Ctl.bulletSectionHitbox, "Slider", {
     Value = { Min = 1, Max = 10, Default = HitboxState.Multiplier },
     Step = 0.5,
     Callback = function(v) HitboxState.Multiplier = tonumber(v) or 1.5; restoreAllHitbox() end
-})
+}, "BULLET_HB_MULT")
 bindLang(function() pcall(function() Ctl.bulletHbMult:SetTitle(T("BULLET_HB_MULT")) end) end)
 
 -- 抛射物参数
@@ -5771,7 +5789,7 @@ Ctl.bulletProjSpeed = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Value = { Min = 10, Max = 500, Default = Ctl.BulletState.ProjMinSpeed },
     Step = 10,
     Callback = function(v) Ctl.BulletState.ProjMinSpeed = tonumber(v) or 50 end
-})
+}, "BULLET_PROJ_SPEED")
 bindLang(function() pcall(function() Ctl.bulletProjSpeed:SetTitle(T("BULLET_PROJ_SPEED")) end) end)
 
 Ctl.bulletProjRange = safeCreate(Ctl.bulletSectionFilter, "Slider", {
@@ -5780,11 +5798,11 @@ Ctl.bulletProjRange = safeCreate(Ctl.bulletSectionFilter, "Slider", {
     Value = { Min = 5, Max = 200, Default = Ctl.BulletState.ProjRange },
     Step = 5,
     Callback = function(v) Ctl.BulletState.ProjRange = tonumber(v) or 25 end
-})
+}, "BULLET_PROJ_RANGE")
 bindLang(function() pcall(function() Ctl.bulletProjRange:SetTitle(T("BULLET_PROJ_RANGE")) end) end)
 
 -- Remote 分区
-Ctl.bulletSectionRemote = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_REMOTE"), Icon = "activity", Opened = true })
+Ctl.bulletSectionRemote = safeCreate(TabHandles.Bullet, "Section", { Title = T("BULLET_REMOTE"), Icon = "activity", Opened = true }, "BULLET_REMOTE")
 bindLang(function() setTitleSafe(Ctl.bulletSectionRemote, T("BULLET_REMOTE")) end)
 
 safeCreate(Ctl.bulletSectionRemote, "Paragraph", {
@@ -5793,7 +5811,7 @@ safeCreate(Ctl.bulletSectionRemote, "Paragraph", {
     Image = "info",
     ImageSize = 20,
     Color = "Grey",
-})
+}, "BULLET_REMOTE2")
 
 safeCreate(Ctl.bulletSectionRemote, "Input", {
     Title = T("BULLET_RM_KW"),
@@ -5802,7 +5820,7 @@ safeCreate(Ctl.bulletSectionRemote, "Input", {
     Type = "Input",
     Placeholder = "shoot",
     Callback = function(text) Ctl.BulletState.RemoteKeyword = tostring(text or "") end
-})
+}, "BULLET_RM_KW")
 
 Ctl.bulletRmIdx = safeCreate(Ctl.bulletSectionRemote, "Slider", {
     Title = T("BULLET_RM_IDX"),
@@ -5810,7 +5828,7 @@ Ctl.bulletRmIdx = safeCreate(Ctl.bulletSectionRemote, "Slider", {
     Value = { Min = 1, Max = 10, Default = Ctl.BulletState.RemoteArgIndex },
     Step = 1,
     Callback = function(v) Ctl.BulletState.RemoteArgIndex = math.floor(tonumber(v) or 1) end
-})
+}, "BULLET_RM_IDX")
 bindLang(function() pcall(function() Ctl.bulletRmIdx:SetTitle(T("BULLET_RM_IDX")) end) end)
 
 Ctl.bulletRmType = safeCreate(Ctl.bulletSectionRemote, "Dropdown", {
@@ -5818,7 +5836,7 @@ Ctl.bulletRmType = safeCreate(Ctl.bulletSectionRemote, "Dropdown", {
     Values = { "目标部位", T("T_PLAYER"), T("T_POSITION") },
     Value = Ctl.BulletState.RemoteArgType,
     Callback = function(v) Ctl.BulletState.RemoteArgType = v end
-})
+}, "BULLET_RM_TYPE")
 bindLang(function() pcall(function() Ctl.bulletRmType:SetTitle(T("BULLET_RM_TYPE")) end) end)
 
 safeCreate(Ctl.bulletSectionRemote, "Button", {
@@ -5842,7 +5860,7 @@ safeCreate(Ctl.bulletSectionRemote, "Button", {
             })
         end
     end
-})
+}, "BULLET_RM_LOG")
 
 safeCreate(TabHandles.Bullet, "Button", {
     Title = T("BULLET_RESET"),
@@ -5873,7 +5891,7 @@ safeCreate(TabHandles.Bullet, "Button", {
         Ctl.bulletHitChance:Set(100); Ctl.bulletFov:Set(200); Ctl.bulletDist:Set(500)
         WindUI:Notify({ Title = T("BULLET_TITLE"), Content = T("AIM_RESET_MSG"), Icon = "check", Duration = 2 })
     end
-})
+}, "BULLET_RESET")
 -- ======================= 子追模块结束 =======================
 
 
@@ -6152,13 +6170,13 @@ Ctl.flyToggle = safeCreate(TabHandles.Fly, "Toggle", {
             WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_STOPPED"), Icon = "check", Duration = 2 })
         end
     end
-})
+}, "FLY_ENABLE")
 bindLang(function()
     pcall(function() Ctl.flyToggle:SetTitle(T("FLY_ENABLE")) end)
     pcall(function() Ctl.flyToggle:SetDesc(T("FLY_ENABLE_DESC")) end)
 end)
 
-safeCreate(TabHandles.Fly, "Divider", {})
+safeCreate(TabHandles.Fly, "Divider", {}, "Divider4")
 
 Ctl.flySpeedSlider = safeCreate(TabHandles.Fly, "Slider", {
     Title = T("FLY_SPEED"),
@@ -6169,7 +6187,7 @@ Ctl.flySpeedSlider = safeCreate(TabHandles.Fly, "Slider", {
         Ctl.FlyState.Speed = tonumber(v) or 1
         if Ctl.FlyState.Noclip and Ctl.FlyState.Enabled then startNoclip() end
     end
-})
+}, "FLY_SPEED")
 bindLang(function() pcall(function() Ctl.flySpeedSlider:SetTitle(T("FLY_SPEED")) end) end)
 
 Ctl.flyVertSlider = safeCreate(TabHandles.Fly, "Slider", {
@@ -6178,7 +6196,7 @@ Ctl.flyVertSlider = safeCreate(TabHandles.Fly, "Slider", {
     Value = { Min = 1, Max = 10, Default = Ctl.FlyState.VertSpeed },
     Step = 1,
     Callback = function(v) Ctl.FlyState.VertSpeed = tonumber(v) or 1 end
-})
+}, "FLY_VERTSPD")
 bindLang(function() pcall(function() Ctl.flyVertSlider:SetTitle(T("FLY_VERTSPD")) end) end)
 
 Ctl.flyNoclipToggle = safeCreate(TabHandles.Fly, "Toggle", {
@@ -6191,7 +6209,7 @@ Ctl.flyNoclipToggle = safeCreate(TabHandles.Fly, "Toggle", {
             if v then startNoclip() else stopNoclip() end
         end
     end
-})
+}, "FLY_NOCLIP")
 bindLang(function()
     pcall(function() Ctl.flyNoclipToggle:SetTitle(T("FLY_NOCLIP")) end)
     pcall(function() Ctl.flyNoclipToggle:SetDesc(T("FLY_NOCLIP_DESC")) end)
@@ -6209,7 +6227,7 @@ Ctl.flyNoclipMode = safeCreate(TabHandles.Fly, "Dropdown", {
             startNoclip()
         end
     end
-})
+}, "FLY_NOCLIP_MODE")
 bindLang(function() pcall(function() Ctl.flyNoclipMode:SetTitle(T("FLY_NOCLIP_MODE")) end) end)
 
 Ctl.flyUnstickToggle = safeCreate(TabHandles.Fly, "Toggle", {
@@ -6217,13 +6235,13 @@ Ctl.flyUnstickToggle = safeCreate(TabHandles.Fly, "Toggle", {
     Desc = T("FLY_UNSTICK_DESC"),
     Value = Ctl.FlyState.AutoUnstick,
     Callback = function(v) Ctl.FlyState.AutoUnstick = v end
-})
+}, "FLY_UNSTICK")
 bindLang(function()
     pcall(function() Ctl.flyUnstickToggle:SetTitle(T("FLY_UNSTICK")) end)
     pcall(function() Ctl.flyUnstickToggle:SetDesc(T("FLY_UNSTICK_DESC")) end)
 end)
 
-safeCreate(TabHandles.Fly, "Divider", {})
+safeCreate(TabHandles.Fly, "Divider", {}, "Divider5")
 
 safeCreate(TabHandles.Fly, "Button", {
     Title = T("FLY_FORCE_RESET"),
@@ -6241,9 +6259,9 @@ safeCreate(TabHandles.Fly, "Button", {
         if h then resetHumanoidState(h) end
         WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_RESET_DONE"), Icon = "check", Duration = 3 })
     end
-})
+}, "FLY_FORCE_RESET")
 
-safeCreate(TabHandles.Fly, "Divider", {})
+safeCreate(TabHandles.Fly, "Divider", {}, "Divider6")
 
 safeCreate(TabHandles.Fly, "Button", {
     Title = T("FLY_UP"),
@@ -6257,7 +6275,7 @@ safeCreate(TabHandles.Fly, "Button", {
         startVertical(1)
         task.delay(0.35, function() stopVertical(1) end)
     end
-})
+}, "FLY_UP")
 
 safeCreate(TabHandles.Fly, "Button", {
     Title = T("FLY_DOWN"),
@@ -6271,7 +6289,7 @@ safeCreate(TabHandles.Fly, "Button", {
         startVertical(-1)
         task.delay(0.35, function() stopVertical(-1) end)
     end
-})
+}, "FLY_DOWN")
 
 safeCreate(TabHandles.Fly, "Button", {
     Title = T("FLY_STOP"),
@@ -6282,7 +6300,7 @@ safeCreate(TabHandles.Fly, "Button", {
         pcall(function() Ctl.flyToggle:Set(false) end)
         WindUI:Notify({ Title = T("FLY_TITLE"), Content = T("FLY_STOPPED"), Icon = "check", Duration = 2 })
     end
-})
+}, "FLY_STOP")
 
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(0.7)
@@ -6324,7 +6342,7 @@ safeCreate(TabHandles.Profile, "Button", {
             Buttons = { { Title = "确定", Variant = "Primary" } }
         })
     end
-})
+}, "脚本诊断")
 
 
 markBuild("Fly-OK")
@@ -7018,17 +7036,17 @@ safeCreate(TabHandles.Profile, "Paragraph", {
     Image = "user",
     ImageSize = 24,
     Color = Color3.fromHex("#30ff6a"),
-})
-safeCreate(TabHandles.Profile, "Divider", {})
+}, "Paragraph")
+safeCreate(TabHandles.Profile, "Divider", {}, "Divider7")
 
-Ctl.profileSectionBasic = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_BASIC"), Icon = "user", Opened = true })
+Ctl.profileSectionBasic = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_BASIC"), Icon = "user", Opened = true }, "PROFILE_BASIC")
 Ctl.profileAgeText = safeCreate(Ctl.profileSectionBasic, "Paragraph", {
     Title = T("PROFILE_ACCOUNTAGE"),
     Desc = accountAgeText(),
     Image = "calendar",
     ImageSize = 20,
     Color = "White",
-})
+}, "PROFILE_ACCOUNTAGE")
 bindLang(function()
     setTitleSafe(Ctl.profileAgeText, T("PROFILE_ACCOUNTAGE"))
     pcall(function() Ctl.profileAgeText:SetDesc(accountAgeText()) end)
@@ -7041,12 +7059,12 @@ safeCreate(Ctl.profileSectionBasic, "Button", {
         pcall(function() setclipboard(tostring(LocalPlayer.UserId)) end)
         WindUI:Notify({ Title = T("PROFILE_UID"), Content = T("PROFILE_COPIED"), Icon = "check", Duration = 2 })
     end
-})
+}, "PROFILE_COPYUID")
 bindLang(function()
     setTitleSafe(Ctl.profileSectionBasic, T("PROFILE_BASIC"))
 end)
 
-Ctl.profileSectionServer = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_SERVER"), Icon = "database", Opened = true })
+Ctl.profileSectionServer = safeCreate(TabHandles.Profile, "Section", { Title = T("PROFILE_SERVER"), Icon = "database", Opened = true }, "PROFILE_SERVER")
 bindLang(function() setTitleSafe(Ctl.profileSectionServer, T("PROFILE_SERVER")) end)
 
 safeCreate(Ctl.profileSectionServer, "Button", {
@@ -7059,7 +7077,7 @@ safeCreate(Ctl.profileSectionServer, "Button", {
             Buttons = { { Title = "OK", Variant = "Primary" } }
         })
     end
-})
+}, "PROFILE_REFRESH")
 safeCreate(Ctl.profileSectionServer, "Button", {
     Title = T("PROFILE_COPYJOBID"),
     Icon = "copy",
@@ -7082,7 +7100,7 @@ safeCreate(Ctl.profileSectionServer, "Button", {
             })
         end
     end
-})
+}, "PROFILE_COPYJOBID")
 safeCreate(Ctl.profileSectionServer, "Button", {
     Title = T("PROFILE_VIEW"),
     Icon = "user",
@@ -7095,7 +7113,7 @@ safeCreate(Ctl.profileSectionServer, "Button", {
             Duration = 4
         })
     end
-})
+}, "PROFILE_VIEW")
 
 markBuild("Profile-OK")
 
@@ -7109,8 +7127,8 @@ safeCreate(TabHandles.Language, "Paragraph", {
     Image = "languages",
     ImageSize = 20,
     Color = Color3.fromHex("#315dff"),
-})
-safeCreate(TabHandles.Language, "Divider", {})
+}, "LANG_TITLE")
+safeCreate(TabHandles.Language, "Divider", {}, "Divider8")
 
 local langNames = {}
 for _, item in ipairs(LANG_ORDER) do table.insert(langNames, item.Name) end
@@ -7122,10 +7140,10 @@ Ctl.langParagraph = safeCreate(TabHandles.Language, "Paragraph", {
     Image = "info",
     ImageSize = 20,
     Color = "White",
-})
+}, "LANG_CURRENT")
 bindLang(function() setTitleSafe(Ctl.langParagraph, T("LANG_CURRENT")) end)
 
-Ctl.langSection = safeCreate(TabHandles.Language, "Section", { Title = T("LANG_SELECT"), Icon = "globe" })
+Ctl.langSection = safeCreate(TabHandles.Language, "Section", { Title = T("LANG_SELECT"), Icon = "globe" }, "LANG_SELECT")
 bindLang(function() setTitleSafe(Ctl.langSection, T("LANG_SELECT")) end)
 
 local langDropdown = Ctl.langSection:Dropdown({
@@ -7160,7 +7178,7 @@ safeCreate(TabHandles.Language, "Button", {
             Duration = 3
         })
     end
-})
+}, "LANG_TIP")
 -- ======================= 语言页结束 =======================
 
 
@@ -7169,7 +7187,7 @@ Ctl.espColor = safeCreate(Ctl.espSectionFilter, "Colorpicker", {
     Title = T("ESP_COLOR"),
     Default = Ctl.ESPState.Color,
     Callback = function(color) Ctl.ESPState.Color = color end
-})
+}, "ESP_COLOR")
 bindLang(function() pcall(function() Ctl.espColor:SetTitle(T("ESP_COLOR")) end) end)
 
 safeCreate(TabHandles.ESP, "Button", {
@@ -7215,7 +7233,7 @@ safeCreate(TabHandles.ESP, "Button", {
             Buttons = { { Title = T("OK"), Variant = "Primary" } }
         })
     end
-})
+}, "ESP_DIAG")
 
 safeCreate(TabHandles.ESP, "Button", {
     Title = T("ESP_CLEAR"),
@@ -7229,7 +7247,7 @@ safeCreate(TabHandles.ESP, "Button", {
         end
         WindUI:Notify({ Title = "ESP", Content = T("ESP_CLEARED"), Icon = "check", Duration = 2 })
     end
-})
+}, "ESP_CLEAR")
 
 -- 构建错误提示（有错误才显示，方便定位 ESP 页空白问题）
 if #UIErrorLog > 0 then
@@ -7250,14 +7268,14 @@ safeCreate(TabHandles.Elements, "Paragraph", {
     Image = "component",
     ImageSize = 20,
     Color = Color3.fromHex("#30ff6a"),
-})
+}, "InteractiveCompone")
 
-safeCreate(TabHandles.Elements, "Divider", {})
+safeCreate(TabHandles.Elements, "Divider", {}, "Divider9")
 
 Ctl.ElementsSection = safeCreate(TabHandles.Elements, "Section", {
     Title = "Section Example",
     Icon = "feather",
-})
+}, "SectionExample")
 
 local toggleState = false
 local featureToggle = Ctl.ElementsSection:Toggle({
@@ -7340,7 +7358,7 @@ Ctl.appearanceHeader = safeCreate(TabHandles.Appearance, "Paragraph", {
     Image = "palette",
     ImageSize = 20,
     Color = "White"
-})
+}, "APPEARANCE_TITLE")
 bindLang(function()
     pcall(function() Ctl.appearanceHeader:SetTitle(T("APPEARANCE_TITLE")) end)
     pcall(function() Ctl.appearanceHeader:SetDesc(T("APPEARANCE_DESC")) end)
@@ -7372,7 +7390,7 @@ Ctl.themeDropdown = safeCreate(TabHandles.Appearance, "Dropdown", {
         })
         canchangedropdown = true
     end
-})
+}, "locTHEME_SELECT")
 
 Ctl.transparencySlider = safeCreate(TabHandles.Appearance, "Slider", {
     Title = "loc:TRANSPARENCY",
@@ -7386,7 +7404,7 @@ Ctl.transparencySlider = safeCreate(TabHandles.Appearance, "Slider", {
         WindUI.TransparencyValue = tonumber(value)
         Window:ToggleTransparency(tonumber(value) > 0)
     end
-})
+}, "locTRANSPARENCY")
 
 Ctl.ThemeToggle = safeCreate(TabHandles.Appearance, "Toggle", {
     Title = T("DARKMODE"),
@@ -7400,7 +7418,7 @@ Ctl.ThemeToggle = safeCreate(TabHandles.Appearance, "Toggle", {
             Ctl.themeDropdown:Select(state and "Dark" or "Light")
         end
     end
-})
+}, "DARKMODE")
 
 WindUI:OnThemeChange(function(theme)
     canchangetheme = false
@@ -7424,7 +7442,7 @@ Ctl.createThemeBtn = safeCreate(TabHandles.Appearance, "Button", {
             }
         })
     end
-})
+}, "CREATE_THEME")
 bindLang(function() pcall(function() Ctl.createThemeBtn:SetTitle(T("CREATE_THEME")) end) end)
 
 -- ========================= 配置管理（挂在外观页） =========================
@@ -7432,7 +7450,7 @@ local ConfigManager = Window.ConfigManager
 local configName = "default"
 local configFile = nil
 
-Ctl.configSection = safeCreate(TabHandles.Appearance, "Section", { Title = T("CONFIG_SEC"), Icon = "download", Opened = true })
+Ctl.configSection = safeCreate(TabHandles.Appearance, "Section", { Title = T("CONFIG_SEC"), Icon = "download", Opened = true }, "CONFIG_SEC")
 bindLang(function() setTitleSafe(Ctl.configSection, T("CONFIG_SEC")) end)
 
 Ctl.configHeader = safeCreate(Ctl.configSection, "Paragraph", {
@@ -7441,7 +7459,7 @@ Ctl.configHeader = safeCreate(Ctl.configSection, "Paragraph", {
     Image = "save",
     ImageSize = 20,
     Color = "White",
-})
+}, "CONFIG_TITLE")
 bindLang(function()
     pcall(function() Ctl.configHeader:SetTitle(T("CONFIG_TITLE")) end)
     pcall(function() Ctl.configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
@@ -7457,7 +7475,7 @@ safeCreate(Ctl.configSection, "Input", {
         configName = tostring(text or "default")
         pcall(function() Ctl.configHeader:SetDesc(T("CONFIG_NAME") .. ": " .. configName) end)
     end
-})
+}, "CONFIG_NAME")
 
 if ConfigManager then
     ConfigManager:Init(Window)
@@ -7549,7 +7567,7 @@ if ConfigManager then
                 WindUI:Notify({ Title = T("CONFIG_SAVE_FAIL"), Content = configName, Icon = "x", Duration = 3 })
             end
         end
-    })
+    }, "CONFIG_SAVE")
 
     safeCreate(Ctl.configSection, "Button", {
         Title = T("CONFIG_LOAD"),
@@ -7572,7 +7590,7 @@ if ConfigManager then
                 WindUI:Notify({ Title = T("CONFIG_LOAD_FAIL"), Content = T("CONFIG_EMPTY"), Icon = "x", Duration = 3 })
             end
         end
-    })
+    }, "CONFIG_LOAD")
 else
     safeCreate(Ctl.configSection, "Paragraph", {
         Title = T("CONFIG_NOTSUP"),
@@ -7580,7 +7598,7 @@ else
         Image = "alert-triangle",
         ImageSize = 20,
         Color = "White"
-    })
+    }, "CONFIG_NOTSUP")
 end
 
 -- ======================= 配置管理结束 =======================
@@ -7923,7 +7941,7 @@ safeCreate(TabHandles.Profile, "Paragraph", {
             end
         }
     }
-})
+}, "LaevatainSky")
 
 Ctl.footerSection = Window:Section({ Title = "WindUI " .. WindUI.Version })
 Ctl.footerSection:Paragraph({
