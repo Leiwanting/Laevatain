@@ -14,10 +14,17 @@
 
     -- 3. Gitee 镜像（需先在 Gitee 导入本仓库）
     loadstring(game:HttpGet("https://gitee.com/Leiwanting/Laevatain/raw/main/LaevatainSky.lua"))()
+
+    v2.8.0：按 WindUI 官方仓库源码修复空白 Tab（This tab is empty）
+    - 官方 src/components/window/Tab.lua:509-575 空页是 task.spawn 异步创建，
+      ChildAdded 信号在其之后才连接且一次性 Disconnect —— 元素若先加完，空页永远留着
+    - 官方 src/elements/Section.lua:190-208,352-374 Section 的 Content 默认 Visible=false，
+      靠 task.defer 才打开 —— 调度被打断时控件全部不可见
+    - 本版在界面库源码加载层直接修正这两处默认值，与构建时序无关
 ]]
 
 local LIB_NAME    = "LaevatainSky"
-local LIB_VERSION = "2.6.0"
+local LIB_VERSION = "2.8.0"
 local LIB_REPO    = "https://github.com/Leiwanting/Laevatain"
 local VER_URL     = "https://cdn.jsdelivr.net/gh/Leiwanting/Laevatain@main/version.txt"
 
@@ -60,11 +67,49 @@ local function showMsg(title, text, sec)
     end)
 end
 
+-- ===== WindUI 源码补丁（依据官方 src 逐行核对）=====
+-- 主脚本用的是第三方 fork 的混淆单文件（WindUI v1.6.63），其空页/分组逻辑
+-- 与官方 src/components/window/Tab.lua、src/elements/Section.lua 完全一致：
+--   * 空页 Frame 由 task.spawn 异步创建，ChildAdded 信号在它之后才连接且一次性断开
+--   * Section 的 Content 默认 Visible=false，靠 task.defer 才打开
+-- 两处都依赖"异步初始化"，长构建时必然竞态。这里在 loadstring 之前直接改默认值，
+-- 与构建时序、让帧、执行器调度全部无关。
+local WindUIPatchInfo = "未应用"
+
+local function patchWindUISource(src)
+    if type(src) ~= "string" then return src, 0, 0 end
+    local ok, patched, n1 = pcall(function()
+        return src:gsub(
+            '(BackgroundTransparency=1,%s*)(Size=UDim2%.new%(1,0,1,%-Window%.UIElements%.Main%.Main%.Topbar%.AbsoluteSize%.Y%))',
+            '%1Visible=false,%2', 1)
+    end)
+    if ok and type(patched) == "string" then
+        src = patched
+    else
+        n1 = 0
+    end
+    local ok2, patched2, n2 = pcall(function()
+        return src:gsub('(Name="Content",%s*)Visible%s*=%s*false', '%1Visible=true')
+    end)
+    if ok2 and type(patched2) == "string" then
+        src = patched2
+    else
+        n2 = 0
+    end
+    return src, tonumber(n1) or 0, tonumber(n2) or 0
+end
+
 local function tryLoad(urls)
     local lastErr = ""
     for _, u in ipairs(urls) do
         local ok, res = pcall(function() return game:HttpGet(u) end)
         if ok and res and #res > 500 then
+            local np1, np2
+            res, np1, np2 = patchWindUISource(res)
+            WindUIPatchInfo = ("空页=%d 分组=%d"):format(np1 or 0, np2 or 0)
+            if (np1 or 0) == 0 then
+                warn("[LaevatainSky] 界面库版本变化，源码补丁未命中，改用运行时兜底")
+            end
             local fn, err = loadstring(res)
             if fn then
                 local rok, robj = pcall(fn)
@@ -87,6 +132,10 @@ for _, base in ipairs(WINDUI_PATHS) do
     local obj, err = tryLoad(buildSources(base))
     if obj then WindUI = obj; break end
     if err and err ~= "" then windErr = err end
+end
+
+if WindUI then
+    print("[LaevatainSky] 界面库源码补丁: " .. WindUIPatchInfo)
 end
 
 if not WindUI then
@@ -4244,6 +4293,44 @@ local function makeProxy(tag)
     })
 end
 
+-- ===== 确定性清除 WindUI 空状态占位符 =====
+-- 源码里 "This tab is empty" 只在 ContainerFrame.ChildAdded 触发时隐藏。
+-- 若控件在信号连接前就加进去（或信号已 Disconnect），占位符会永远显示。
+-- 这里不依赖信号：直接遍历隐藏，并补一次 ChildAdded 触发双保险。
+local function clearEmptyTabs()
+    for _, tab in pairs(TabHandles) do
+        pcall(function()
+            -- 有些 Tab 走 Window:Section():Tab()，返回值结构一致
+            local cf = tab and tab.UIElements and tab.UIElements.ContainerFrame
+            if not cf then return end
+
+            -- 触发一次 ChildAdded（若库的一次性信号仍连着）。复用同一个 Frame，避免堆积
+            if not cf:FindFirstChild("LaevatainSkyKeepAlive") then
+                local d = Instance.new("Frame")
+                d.Name = "LaevatainSkyKeepAlive"
+                d.Visible = false
+                d.BackgroundTransparency = 1
+                d.Size = UDim2.new(0, 0, 0, 0)
+                d.Parent = cf
+            end
+
+            for _, c in ipairs(cf:GetDescendants()) do
+                -- 空页：fork 文案 / 官方文案都覆盖
+                if c:IsA("TextLabel") and
+                    (c.Text == "This tab is empty" or c.Text == "This tab is Empty") then
+                    c.Visible = false
+                    local par = c.Parent
+                    if par and par:IsA("GuiObject") then par.Visible = false end
+                end
+                -- 分组内容区：库默认隐藏、靠 task.defer 打开；这里兜底直接显示
+                if c:IsA("GuiObject") and c.Name == "Content" and not c.Visible then
+                    c.Visible = true
+                end
+            end
+        end)
+    end
+end
+
 local function createNow(creator, method, cfg, tag)
     if creator == nil then
         table.insert(UIErrorLog, tostring(tag or method) .. ": parent nil")
@@ -4271,6 +4358,7 @@ local function pumpQueue()
                 if real ~= nil then rawset(proxy, "__real", real) end
                 deferredDone = deferredDone + 1
                 if deferredDone % 2 == 0 then
+                    pcall(function() clearEmptyTabs() end)
                     pcall(function()
                         if Ctl.diagLabel then
                             Ctl.diagLabel.Text = "补全 " .. tostring(deferredDone)
@@ -4283,6 +4371,7 @@ local function pumpQueue()
             end
             deferredRunning = false
             Ctl.building = false
+            pcall(function() clearEmptyTabs() end)
             pcall(function() applyLanguage() end)
             diagSet("界面补全完成 " .. tostring(deferredDone) .. "/"
                 .. tostring(Ctl.enqueued or 0) .. " 个\n错误数 " .. tostring(#UIErrorLog))
@@ -4295,6 +4384,13 @@ local function safeCreate(creator, method, cfg, tag)
     Ctl.createCount = (Ctl.createCount or 0) + 1
     local proxy = makeProxy(tag)
     table.insert(deferredQueue, { proxy, creator, method, cfg, tag })
+    Ctl.lastEnqueued = tostring(Ctl.createCount) .. " " .. tostring(tag or "?")
+    pcall(function()
+        if Ctl.diagLabel then
+            Ctl.diagLabel.Text = "入队 [" .. Ctl.lastEnqueued .. "]\n补全 "
+                .. tostring(deferredDone) .. " | 队列 " .. tostring(#deferredQueue)
+        end
+    end)
     return proxy
 end
 
@@ -8134,6 +8230,19 @@ end
 Ctl.enqueued = #deferredQueue
 diagSet("主体完成，入队 " .. tostring(Ctl.enqueued) .. " 个控件，开始补全")
 pumpQueue()
+-- 空页由库内部 task.spawn 异步创建，必须在它之后再做最终清理。
+-- 多次执行，覆盖不同执行器的调度延迟；源码补丁未命中时这一层仍能兜住。
+pcall(function()
+    task.spawn(function()
+        local delays = { 0, 0.3, 1, 3, 6 }
+        for _, d in ipairs(delays) do
+            if d > 0 then pcall(function() task.wait(d) end) end
+            clearEmptyTabs()
+        end
+        diagSet("空状态清理完成\n源码补丁: " .. WindUIPatchInfo
+            .. "\n入队控件: " .. tostring(Ctl.enqueued or 0))
+    end)
+end)
 
 -- 返回模块表，供二次开发
 return {
